@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>DxS Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -31,11 +31,7 @@
             --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
@@ -47,726 +43,120 @@
             background-image: var(--bg-gradient);
         }
 
-        .liquid-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .liquid-shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.15;
-            animation: float 20s infinite linear;
-        }
-
-        .shape-1 {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
-        }
-
-        .shape-2 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, var(--secondary-glow), var(--accent-glow));
-            top: 60%;
-            left: 80%;
-            animation-delay: -5s;
-        }
-
-        .shape-3 {
-            width: 350px;
-            height: 350px;
-            background: linear-gradient(135deg, var(--accent-glow), var(--primary-glow));
-            top: 30%;
-            left: 70%;
-            animation-delay: -10s;
-        }
-
-        .shape-4 {
-            width: 250px;
-            height: 250px;
-            background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
-            top: 70%;
-            left: 10%;
-            animation-delay: -15s;
-        }
+        .liquid-background { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; overflow:hidden; }
+        .liquid-shape { position:absolute; border-radius:50%; filter:blur(60px); opacity:0.15; animation: float 20s infinite linear; }
+        .shape-1{ width:400px; height:400px; background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow)); top:10%; left:5%; }
+        .shape-2{ width:300px; height:300px; background: linear-gradient(135deg, var(--secondary-glow), var(--accent-glow)); top:60%; left:80%; animation-delay:-5s; }
+        .shape-3{ width:350px; height:350px; background: linear-gradient(135deg, var(--accent-glow), var(--primary-glow)); top:30%; left:70%; animation-delay:-10s; }
+        .shape-4{ width:250px; height:250px; background: linear-gradient(135deg,var(--primary-glow),var(--accent-glow)); top:70%; left:10%; animation-delay:-15s; }
 
         @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -50px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 20px 30px;
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .logo {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
-            letter-spacing: -0.5px;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 18px;
-            font-weight: 400;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(var(--blur-intensity));
-            -webkit-backdrop-filter: blur(var(--blur-intensity));
-            box-shadow: var(--glass-shadow);
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.3), transparent);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            border-color: rgba(0, 255, 65, 0.3);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 16px;
-            background: rgba(0, 10, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .card-icon i {
-            font-size: 22px;
-            background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .card-title {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 16px 20px;
-            background: rgba(0, 10, 0, 0.4);
-            border: 1px solid rgba(0, 255, 65, 0.1);
-            border-radius: 16px;
-            font-size: 16px;
-            color: var(--text-primary);
-            transition: var(--transition-smooth);
-            backdrop-filter: blur(10px);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-glow);
-            box-shadow: 0 0 0 2px rgba(0, 255, 65, 0.2);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px 28px;
-            border: none;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
-            transition: left 0.7s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 143, 57, 0.2));
-            color: var(--text-primary);
-            border: 1px solid rgba(0, 255, 65, 0.3);
-            box-shadow: 0 4px 20px rgba(0, 255, 65, 0.15);
-            width: 100%;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.3), rgba(0, 143, 57, 0.3));
-            box-shadow: 0 6px 25px rgba(0, 255, 65, 0.25);
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, rgba(0, 255, 102, 0.2), rgba(0, 255, 65, 0.2));
-            color: var(--text-primary);
-            border: 1px solid rgba(0, 255, 102, 0.3);
-            box-shadow: 0 4px 20px rgba(0, 255, 102, 0.15);
-        }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, rgba(0, 255, 102, 0.3), rgba(0, 255, 65, 0.3));
-            box-shadow: 0 6px 25px rgba(0, 255, 102, 0.25);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: rgba(0, 10, 0, 0.3);
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            color: var(--text-primary);
-        }
-
-        .btn-outline:hover {
-            background: rgba(0, 255, 65, 0.1);
-            border-color: rgba(0, 255, 65, 0.4);
-        }
-
-        .btn-sm {
-            padding: 10px 16px;
-            font-size: 14px;
-        }
-
-        .order-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.1);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .order-item:hover {
-            background: rgba(0, 255, 65, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 0 -10px;
-        }
-
-        .order-item:last-child {
-            border-bottom: none;
-        }
-
-        .order-info h3 {
-            font-size: 18px;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-
-        .order-meta {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .order-price {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .order-status {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-        }
-
-        .status-pending {
-            background: rgba(255, 214, 0, 0.15);
-            color: var(--warning-glow);
-            border: 1px solid rgba(255, 214, 0, 0.3);
-        }
-
-        .status-waiting {
-            background: rgba(0, 255, 65, 0.15);
-            color: var(--primary-glow);
-            border: 1px solid rgba(0, 255, 65, 0.3);
-        }
-
-        .status-completed {
-            background: rgba(0, 255, 102, 0.15);
-            color: var(--success-glow);
-            border: 1px solid rgba(0, 255, 102, 0.3);
-        }
-
-        .payment-methods {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin: 20px 0;
-        }
-
-        .payment-method {
-            display: flex;
-            align-items: center;
-            padding: 18px;
-            border: 1px solid rgba(0, 255, 65, 0.1);
-            border-radius: 16px;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            backdrop-filter: blur(10px);
-            background: rgba(0, 10, 0, 0.3);
-        }
-
-        .payment-method:hover {
-            border-color: var(--primary-glow);
-            background: rgba(0, 255, 65, 0.05);
-            transform: translateY(-2px);
-        }
-
-        .payment-method input {
-            margin-right: 16px;
-        }
-
-        .payment-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 16px;
-            background: rgba(0, 10, 0, 0.4);
-            border: 1px solid rgba(0, 255, 65, 0.1);
-        }
-
-        .payment-icon i {
-            font-size: 20px;
-            background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .bank-details {
-            background: rgba(0, 10, 0, 0.4);
-            border: 1px solid var(--primary-glow);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            backdrop-filter: blur(10px);
-        }
-
-        .bank-details pre {
-            white-space: pre-wrap;
-            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            color: var(--text-secondary);
-        }
-
-        .copy-btn {
-            background: rgba(0, 10, 0, 0.4);
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            border-radius: 12px;
-            padding: 10px 16px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            margin-top: 12px;
-            display: inline-flex;
-            align-items: center;
-            transition: var(--transition-smooth);
-            backdrop-filter: blur(10px);
-        }
-
-        .copy-btn:hover {
-            background: rgba(0, 255, 65, 0.1);
-            border-color: var(--primary-glow);
-            color: var(--primary-glow);
-        }
-
-        .copy-btn i {
-            margin-right: 8px;
-        }
-
-        .status-indicator {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .status-icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            font-size: 40px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .status-icon.success {
-            background: rgba(0, 255, 102, 0.1);
-            color: var(--success-glow);
-            border-color: rgba(0, 255, 102, 0.2);
-        }
-
-        .status-icon.waiting {
-            background: rgba(0, 255, 65, 0.1);
-            color: var(--primary-glow);
-            border-color: rgba(0, 255, 65, 0.2);
-        }
-
-        .status-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-        }
-
-        .status-description {
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-            font-size: 18px;
-            line-height: 1.5;
-        }
-
-        .nav-tabs {
-            display: flex;
-            background: rgba(0, 10, 0, 0.4);
-            border-radius: 18px;
-            padding: 6px;
-            margin-bottom: 24px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 65, 0.1);
-        }
-
-        .nav-tab {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            border-radius: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .nav-tab.active {
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 143, 57, 0.2));
-            color: var(--text-primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
-
-        .auth-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .auth-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 32px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(var(--blur-intensity));
-            -webkit-backdrop-filter: blur(var(--blur-intensity));
-        }
-
-        .auth-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            text-align: center;
-            letter-spacing: -0.5px;
-        }
-
-        .auth-subtitle {
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 28px;
-            font-size: 16px;
-        }
-
-        .logout-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 46, 122, 0.1);
-            color: var(--danger-glow);
-            border: 1px solid rgba(255, 46, 122, 0.3);
-            border-radius: 12px;
-            padding: 10px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            backdrop-filter: blur(10px);
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 46, 122, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .order-details-panel {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            max-width: 500px;
-            height: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--blur-intensity));
-            border-left: 1px solid var(--glass-border);
-            z-index: 100;
-            transition: var(--transition-smooth);
-            overflow-y: auto;
-            padding: 24px;
-        }
-
-        .order-details-panel.active {
-            right: 0;
-        }
-
-        .order-details-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.1);
-        }
-
-        .order-details-title {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .close-details {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 20px;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-smooth);
-        }
-
-        .close-details:hover {
-            background: rgba(0, 255, 65, 0.1);
-            color: var(--primary-glow);
-        }
-
-        .detail-item {
-            margin-bottom: 20px;
-        }
-
-        .detail-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-
-        .detail-value {
-            font-size: 16px;
-            color: var(--text-primary);
-        }
-
-        .order-link-container {
-            display: flex;
-            margin-top: 8px;
-        }
-
-        .order-link-input {
-            flex: 1;
-            padding: 12px 16px;
-            background: rgba(0, 10, 0, 0.4);
-            border: 1px solid rgba(0, 255, 65, 0.1);
-            border-radius: 12px 0 0 12px;
-            color: var(--text-primary);
-            font-size: 14px;
-        }
-
-        .order-link-copy {
-            background: rgba(0, 255, 65, 0.2);
-            border: 1px solid rgba(0, 255, 65, 0.3);
-            border-left: none;
-            border-radius: 0 12px 12px 0;
-            color: var(--primary-glow);
-            padding: 0 16px;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            display: flex;
-            align-items: center;
-        }
-
-        .order-link-copy:hover {
-            background: rgba(0, 255, 65, 0.3);
-        }
-
-        .quick-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .quick-action-btn {
-            flex: 1;
-            padding: 12px;
-            background: rgba(0, 10, 0, 0.3);
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .quick-action-btn:hover {
-            background: rgba(0, 255, 65, 0.1);
-            border-color: var(--primary-glow);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 16px; }
-            .logo { font-size: 36px; }
-            .glass-card { padding: 20px; }
-            .card-title { font-size: 22px; }
-            .order-details-panel { max-width: 100%; }
-            .quick-actions { flex-direction: column; }
+            0% { transform: translate(0,0) rotate(0deg); }
+            33% { transform: translate(30px,-50px) rotate(120deg); }
+            66% { transform: translate(-20px,20px) rotate(240deg); }
+            100% { transform: translate(0,0) rotate(360deg); }
+        }
+
+        .container { max-width:800px; margin:0 auto; padding:20px; min-height:100vh; display:flex; flex-direction:column; }
+
+        header { text-align:center; padding:40px 20px 30px; position:relative; margin-bottom:20px; }
+        .logo { font-size:42px; font-weight:800; margin-bottom:12px; background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-shadow:0 0 30px rgba(0,255,65,0.3); letter-spacing:-0.5px; }
+        .subtitle { color:var(--text-secondary); font-size:18px; font-weight:400; margin-bottom:10px; letter-spacing:0.5px; }
+
+        .glass-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:24px; padding:24px; margin-bottom:20px; backdrop-filter: blur(var(--blur-intensity)); box-shadow:var(--glass-shadow); transition:var(--transition-smooth); position:relative; overflow:hidden; }
+        .glass-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background: linear-gradient(90deg, transparent, rgba(0,255,65,0.3), transparent); }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: rgba(0,255,65,0.3); }
+
+        .card-header { display:flex; align-items:center; margin-bottom:20px; }
+        .card-icon { width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin-right:16px; background: rgba(0,10,0,0.5); backdrop-filter: blur(10px); border:1px solid rgba(0,255,65,0.2); box-shadow:0 4px 20px rgba(0,0,0,0.2); }
+        .card-icon i { font-size:22px; background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .card-title { font-size:24px; font-weight:700; letter-spacing:-0.5px; }
+
+        .form-group { margin-bottom:20px; }
+        .form-label { display:block; margin-bottom:8px; font-weight:600; color:var(--text-secondary); font-size:16px; }
+        .form-control { width:100%; padding:16px 20px; background: rgba(0,10,0,0.4); border:1px solid rgba(0,255,65,0.1); border-radius:16px; font-size:16px; color:var(--text-primary); transition:var(--transition-smooth); backdrop-filter: blur(10px); }
+        .form-control:focus { outline:none; border-color:var(--primary-glow); box-shadow:0 0 0 2px rgba(0,255,65,0.2); }
+
+        .btn { display:inline-flex; align-items:center; justify-content:center; padding:16px 28px; border:none; border-radius:16px; font-size:16px; font-weight:600; cursor:pointer; transition:var(--transition-smooth); text-decoration:none; position:relative; overflow:hidden; backdrop-filter: blur(10px); }
+        .btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background: linear-gradient(90deg, transparent, rgba(0,255,65,0.2), transparent); transition:left 0.7s ease; }
+        .btn:hover::before { left:100%; }
+        .btn-primary { background: linear-gradient(135deg, rgba(0,255,65,0.2), rgba(0,143,57,0.2)); color:var(--text-primary); border:1px solid rgba(0,255,65,0.3); box-shadow:0 4px 20px rgba(0,255,65,0.15); width:100%; }
+        .btn-success { background: linear-gradient(135deg, rgba(0,255,102,0.2), rgba(0,255,65,0.2)); color:var(--text-primary); border:1px solid rgba(0,255,102,0.3); box-shadow:0 4px 20px rgba(0,255,102,0.15); }
+        .btn-outline { background: rgba(0,10,0,0.3); border:1px solid rgba(0,255,65,0.2); color:var(--text-primary); }
+        .btn-sm { padding:10px 16px; font-size:14px; }
+
+        .order-item { display:flex; justify-content:space-between; align-items:center; padding:20px 0; border-bottom:1px solid rgba(0,255,65,0.1); cursor:pointer; transition:var(--transition-smooth); }
+        .order-item:hover { background: rgba(0,255,65,0.05); border-radius:12px; padding:20px; margin:0 -10px; }
+        .order-info h3 { font-size:18px; margin-bottom:6px; font-weight:600; }
+        .order-meta { color:var(--text-secondary); font-size:14px; }
+        .order-price { font-size:20px; font-weight:700; background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .order-status { padding:6px 16px; border-radius:20px; font-size:12px; font-weight:600; backdrop-filter: blur(10px); }
+        .status-pending { background: rgba(255,214,0,0.15); color:var(--warning-glow); border: 1px solid rgba(255,214,0,0.3); }
+        .status-waiting { background: rgba(0,255,65,0.15); color:var(--primary-glow); border:1px solid rgba(0,255,65,0.3); }
+        .status-completed { background: rgba(0,255,102,0.15); color:var(--success-glow); border:1px solid rgba(0,255,102,0.3); }
+        .status-rejected { background: rgba(255,46,122,0.15); color:var(--danger-glow); border:1px solid rgba(255,46,122,0.3); }
+
+        .payment-methods { display:grid; grid-template-columns:1fr; gap:12px; margin:20px 0; }
+        .payment-method { display:flex; align-items:center; padding:18px; border:1px solid rgba(0,255,65,0.1); border-radius:16px; cursor:pointer; transition:var(--transition-smooth); backdrop-filter: blur(10px); background: rgba(0,10,0,0.3); }
+        .payment-method:hover { border-color: rgba(0,255,65,0.3); background: rgba(0,255,65,0.05); }
+        .payment-method input { margin-right:16px; }
+        .payment-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-right:16px; background: rgba(0,10,0,0.4); border:1px solid rgba(0,255,65,0.1); }
+        .bank-details { background: rgba(0,10,0,0.4); border:1px solid var(--primary-glow); border-radius:16px; padding:20px; margin:20px 0; backdrop-filter: blur(10px); }
+
+        .copy-btn { background: rgba(0,10,0,0.4); border:1px solid rgba(0,255,65,0.2); border-radius:12px; padding:10px 16px; font-size:14px; color:var(--text-secondary); cursor:pointer; margin-top:12px; display:inline-flex; align-items:center; transition:var(--transition-smooth); backdrop-filter: blur(10px); }
+        .copy-btn:hover { background: rgba(0,255,65,0.1); border-color:var(--primary-glow); color:var(--primary-glow); }
+
+        .status-indicator { display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 20px; }
+        .status-icon { width:100px; height:100px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:40px; backdrop-filter: blur(10px); border:1px solid rgba(0,255,65,0.2); box-shadow:0 8px 32px rgba(0,0,0,0.3); }
+        .status-icon.success { background: rgba(0,255,102,0.1); color:var(--success-glow); border-color: rgba(0,255,102,0.2); }
+        .status-icon.waiting { background: rgba(0,255,65,0.1); color:var(--primary-glow); border-color: rgba(0,255,65,0.2); }
+        .status-icon.error { background: rgba(255,46,122,0.1); color:var(--danger-glow); border-color: rgba(255,46,122,0.2); }
+        .status-title { font-size:28px; font-weight:700; margin-bottom:12px; letter-spacing:-0.5px; }
+        .status-description { color:var(--text-secondary); margin-bottom:24px; font-size:18px; line-height:1.5; }
+
+        .nav-tabs { display:flex; background: rgba(0,10,0,0.4); border-radius:18px; padding:6px; margin-bottom:24px; backdrop-filter: blur(10px); border:1px solid rgba(0,255,65,0.1); }
+        .nav-tab { flex:1; text-align:center; padding:12px; border-radius:14px; font-weight:600; cursor:pointer; transition:var(--transition-smooth); }
+        .nav-tab.active { background: linear-gradient(135deg, rgba(0,255,65,0.2), rgba(0,143,57,0.2)); color:var(--text-primary); box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+
+        .auth-modal { position: fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:1000; backdrop-filter: blur(10px); }
+        .auth-card { background: var(--glass-bg); border:1px solid var(--glass-border); border-radius:24px; padding:32px; width:90%; max-width:400px; box-shadow:0 20px 60px rgba(0,0,0,0.4); backdrop-filter: blur(var(--blur-intensity)); }
+        .auth-title { font-size:24px; font-weight:700; margin-bottom:8px; text-align:center; }
+        .auth-subtitle { color:var(--text-secondary); text-align:center; margin-bottom:24px; }
+
+        .order-details-panel { position: fixed; top:0; right:-100%; width:100%; max-width:500px; height:100%; background:var(--glass-bg); backdrop-filter: blur(var(--blur-intensity)); border-left:1px solid var(--glass-border); z-index:100; transition:var(--transition-smooth); overflow-y:auto; padding:24px; }
+        .order-details-panel.active { right:0; }
+        .order-details-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+        .order-details-title { font-size:24px; font-weight:700; }
+        .close-details { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: rgba(0,10,0,0.4); border:1px solid rgba(0,255,65,0.1); color:var(--text-secondary); cursor:pointer; transition:var(--transition-smooth); }
+        .close-details:hover { background: rgba(0,255,65,0.1); color:var(--primary-glow); }
+
+        .detail-item { margin-bottom:20px; }
+        .detail-label { font-size:14px; color:var(--text-secondary); margin-bottom:4px; }
+        .detail-value { font-size:16px; color:var(--text-primary); }
+        .order-link-container { display:flex; margin-top:8px; }
+        .order-link-input { flex:1; padding:12px 16px; background: rgba(0,10,0,0.4); border:1px solid rgba(0,255,65,0.1); border-radius:12px 0 0 12px; color:var(--text-primary); font-size:14px; }
+        .order-link-copy { padding:12px 16px; background: rgba(0,10,0,0.4); border:1px solid rgba(0,255,65,0.1); border-left:none; border-radius:0 12px 12px 0; color:var(--text-secondary); cursor:pointer; transition:var(--transition-smooth); }
+        .order-link-copy:hover { background: rgba(0,255,65,0.1); color:var(--primary-glow); }
+        .quick-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+        .quick-action-btn { padding:8px 16px; background: rgba(0,10,0,0.4); border:1px solid rgba(0,255,65,0.2); border-radius:12px; color:var(--text-primary); font-size:14px; cursor:pointer; transition:var(--transition-smooth); }
+        .quick-action-btn:hover { background: rgba(0,255,65,0.1); border-color:var(--primary-glow); }
+
+        .empty-state { text-align:center; padding:40px 20px; color:var(--text-secondary); }
+        .empty-state i { font-size:48px; margin-bottom:16px; opacity:0.5; }
+
+        .logout-btn { position:absolute; top:20px; right:20px; padding:10px 16px; background: rgba(0,10,0,0.4); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:var(--text-secondary); font-size:14px; cursor:pointer; transition:var(--transition-smooth); backdrop-filter: blur(10px); }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); color:var(--text-primary); }
+
+        .hidden { display:none; }
+        .fade-in { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+
+        @media (max-width:768px) {
+            .container { padding:16px; }
+            .logo { font-size:36px; }
+            .glass-card { padding:20px; }
+            .card-title { font-size:22px; }
+            .order-details-panel { max-width:100%; }
         }
     </style>
 </head>
@@ -782,16 +172,13 @@
         <div class="auth-card fade-in">
             <div class="auth-title">Доступ к админ-панели</div>
             <div class="auth-subtitle">Введите пароль администратора</div>
-            
             <div class="form-group">
                 <input type="password" id="admin-password" class="form-control" placeholder="Пароль" autocomplete="off">
             </div>
-            
             <button class="btn btn-primary" id="login-btn">
-                <i class="fas fa-lock" style="margin-right: 12px;"></i> Войти
+                <i class="fas fa-lock" style="margin-right:12px;"></i> Войти
             </button>
-            
-            <div id="auth-error" style="color: var(--danger-glow); text-align: center; margin-top: 20px; display: none;">
+            <div id="auth-error" style="color: var(--danger-glow); text-align:center; margin-top:20px; display:none;">
                 <i class="fas fa-exclamation-circle"></i> Неверный пароль
             </div>
         </div>
@@ -804,7 +191,6 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        
         <div id="order-details-content"></div>
     </div>
 
@@ -813,10 +199,11 @@
             <div class="logo">DxS Shop</div>
             <div class="subtitle">Премиум услуги с быстрой доставкой</div>
             <button id="logout-btn" class="logout-btn hidden">
-                <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Выйти
+                <i class="fas fa-sign-out-alt" style="margin-right:8px;"></i> Выйти
             </button>
         </header>
 
+        <!-- ADMIN PANEL (hidden by default) -->
         <div id="admin-panel" class="hidden">
             <div class="nav-tabs">
                 <div class="nav-tab active" data-tab="orders">Заказы</div>
@@ -851,20 +238,19 @@
                             <input type="text" id="client-name" class="form-control" placeholder="Например: Иван" required>
                         </div>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-plus-circle" style="margin-right: 12px;"></i> Создать заказ
+                            <i class="fas fa-plus-circle" style="margin-right:12px;"></i> Создать заказ
                         </button>
                     </form>
                 </div>
             </div>
         </div>
 
+        <!-- ORDER VIEW (for client via ?order=...) -->
         <div id="order-view" class="hidden">
             <div class="glass-card">
                 <div class="card-header">
-                    <div style="display: flex; align-items: center;">
-                        <div class="card-icon">
-                            <i class="fas fa-shopping-bag"></i>
-                        </div>
+                    <div style="display:flex; align-items:center;">
+                        <div class="card-icon"><i class="fas fa-shopping-bag"></i></div>
                         <div>
                             <div class="card-title">Ваш заказ</div>
                             <div class="order-meta" id="order-client"></div>
@@ -883,19 +269,19 @@
             <div id="order-status" class="status-indicator"></div>
         </div>
 
+        <!-- PAYMENT VIEW -->
         <div id="payment-view" class="hidden">
             <div class="glass-card">
                 <div class="card-header">
-                    <div style="display: flex; align-items: center;">
-                        <div class="card-icon">
-                            <i class="fas fa-credit-card"></i>
-                        </div>
+                    <div style="display:flex; align-items:center;">
+                        <div class="card-icon"><i class="fas fa-credit-card"></i></div>
                         <div>
                             <div class="card-title">Оплата заказа</div>
                             <div class="order-meta" id="payment-product"></div>
                         </div>
                     </div>
                 </div>
+
                 <div class="order-item">
                     <div class="order-info">
                         <h3 id="payment-product-name"></h3>
@@ -903,6 +289,7 @@
                     </div>
                     <div class="order-price" id="payment-price"></div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label">Выберите способ оплаты:</label>
                     <div class="payment-methods">
@@ -923,28 +310,31 @@
                         </label>
                     </div>
                 </div>
+
                 <div id="bank-details" class="bank-details hidden">
-                    <h4 style="margin-bottom: 16px;">Реквизиты для оплаты:</h4>
+                    <h4 style="margin-bottom:16px;">Реквизиты для оплаты:</h4>
                     <pre id="bank-details-text"></pre>
                     <button type="button" class="copy-btn" id="copy-details">
                         <i class="far fa-copy"></i> Скопировать реквизиты
                     </button>
                 </div>
+
                 <button class="btn btn-primary" id="confirm-payment" disabled>
-                    <i class="fas fa-check-circle" style="margin-right: 12px;"></i> Я оплатил
+                    <i class="fas fa-check-circle" style="margin-right:12px;"></i> Я оплатил
                 </button>
             </div>
         </div>
-        
+
+        <!-- WELCOME VIEW (default) -->
         <div id="welcome-view">
             <div class="status-indicator">
-                <div class="status-icon" style="background: rgba(0, 255, 65, 0.1); color: var(--primary-glow); border-color: rgba(0, 255, 65, 0.2);">
+                <div class="status-icon" style="background: rgba(0,255,65,0.1); color:var(--primary-glow); border-color: rgba(0,255,65,0.2);">
                     <i class="fas fa-store"></i>
                 </div>
                 <div class="status-title">DxS Shop</div>
                 <div class="status-description">Для доступа к заказу используйте ссылку, предоставленную администратором</div>
-                <button class="btn btn-outline" id="admin-access-btn" style="margin-top: 24px;">
-                    <i class="fas fa-cog" style="margin-right: 12px;"></i> Панель администратора
+                <button class="btn btn-outline" id="admin-access-btn" style="margin-top:24px;">
+                    <i class="fas fa-cog" style="margin-right:12px;"></i> Панель администратора
                 </button>
             </div>
         </div>
@@ -964,16 +354,17 @@
             messagingSenderId: "404838670939",
             appId: "1:404838670939:web:1b8ef595f599cfef29957e"
         };
- 
+
         // Инициализация Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
         const ADMIN_PASSWORD = "dxs2024";
         let currentOrderId = null;
+        let orderStatusInterval = null;
         let isAdminAuthenticated = localStorage.getItem('dxs_admin_authenticated') === 'true';
 
-        // Firebase функции
+        // --- Firebase helper functions ---
         async function saveOrder(order) {
             try {
                 await db.collection('orders').doc(order.id).set(order);
@@ -1017,38 +408,68 @@
             }
         }
 
-        // Основные функции
+        // --- App logic ---
         document.addEventListener('DOMContentLoaded', async function() {
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('order');
-            
+
             if (window.history.replaceState) {
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
-            
+
             if (orderId) {
                 await showOrderView(orderId);
-            } else if (isAdminAuthenticated) {
-                await showAdminPanel();
+                startOrderStatusPolling(orderId);
             } else {
                 showWelcomeView();
             }
-            
+
             setupEventHandlers();
         });
 
+        // Start polling for order status updates
+        function startOrderStatusPolling(orderId) {
+            if (orderStatusInterval) {
+                clearInterval(orderStatusInterval);
+            }
+            
+            orderStatusInterval = setInterval(async () => {
+                const order = await getOrder(orderId);
+                if (order) {
+                    updateOrderStatusView(order.status);
+                    updateOrderActions(order.status);
+                    
+                    // Если заказ завершен или отклонен, останавливаем опрос
+                    if (order.status === 'completed' || order.status === 'rejected') {
+                        stopOrderStatusPolling();
+                    }
+                }
+            }, 1000);
+        }
+
+        // Stop polling when leaving order view
+        function stopOrderStatusPolling() {
+            if (orderStatusInterval) {
+                clearInterval(orderStatusInterval);
+                orderStatusInterval = null;
+            }
+        }
+
+        // -- Views --
         async function showAdminPanel() {
+            stopOrderStatusPolling();
             document.getElementById('admin-panel').classList.remove('hidden');
             document.getElementById('order-view').classList.add('hidden');
             document.getElementById('payment-view').classList.add('hidden');
             document.getElementById('welcome-view').classList.add('hidden');
             document.getElementById('logout-btn').classList.remove('hidden');
-            
+
             await loadOrdersList();
             setupAdminTabs();
         }
 
         function showWelcomeView() {
+            stopOrderStatusPolling();
             document.getElementById('admin-panel').classList.add('hidden');
             document.getElementById('order-view').classList.add('hidden');
             document.getElementById('payment-view').classList.add('hidden');
@@ -1069,7 +490,6 @@
 
         function authenticateAdmin() {
             const password = document.getElementById('admin-password').value;
-            
             if (password === ADMIN_PASSWORD) {
                 isAdminAuthenticated = true;
                 localStorage.setItem('dxs_admin_authenticated', 'true');
@@ -1088,18 +508,20 @@
             showWelcomeView();
         }
 
+        // --- Client order view ---
         async function showOrderView(orderId) {
+            stopOrderStatusPolling();
             document.getElementById('admin-panel').classList.add('hidden');
             document.getElementById('order-view').classList.remove('hidden');
             document.getElementById('payment-view').classList.add('hidden');
             document.getElementById('welcome-view').classList.add('hidden');
             document.getElementById('logout-btn').classList.add('hidden');
-            
+
             const order = await getOrder(orderId);
             if (!order) {
                 document.getElementById('order-view').innerHTML = `
                     <div class="status-indicator">
-                        <div class="status-icon waiting">
+                        <div class="status-icon error">
                             <i class="fas fa-exclamation-circle"></i>
                         </div>
                         <div class="status-title">Заказ не найден</div>
@@ -1108,34 +530,53 @@
                 `;
                 return;
             }
-            
+
             currentOrderId = orderId;
             document.getElementById('order-product').textContent = order.product;
             document.getElementById('order-price').textContent = order.price;
             document.getElementById('order-client').textContent = `Для: ${order.client}`;
-            
+
             updateOrderActions(order.status);
-            updateOrderStatus(order.status);
+            updateOrderStatusView(order.status);
+            
+            startOrderStatusPolling(orderId);
         }
 
         function updateOrderActions(status) {
             const actionsContainer = document.getElementById('order-actions');
-            
+
             if (status === 'pending') {
                 actionsContainer.innerHTML = `
                     <button class="btn btn-primary" id="pay-button">
-                        <i class="fas fa-credit-card" style="margin-right: 12px;"></i> Оплатить заказ
+                        <i class="fas fa-credit-card" style="margin-right:12px;"></i> Оплатить заказ
                     </button>
                 `;
-                document.getElementById('pay-button').addEventListener('click', showPaymentView);
+                setTimeout(() => {
+                    const payButton = document.getElementById('pay-button');
+                    if (payButton) payButton.addEventListener('click', showPaymentView);
+                }, 0);
+            } else if (status === 'rejected') {
+                actionsContainer.innerHTML = `
+                    <button class="btn btn-primary" id="try-again-button">
+                        <i class="fas fa-redo" style="margin-right:12px;"></i> Попробовать снова
+                    </button>
+                `;
+                setTimeout(() => {
+                    const tryAgainButton = document.getElementById('try-again-button');
+                    if (tryAgainButton) tryAgainButton.addEventListener('click', function() {
+                        updateOrderStatus(currentOrderId, 'pending').then(() => {
+                            showOrderView(currentOrderId);
+                        });
+                    });
+                }, 0);
             } else {
                 actionsContainer.innerHTML = '';
             }
         }
 
-        function updateOrderStatus(status) {
+        function updateOrderStatusView(status) {
             const statusContainer = document.getElementById('order-status');
-            
+
             if (status === 'pending') {
                 statusContainer.innerHTML = `
                     <div class="status-icon waiting">
@@ -1152,7 +593,6 @@
                     <div class="status-title">Ожидает подтверждения</div>
                     <div class="status-description">Администратор проверяет вашу оплату</div>
                 `;
-                setTimeout(checkOrderStatus, 5000);
             } else if (status === 'completed') {
                 statusContainer.innerHTML = `
                     <div class="status-icon success">
@@ -1161,31 +601,42 @@
                     <div class="status-title">Оплата подтверждена!</div>
                     <div class="status-description">Для продолжения вернитесь в чат с администратором</div>
                 `;
-            }
-        }
-
-        async function checkOrderStatus() {
-            const order = await getOrder(currentOrderId);
-            if (order && order.status === 'waiting') {
-                showOrderView(currentOrderId);
+            } else if (status === 'rejected') {
+                statusContainer.innerHTML = `
+                    <div class="status-icon error">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="status-title">Оплата не прошла</div>
+                    <div class="status-description">Попробуйте еще раз или обратитесь к администратору</div>
+                `;
             }
         }
 
         function showPaymentView() {
+            stopOrderStatusPolling();
             document.getElementById('admin-panel').classList.add('hidden');
             document.getElementById('order-view').classList.add('hidden');
             document.getElementById('payment-view').classList.remove('hidden');
             document.getElementById('welcome-view').classList.add('hidden');
             document.getElementById('logout-btn').classList.add('hidden');
+            
+            getOrder(currentOrderId).then(order => {
+                if (order) {
+                    document.getElementById('payment-product').textContent = order.product;
+                    document.getElementById('payment-product-name').textContent = order.product;
+                    document.getElementById('payment-price').textContent = order.price;
+                }
+            });
         }
 
+        // --- Admin: list, details, actions ---
         async function loadOrdersList() {
             const ordersList = document.getElementById('orders-list');
-            ordersList.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary);">Загрузка...</div>';
-            
+            ordersList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
+
             try {
                 const orders = await loadOrders();
-                
+
                 if (orders.length === 0) {
                     ordersList.innerHTML = `
                         <div class="empty-state">
@@ -1195,12 +646,17 @@
                     `;
                     return;
                 }
-                
+
                 let html = '';
                 orders.forEach(order => {
-                    const statusText = order.status === 'pending' ? 'Ожидает оплаты' : order.status === 'waiting' ? 'Ожидает проверки' : 'Завершен';
-                    const orderLink = `${window.location.origin}${window.location.pathname}?order=${order.id}`;
+                    const statusText = 
+                        order.status === 'pending' ? 'Ожидает оплаты' : 
+                        order.status === 'waiting' ? 'Ожидает проверки' : 
+                        order.status === 'completed' ? 'Завершен' : 
+                        'Оплата не прошла';
                     
+                    const orderLink = `${window.location.origin}${window.location.pathname}?order=${order.id}`;
+
                     html += `
                         <div class="order-item" data-order-id="${order.id}">
                             <div class="order-info">
@@ -1208,9 +664,9 @@
                                 <div class="order-meta">${order.client} • ${new Date(order.createdAt).toLocaleDateString('ru-RU')}</div>
                             </div>
                             <div>
-                                <div style="text-align: right; margin-bottom: 8px;">${order.price}</div>
+                                <div style="text-align:right;margin-bottom:8px;">${order.price}</div>
                                 <div class="order-status status-${order.status}">${statusText}</div>
-                                <div class="quick-actions">
+                                <div class="quick-actions" style="margin-top:8px;">
                                     <button class="quick-action-btn" onclick="copyOrderLink('${orderLink}')">
                                         <i class="fas fa-copy"></i> Ссылка
                                     </button>
@@ -1219,17 +675,25 @@
                                     </button>
                                 </div>
                                 ${order.status === 'waiting' ? `
-                                    <button onclick="verifyPayment('${order.id}')" class="btn btn-success btn-sm" style="margin-top: 8px; width: 100%;">
+                                    <button onclick="verifyPayment('${order.id}')" class="btn btn-success btn-sm" style="margin-top:8px;width:100%;">
                                         Подтвердить оплату
+                                    </button>
+                                    <button onclick="rejectPayment('${order.id}')" class="btn btn-outline btn-sm" style="margin-top:6px;width:100%; color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                        Оплата не получена
+                                    </button>
+                                ` : ''}
+                                ${order.status === 'rejected' ? `
+                                    <button onclick="resetOrderStatus('${order.id}')" class="btn btn-outline btn-sm" style="margin-top:6px;width:100%;">
+                                        Вернуть в ожидание
                                     </button>
                                 ` : ''}
                             </div>
                         </div>
                     `;
                 });
-                
+
                 ordersList.innerHTML = html;
-                
+
                 document.querySelectorAll('.order-item').forEach(item => {
                     item.addEventListener('click', function(e) {
                         if (!e.target.closest('button')) {
@@ -1238,7 +702,7 @@
                         }
                     });
                 });
-                
+
             } catch (error) {
                 ordersList.innerHTML = `
                     <div class="empty-state">
@@ -1252,10 +716,14 @@
         async function showOrderDetails(orderId) {
             const order = await getOrder(orderId);
             if (!order) return;
-            
+
             const orderLink = `${window.location.origin}${window.location.pathname}?order=${order.id}`;
-            const statusText = order.status === 'pending' ? 'Ожидает оплаты' : order.status === 'waiting' ? 'Ожидает проверки' : 'Завершен';
-            
+            const statusText = 
+                order.status === 'pending' ? 'Ожидает оплаты' : 
+                order.status === 'waiting' ? 'Ожидает проверки' : 
+                order.status === 'completed' ? 'Завершен' : 
+                'Оплата не прошла';
+
             document.getElementById('order-details-content').innerHTML = `
                 <div class="detail-item">
                     <div class="detail-label">ID заказа</div>
@@ -1292,7 +760,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="quick-actions">
+                <div class="quick-actions" style="margin-top:12px;">
                     <button class="quick-action-btn" onclick="copyOrderLink('${orderLink}')">
                         <i class="fas fa-copy"></i> Скопировать ссылку
                     </button>
@@ -1300,23 +768,23 @@
                         <button class="quick-action-btn" onclick="verifyPayment('${order.id}')">
                             <i class="fas fa-check"></i> Подтвердить оплату
                         </button>
+                        <button class="quick-action-btn" onclick="rejectPayment('${order.id}')">
+                            <i class="fas fa-times"></i> Оплата не получена
+                        </button>
+                    ` : ''}
+                    ${order.status === 'rejected' ? `
+                        <button class="quick-action-btn" onclick="resetOrderStatus('${order.id}')">
+                            <i class="fas fa-undo"></i> Вернуть в ожидание
+                        </button>
                     ` : ''}
                 </div>
             `;
-            
+
             document.getElementById('order-details-panel').classList.add('active');
         }
 
         function copyOrderLink(link) {
             navigator.clipboard.writeText(link).then(() => {
-                const copyButtons = document.querySelectorAll('.order-link-copy, .quick-action-btn');
-                copyButtons.forEach(btn => {
-                    if (btn.innerHTML.includes('fa-copy')) {
-                        const originalHTML = btn.innerHTML;
-                        btn.innerHTML = '<i class="fas fa-check"></i>';
-                        setTimeout(() => btn.innerHTML = originalHTML, 2000);
-                    }
-                });
                 alert('Ссылка скопирована в буфер обмена!');
             });
         }
@@ -1336,6 +804,29 @@
             }
         }
 
+        async function rejectPayment(orderId) {
+            const success = await updateOrderStatus(orderId, 'rejected');
+            if (success) {
+                await loadOrdersList();
+                closeOrderDetails();
+                alert('❌ Статус заказа изменен на "Оплата не прошла". Клиент уведомлен.');
+            } else {
+                alert('❌ Ошибка при изменении статуса');
+            }
+        }
+
+        async function resetOrderStatus(orderId) {
+            const success = await updateOrderStatus(orderId, 'pending');
+            if (success) {
+                await loadOrdersList();
+                closeOrderDetails();
+                alert('✅ Статус заказа возвращен на "Ожидает оплаты".');
+            } else {
+                alert('❌ Ошибка при изменении статуса');
+            }
+        }
+
+        // Admin tabs
         function setupAdminTabs() {
             const tabs = document.querySelectorAll('.nav-tab');
             tabs.forEach(tab => {
@@ -1350,6 +841,7 @@
             });
         }
 
+        // events and handlers
         function setupEventHandlers() {
             document.getElementById('admin-access-btn').addEventListener('click', showAuthModal);
             document.getElementById('login-btn').addEventListener('click', authenticateAdmin);
@@ -1362,42 +854,47 @@
             });
             document.getElementById('close-details').addEventListener('click', closeOrderDetails);
 
-            document.getElementById('create-order-form').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const product = document.getElementById('product-name').value;
-                const price = document.getElementById('product-price').value;
-                const client = document.getElementById('client-name').value;
-                const orderId = 'dxs_' + Math.random().toString(36).substr(2, 9);
-                
-                const newOrder = {
-                    id: orderId,
-                    product: product,
-                    price: price + ' ₽',
-                    client: client,
-                    status: 'pending',
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                };
-                
-                const success = await saveOrder(newOrder);
-                if (success) {
-                    const orderLink = `${window.location.origin}${window.location.pathname}?order=${orderId}`;
-                    alert(`Заказ создан! Ссылка для клиента:\n${orderLink}`);
-                    this.reset();
-                    document.querySelector('.nav-tab[data-tab="orders"]').click();
-                    await loadOrdersList();
-                } else {
-                    alert('❌ Ошибка при создании заказа');
-                }
-            });
+            // create order form
+            const createForm = document.getElementById('create-order-form');
+            if (createForm) {
+                createForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const product = document.getElementById('product-name').value;
+                    const price = document.getElementById('product-price').value;
+                    const client = document.getElementById('client-name').value;
+                    const orderId = 'dxs_' + Math.random().toString(36).substr(2, 9);
 
+                    const newOrder = {
+                        id: orderId,
+                        product: product,
+                        price: price + ' ₽',
+                        client: client,
+                        status: 'pending',
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    };
+
+                    const success = await saveOrder(newOrder);
+                    if (success) {
+                        const orderLink = `${window.location.origin}${window.location.pathname}?order=${orderId}`;
+                        alert(`Заказ создан! Ссылка для клиента:\n${orderLink}`);
+                        this.reset();
+                        document.querySelector('.nav-tab[data-tab="orders"]').click();
+                        await loadOrdersList();
+                    } else {
+                        alert('❌ Ошибка при создании заказа');
+                    }
+                });
+            }
+
+            // payment method selection in payment view
             document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     const method = this.value;
                     const detailsContainer = document.getElementById('bank-details');
                     const detailsText = document.getElementById('bank-details-text');
                     const confirmButton = document.getElementById('confirm-payment');
-                    
+
                     if (method) {
                         let details = '';
                         if (method === 'сбп') {
@@ -1407,7 +904,7 @@
                         } else if (method === 'альфа-банк') {
                             details = `Альфа-Банк: 1234567890123456\nИванов И.И.\nСчет: 40817810099910004321`;
                         }
-                        
+
                         detailsText.textContent = details;
                         detailsContainer.classList.remove('hidden');
                         confirmButton.disabled = false;
@@ -1415,17 +912,26 @@
                 });
             });
 
-            document.getElementById('copy-details').addEventListener('click', function() {
-                const detailsText = document.getElementById('bank-details-text').textContent;
-                navigator.clipboard.writeText(detailsText).then(() => {
-                    this.innerHTML = '<i class="far fa-copy"></i> Скопировано!';
-                    setTimeout(() => this.innerHTML = '<i class="far fa-copy"></i> Скопировать реквизиты', 2000);
+            // copy bank details
+            const copyBtn = document.getElementById('copy-details');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    const detailsText = document.getElementById('bank-details-text').textContent;
+                    navigator.clipboard.writeText(detailsText).then(() => {
+                        this.innerHTML = '<i class="far fa-copy"></i> Скопировано!';
+                        setTimeout(() => this.innerHTML = '<i class="far fa-copy"></i> Скопировать реквизиты', 2000);
+                    });
                 });
-            });
+            }
 
-            document.getElementById('confirm-payment').addEventListener('click', async function() {
-                const orderIndex = orders.findIndex(o => o.id === currentOrderId);
-                if (orderIndex !== -1) {
+            // Confirm payment button
+            const confirmBtn = document.getElementById('confirm-payment');
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', async function() {
+                    if (!currentOrderId) {
+                        alert('❌ Ошибка: заказ не найден');
+                        return;
+                    }
                     const success = await updateOrderStatus(currentOrderId, 'waiting');
                     if (success) {
                         alert('✅ Уведомление отправлено администратору. Ожидайте подтверждения оплаты.');
@@ -1433,8 +939,8 @@
                     } else {
                         alert('❌ Ошибка при отправке уведомления');
                     }
-                }
-            });
+                });
+            }
         }
     </script>
 </body>
