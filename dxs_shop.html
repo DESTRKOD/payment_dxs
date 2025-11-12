@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>DxS Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Иконки для добавления на главный экран -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://imgur.com/a/ZLpIvGd">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://imgur.com/a/ZLpIvGd">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://imgur.com/a/ZLpIvGd">
+    <link rel="manifest" href="data:application/manifest+json,{}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DxS Shop">
+    <meta name="theme-color" content="#00FF41">
+    
     <style>
         :root {
             --primary-glow: #00FF41;
@@ -60,7 +71,31 @@
         .container { max-width:800px; margin:0 auto; padding:20px; min-height:100vh; display:flex; flex-direction:column; }
 
         header { text-align:center; padding:40px 20px 30px; position:relative; margin-bottom:20px; }
-        .logo { font-size:42px; font-weight:800; margin-bottom:12px; background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-shadow:0 0 30px rgba(0,255,65,0.3); letter-spacing:-0.5px; }
+        .logo-container { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            margin-bottom: 12px; 
+            gap: 15px;
+        }
+        .logo-img { 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 12px; 
+            object-fit: cover;
+            border: 2px solid rgba(0,255,65,0.3);
+            box-shadow: 0 4px 20px rgba(0,255,65,0.2);
+        }
+        .logo-text { 
+            font-size:42px; 
+            font-weight:800; 
+            background: linear-gradient(135deg, var(--primary-glow), var(--accent-glow)); 
+            -webkit-background-clip:text; 
+            -webkit-text-fill-color:transparent; 
+            background-clip:text; 
+            text-shadow:0 0 30px rgba(0,255,65,0.3); 
+            letter-spacing:-0.5px; 
+        }
         .subtitle { color:var(--text-secondary); font-size:18px; font-weight:400; margin-bottom:10px; letter-spacing:0.5px; }
 
         .glass-card { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:24px; padding:24px; margin-bottom:20px; backdrop-filter: blur(var(--blur-intensity)); box-shadow:var(--glass-shadow); transition:var(--transition-smooth); position:relative; overflow:hidden; }
@@ -83,6 +118,7 @@
         .btn-primary { background: linear-gradient(135deg, rgba(0,255,65,0.2), rgba(0,143,57,0.2)); color:var(--text-primary); border:1px solid rgba(0,255,65,0.3); box-shadow:0 4px 20px rgba(0,255,65,0.15); width:100%; }
         .btn-success { background: linear-gradient(135deg, rgba(0,255,102,0.2), rgba(0,255,65,0.2)); color:var(--text-primary); border:1px solid rgba(0,255,102,0.3); box-shadow:0 4px 20px rgba(0,255,102,0.15); }
         .btn-outline { background: rgba(0,10,0,0.3); border:1px solid rgba(0,255,65,0.2); color:var(--text-primary); }
+        .btn-danger { background: linear-gradient(135deg, rgba(255,46,122,0.2), rgba(255,0,0,0.2)); color:var(--text-primary); border:1px solid rgba(255,46,122,0.3); box-shadow:0 4px 20px rgba(255,46,122,0.15); }
         .btn-sm { padding:10px 16px; font-size:14px; }
 
         .order-item { display:flex; justify-content:space-between; align-items:center; padding:20px 0; border-bottom:1px solid rgba(0,255,65,0.1); cursor:pointer; transition:var(--transition-smooth); }
@@ -147,16 +183,33 @@
         .logout-btn { position:absolute; top:20px; right:20px; padding:10px 16px; background: rgba(0,10,0,0.4); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:var(--text-secondary); font-size:14px; cursor:pointer; transition:var(--transition-smooth); backdrop-filter: blur(10px); }
         .logout-btn:hover { background: rgba(255,255,255,0.1); color:var(--text-primary); }
 
+        /* Таблица заказов */
+        .orders-table-container { overflow-x: auto; margin-top: 20px; }
+        .orders-table { width: 100%; border-collapse: collapse; }
+        .orders-table th, .orders-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(0,255,65,0.1); }
+        .orders-table th { font-weight: 600; color: var(--text-secondary); font-size: 14px; }
+        .orders-table tr:hover { background: rgba(0,255,65,0.05); }
+        .table-actions { display: flex; gap: 8px; }
+        .export-btn { margin-bottom: 20px; }
+
         .hidden { display:none; }
         .fade-in { animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
 
         @media (max-width:768px) {
             .container { padding:16px; }
-            .logo { font-size:36px; }
+            .logo-text { font-size:36px; }
+            .logo-img { width: 50px; height: 50px; }
             .glass-card { padding:20px; }
             .card-title { font-size:22px; }
             .order-details-panel { max-width:100%; }
+            .orders-table { font-size: 14px; }
+            .orders-table th, .orders-table td { padding: 8px 12px; }
+        }
+
+        @media (max-width:480px) {
+            .logo-container { flex-direction: column; gap: 8px; }
+            .logo-text { font-size: 32px; }
         }
     </style>
 </head>
@@ -196,7 +249,11 @@
 
     <div class="container">
         <header>
-            <div class="logo">DxS Shop</div>
+            <div class="logo-container">
+                <!-- ЗАМЕНИТЕ src НА ПУТЬ К ВАШЕМУ ЛОГОТИПУ -->
+                <img src="https://imgur.com/a/ZLpIvGd" alt="DxS Shop" class="logo-img">
+                <div class="logo-text">DxS Shop</div>
+            </div>
             <div class="subtitle">Премиум услуги с быстрой доставкой</div>
             <button id="logout-btn" class="logout-btn hidden">
                 <i class="fas fa-sign-out-alt" style="margin-right:8px;"></i> Выйти
@@ -208,6 +265,7 @@
             <div class="nav-tabs">
                 <div class="nav-tab active" data-tab="orders">Заказы</div>
                 <div class="nav-tab" data-tab="create">Создать заказ</div>
+                <div class="nav-tab" data-tab="export">Экспорт</div>
             </div>
 
             <div id="orders-tab">
@@ -241,6 +299,34 @@
                             <i class="fas fa-plus-circle" style="margin-right:12px;"></i> Создать заказ
                         </button>
                     </form>
+                </div>
+            </div>
+
+            <div id="export-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Экспорт заказов</div>
+                    </div>
+                    <button class="btn btn-outline export-btn" id="export-csv">
+                        <i class="fas fa-file-csv" style="margin-right:12px;"></i> Экспорт в CSV
+                    </button>
+                    <div class="orders-table-container">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Время</th>
+                                    <th>Клиент</th>
+                                    <th>Товар</th>
+                                    <th>Сумма</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table-body">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -363,6 +449,7 @@
         let currentOrderId = null;
         let orderStatusInterval = null;
         let isAdminAuthenticated = localStorage.getItem('dxs_admin_authenticated') === 'true';
+        let currentView = localStorage.getItem('dxs_current_view') || 'welcome';
 
         // --- Firebase helper functions ---
         async function saveOrder(order) {
@@ -408,24 +495,45 @@
             }
         }
 
+        async function deleteOrder(orderId) {
+            try {
+                await db.collection('orders').doc(orderId).delete();
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления:', error);
+                return false;
+            }
+        }
+
         // --- App logic ---
         document.addEventListener('DOMContentLoaded', async function() {
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('order');
 
-            if (window.history.replaceState) {
-                window.history.replaceState({}, document.title, window.location.pathname);
+            // Сохраняем текущий view при перезагрузке
+            if (orderId) {
+                currentView = 'order';
+                currentOrderId = orderId;
             }
 
-            if (orderId) {
-                await showOrderView(orderId);
-                startOrderStatusPolling(orderId);
+            // Восстанавливаем предыдущее состояние
+            if (currentView === 'admin' && isAdminAuthenticated) {
+                await showAdminPanel();
+            } else if (currentView === 'order' && currentOrderId) {
+                await showOrderView(currentOrderId);
+                startOrderStatusPolling(currentOrderId);
             } else {
                 showWelcomeView();
             }
 
             setupEventHandlers();
         });
+
+        // Сохранение текущего состояния
+        function saveCurrentView(view) {
+            currentView = view;
+            localStorage.setItem('dxs_current_view', view);
+        }
 
         // Start polling for order status updates
         function startOrderStatusPolling(orderId) {
@@ -457,6 +565,7 @@
 
         // -- Views --
         async function showAdminPanel() {
+            saveCurrentView('admin');
             stopOrderStatusPolling();
             document.getElementById('admin-panel').classList.remove('hidden');
             document.getElementById('order-view').classList.add('hidden');
@@ -469,6 +578,7 @@
         }
 
         function showWelcomeView() {
+            saveCurrentView('welcome');
             stopOrderStatusPolling();
             document.getElementById('admin-panel').classList.add('hidden');
             document.getElementById('order-view').classList.add('hidden');
@@ -505,11 +615,13 @@
         function logoutAdmin() {
             isAdminAuthenticated = false;
             localStorage.removeItem('dxs_admin_authenticated');
+            localStorage.removeItem('dxs_current_view');
             showWelcomeView();
         }
 
         // --- Client order view ---
         async function showOrderView(orderId) {
+            saveCurrentView('order');
             stopOrderStatusPolling();
             document.getElementById('admin-panel').classList.add('hidden');
             document.getElementById('order-view').classList.remove('hidden');
@@ -598,8 +710,8 @@
                     <div class="status-icon success">
                         <i class="fas fa-check-circle"></i>
                     </div>
-                    <div class="status-title">Оплата подтверждена!</div>
-                    <div class="status-description">Для продолжения вернитесь в чат с администратором</div>
+                    <div class="status-title">Заказ уже завершен</div>
+                    <div class="status-description">Спасибо, что выбрали наш магазин</div>
                 `;
             } else if (status === 'rejected') {
                 statusContainer.innerHTML = `
@@ -673,6 +785,9 @@
                                     <button class="quick-action-btn" onclick="showOrderDetails('${order.id}')">
                                         <i class="fas fa-eye"></i> Детали
                                     </button>
+                                    <button class="quick-action-btn" onclick="deleteOrderFromList('${order.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                        <i class="fas fa-trash"></i> Удалить
+                                    </button>
                                 </div>
                                 ${order.status === 'waiting' ? `
                                     <button onclick="verifyPayment('${order.id}')" class="btn btn-success btn-sm" style="margin-top:8px;width:100%;">
@@ -711,6 +826,96 @@
                     </div>
                 `;
             }
+        }
+
+        // Загрузка таблицы заказов
+        async function loadOrdersTable() {
+            const tableBody = document.getElementById('orders-table-body');
+            tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</td></tr>';
+
+            try {
+                const orders = await loadOrders();
+
+                if (orders.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-secondary);">Заказов пока нет</td></tr>';
+                    return;
+                }
+
+                let html = '';
+                orders.forEach(order => {
+                    const date = new Date(order.createdAt);
+                    const dateStr = date.toLocaleDateString('ru-RU');
+                    const timeStr = date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                    
+                    const statusText = 
+                        order.status === 'pending' ? 'Ожидает оплаты' : 
+                        order.status === 'waiting' ? 'Ожидает проверки' : 
+                        order.status === 'completed' ? 'Завершен' : 
+                        'Оплата не прошла';
+
+                    html += `
+                        <tr>
+                            <td>${dateStr}</td>
+                            <td>${timeStr}</td>
+                            <td>${order.client}</td>
+                            <td>${order.product}</td>
+                            <td>${order.price}</td>
+                            <td><span class="order-status status-${order.status}">${statusText}</span></td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="quick-action-btn" onclick="showOrderDetails('${order.id}')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="quick-action-btn" onclick="deleteOrderFromList('${order.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                tableBody.innerHTML = html;
+
+            } catch (error) {
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--danger-glow);">Ошибка загрузки заказов</td></tr>';
+            }
+        }
+
+        // Экспорт в CSV
+        function exportToCSV() {
+            loadOrders().then(orders => {
+                if (orders.length === 0) {
+                    alert('Нет данных для экспорта');
+                    return;
+                }
+
+                let csv = 'Дата;Время;Клиент;Товар;Сумма;Статус\n';
+                
+                orders.forEach(order => {
+                    const date = new Date(order.createdAt);
+                    const dateStr = date.toLocaleDateString('ru-RU');
+                    const timeStr = date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                    
+                    const statusText = 
+                        order.status === 'pending' ? 'Ожидает оплаты' : 
+                        order.status === 'waiting' ? 'Ожидает проверки' : 
+                        order.status === 'completed' ? 'Завершен' : 
+                        'Оплата не прошла';
+
+                    csv += `"${dateStr}";"${timeStr}";"${order.client}";"${order.product}";"${order.price}";"${statusText}"\n`;
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', `заказы_${new Date().toISOString().split('T')[0]}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
         }
 
         async function showOrderDetails(orderId) {
@@ -777,6 +982,9 @@
                             <i class="fas fa-undo"></i> Вернуть в ожидание
                         </button>
                     ` : ''}
+                    <button class="quick-action-btn" onclick="deleteOrderFromList('${order.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                        <i class="fas fa-trash"></i> Удалить заказ
+                    </button>
                 </div>
             `;
 
@@ -797,6 +1005,7 @@
             const success = await updateOrderStatus(orderId, 'completed');
             if (success) {
                 await loadOrdersList();
+                await loadOrdersTable();
                 closeOrderDetails();
                 alert('✅ Оплата подтверждена! Клиент получил уведомление.');
             } else {
@@ -808,6 +1017,7 @@
             const success = await updateOrderStatus(orderId, 'rejected');
             if (success) {
                 await loadOrdersList();
+                await loadOrdersTable();
                 closeOrderDetails();
                 alert('❌ Статус заказа изменен на "Оплата не прошла". Клиент уведомлен.');
             } else {
@@ -819,10 +1029,25 @@
             const success = await updateOrderStatus(orderId, 'pending');
             if (success) {
                 await loadOrdersList();
+                await loadOrdersTable();
                 closeOrderDetails();
                 alert('✅ Статус заказа возвращен на "Ожидает оплаты".');
             } else {
                 alert('❌ Ошибка при изменении статуса');
+            }
+        }
+
+        async function deleteOrderFromList(orderId) {
+            if (confirm('Вы уверены, что хотите удалить этот заказ? Это действие нельзя отменить.')) {
+                const success = await deleteOrder(orderId);
+                if (success) {
+                    await loadOrdersList();
+                    await loadOrdersTable();
+                    closeOrderDetails();
+                    alert('✅ Заказ удален');
+                } else {
+                    alert('❌ Ошибка при удалении заказа');
+                }
             }
         }
 
@@ -835,8 +1060,13 @@
                     this.classList.add('active');
                     document.getElementById('orders-tab').classList.add('hidden');
                     document.getElementById('create-tab').classList.add('hidden');
+                    document.getElementById('export-tab').classList.add('hidden');
                     const tabName = this.getAttribute('data-tab');
                     document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+                    
+                    if (tabName === 'export') {
+                        loadOrdersTable();
+                    }
                 });
             });
         }
@@ -853,6 +1083,7 @@
                 if (e.target === this) hideAuthModal();
             });
             document.getElementById('close-details').addEventListener('click', closeOrderDetails);
+            document.getElementById('export-csv').addEventListener('click', exportToCSV);
 
             // create order form
             const createForm = document.getElementById('create-order-form');
