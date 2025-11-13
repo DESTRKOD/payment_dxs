@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Иконки для добавления на главный экран -->
-    <link rel="apple-touch-icon" sizes="180x180" href="https://imgur.com/a/ZLpIvGd">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://imgur.com/a/ZLpIvGd">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://imgur.com/a/ZLpIvGd">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/LnxVscj.jpeg">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/LnxVscj.jpeg">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/LnxVscj.jpeg">
     <link rel="manifest" href="data:application/manifest+json,{}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -83,8 +83,8 @@
             height: 60px; 
             border-radius: 12px; 
             object-fit: cover;
-            border: 2px solid rgba(0,255,65,0.3);
-            box-shadow: 0 4px 20px rgba(0,255,65,0.2);
+            border: none; /* Убираем рамку полностью */
+            box-shadow: none; /* Убираем тень */
         }
         .logo-text { 
             font-size:42px; 
@@ -111,6 +111,7 @@
         .form-label { display:block; margin-bottom:8px; font-weight:600; color:var(--text-secondary); font-size:16px; }
         .form-control { width:100%; padding:16px 20px; background: rgba(0,10,0,0.4); border:1px solid rgba(0,255,65,0.1); border-radius:16px; font-size:16px; color:var(--text-primary); transition:var(--transition-smooth); backdrop-filter: blur(10px); }
         .form-control:focus { outline:none; border-color:var(--primary-glow); box-shadow:0 0 0 2px rgba(0,255,65,0.2); }
+        textarea.form-control { min-height: 100px; resize: vertical; }
 
         .btn { display:inline-flex; align-items:center; justify-content:center; padding:16px 28px; border:none; border-radius:16px; font-size:16px; font-weight:600; cursor:pointer; transition:var(--transition-smooth); text-decoration:none; position:relative; overflow:hidden; backdrop-filter: blur(10px); }
         .btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background: linear-gradient(90deg, transparent, rgba(0,255,65,0.2), transparent); transition:left 0.7s ease; }
@@ -192,6 +193,213 @@
         .table-actions { display: flex; gap: 8px; }
         .export-btn { margin-bottom: 20px; }
 
+        /* Toast уведомления */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .toast {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            backdrop-filter: blur(var(--blur-intensity));
+            box-shadow: var(--glass-shadow);
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-color: rgba(0,255,102,0.3);
+        }
+
+        .toast.error {
+            border-color: rgba(255,46,122,0.3);
+        }
+
+        .toast.warning {
+            border-color: rgba(255,214,0,0.3);
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .toast.success .toast-icon {
+            background: rgba(0,255,102,0.2);
+            color: var(--success-glow);
+        }
+
+        .toast.error .toast-icon {
+            background: rgba(255,46,122,0.2);
+            color: var(--danger-glow);
+        }
+
+        .toast.warning .toast-icon {
+            background: rgba(255,214,0,0.2);
+            color: var(--warning-glow);
+        }
+
+        .toast-message {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Пасхалка */
+        .easter-egg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 255, 65, 0.1);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--primary-glow);
+            padding: 20px;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .easter-egg.show {
+            transform: translateY(0);
+        }
+
+        .easter-egg-content {
+            text-align: center;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .easter-egg-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-glow);
+        }
+
+        .easter-egg-text {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        /* Шаблоны товаров */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .template-card {
+            background: rgba(0,10,0,0.3);
+            border: 1px solid rgba(0,255,65,0.1);
+            border-radius: 16px;
+            padding: 16px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: center;
+        }
+
+        .template-card:hover {
+            border-color: rgba(0,255,65,0.3);
+            background: rgba(0,255,65,0.05);
+            transform: translateY(-2px);
+        }
+
+        .template-card.active {
+            border-color: var(--primary-glow);
+            background: rgba(0,255,65,0.1);
+        }
+
+        .template-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .template-price {
+            color: var(--primary-glow);
+            font-weight: 700;
+        }
+
+        /* Промокоды */
+        .promocode-section {
+            background: rgba(0,10,0,0.3);
+            border: 1px solid rgba(0,255,65,0.1);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .promocode-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .promocode-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(0,10,0,0.4);
+            border: 1px solid rgba(0,255,65,0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .discount-badge {
+            background: rgba(0,255,102,0.15);
+            color: var(--success-glow);
+            border: 1px solid rgba(0,255,102,0.3);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-right: 8px;
+        }
+
+        .price-final {
+            color: var(--primary-glow);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .promocode-info {
+            background: rgba(0,255,65,0.1);
+            border: 1px solid rgba(0,255,65,0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
         .hidden { display:none; }
         .fade-in { animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
@@ -205,11 +413,22 @@
             .order-details-panel { max-width:100%; }
             .orders-table { font-size: 14px; }
             .orders-table th, .orders-table td { padding: 8px 12px; }
+            .toast-container {
+                right: 16px;
+                left: 16px;
+                max-width: none;
+            }
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width:480px) {
             .logo-container { flex-direction: column; gap: 8px; }
             .logo-text { font-size: 32px; }
+            .promocode-input-group {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -219,6 +438,18 @@
         <div class="liquid-shape shape-2"></div>
         <div class="liquid-shape shape-3"></div>
         <div class="liquid-shape shape-4"></div>
+    </div>
+
+    <!-- Toast уведомления -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Пасхалка -->
+    <div id="easter-egg" class="easter-egg hidden">
+        <div class="easter-egg-content">
+            <div class="easter-egg-title">🎉 Пасхалка найдена!</div>
+            <div class="easter-egg-text">Ты проявил любопытство! Вот тебе промокод: <strong>DXS2024SECRET</strong></div>
+            <button class="btn btn-sm btn-outline" onclick="hideEasterEgg()">Закрыть</button>
+        </div>
     </div>
 
     <div id="auth-modal" class="auth-modal hidden">
@@ -251,10 +482,10 @@
         <header>
             <div class="logo-container">
                 <!-- ЗАМЕНИТЕ src НА ПУТЬ К ВАШЕМУ ЛОГОТИПУ -->
-                <img src="https://imgur.com/a/ZLpIvGd" alt="DxS Shop" class="logo-img">
-                <div class="logo-text">DxS Shop</div>
+                <img src="https://i.imgur.com/0J9xhkb.png" alt="DxS Shop" class="logo-img">
+                <div class="logo-text">DxS Payments</div>
             </div>
-            <div class="subtitle">Премиум услуги с быстрой доставкой</div>
+            <div class="subtitle">Оплата товаров в DxS Shop</div>
             <button id="logout-btn" class="logout-btn hidden">
                 <i class="fas fa-sign-out-alt" style="margin-right:8px;"></i> Выйти
             </button>
@@ -265,6 +496,9 @@
             <div class="nav-tabs">
                 <div class="nav-tab active" data-tab="orders">Заказы</div>
                 <div class="nav-tab" data-tab="create">Создать заказ</div>
+                <div class="nav-tab" data-tab="settings">Реквизиты</div>
+                <div class="nav-tab" data-tab="templates">Шаблоны</div>
+                <div class="nav-tab" data-tab="promocodes">Промокоды</div>
                 <div class="nav-tab" data-tab="export">Экспорт</div>
             </div>
 
@@ -282,6 +516,14 @@
                     <div class="card-header">
                         <div class="card-title">Создать новый заказ</div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Выберите шаблон:</label>
+                        <div class="templates-grid" id="templates-grid">
+                            <!-- Шаблоны будут загружены здесь -->
+                        </div>
+                    </div>
+
                     <form id="create-order-form">
                         <div class="form-group">
                             <label class="form-label" for="product-name">Название товара</label>
@@ -295,10 +537,90 @@
                             <label class="form-label" for="client-name">Имя клиента</label>
                             <input type="text" id="client-name" class="form-control" placeholder="Например: Иван" required>
                         </div>
+                        
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-plus-circle" style="margin-right:12px;"></i> Создать заказ
                         </button>
                     </form>
+                </div>
+            </div>
+
+            <div id="settings-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Настройки реквизитов</div>
+                    </div>
+                    <form id="payment-settings-form">
+                        <div class="form-group">
+                            <label class="form-label" for="sbp-details">СБП реквизиты</label>
+                            <textarea id="sbp-details" class="form-control" rows="3" placeholder="Номер телефона, имя получателя, банк"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="sberbank-details">Сбербанк реквизиты</label>
+                            <textarea id="sberbank-details" class="form-control" rows="3" placeholder="Номер карты, имя получателя"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="alfa-details">Альфа-Банк реквизиты</label>
+                            <textarea id="alfa-details" class="form-control" rows="3" placeholder="Номер карты, имя получателя"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save" style="margin-right:12px;"></i> Сохранить реквизиты
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="templates-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Управление шаблонами товаров</div>
+                    </div>
+                    <form id="create-template-form">
+                        <div class="form-group">
+                            <label class="form-label" for="template-name">Название шаблона</label>
+                            <input type="text" id="template-name" class="form-control" placeholder="Например: Премиум аккаунт" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="template-price">Цена (руб.)</label>
+                            <input type="number" id="template-price" class="form-control" placeholder="Например: 1000" step="0.01" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle" style="margin-right:12px;"></i> Добавить шаблон
+                        </button>
+                    </form>
+
+                    <div id="templates-list" style="margin-top: 24px;">
+                        <!-- Список шаблонов будет здесь -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="promocodes-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Управление промокодами</div>
+                    </div>
+                    <form id="create-promocode-form">
+                        <div class="form-group">
+                            <label class="form-label" for="promocode-name">Код промокода</label>
+                            <input type="text" id="promocode-name" class="form-control" placeholder="Например: SUMMER2024" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="promocode-discount">Скидка (%)</label>
+                            <input type="number" id="promocode-discount" class="form-control" placeholder="Например: 10" min="1" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="promocode-uses">Количество использований</label>
+                            <input type="number" id="promocode-uses" class="form-control" placeholder="0 = безлимит" min="0">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle" style="margin-right:12px;"></i> Создать промокод
+                        </button>
+                    </form>
+
+                    <div id="promocodes-list" style="margin-top: 24px;">
+                        <!-- Список промокодов будет здесь -->
+                    </div>
                 </div>
             </div>
 
@@ -348,7 +670,9 @@
                         <h3 id="order-product"></h3>
                         <div class="order-meta">Один товар</div>
                     </div>
-                    <div class="order-price" id="order-price"></div>
+                    <div id="order-price-container">
+                        <div class="order-price" id="order-price"></div>
+                    </div>
                 </div>
                 <div id="order-actions"></div>
             </div>
@@ -373,7 +697,19 @@
                         <h3 id="payment-product-name"></h3>
                         <div class="order-meta">Сумма к оплате</div>
                     </div>
-                    <div class="order-price" id="payment-price"></div>
+                    <div id="payment-price-container">
+                        <div class="order-price" id="payment-price"></div>
+                    </div>
+                </div>
+
+                <!-- Промокод для клиента -->
+                <div class="promocode-section">
+                    <label class="form-label">Есть промокод?</label>
+                    <div class="promocode-input-group">
+                        <input type="text" id="client-promocode-input" class="promocode-input" placeholder="Введите промокод">
+                        <button type="button" class="btn btn-outline" id="apply-client-promocode">Применить</button>
+                    </div>
+                    <div id="client-promocode-result" class="hidden" style="margin-top: 8px;"></div>
                 </div>
 
                 <div class="form-group">
@@ -450,6 +786,9 @@
         let orderStatusInterval = null;
         let isAdminAuthenticated = localStorage.getItem('dxs_admin_authenticated') === 'true';
         let currentView = localStorage.getItem('dxs_current_view') || 'welcome';
+        let currentPromocode = null;
+        let originalPrice = 0;
+        let completedOrderTimer = null;
 
         // --- Firebase helper functions ---
         async function saveOrder(order) {
@@ -485,6 +824,19 @@
             }
         }
 
+        async function updateOrderPrice(orderId, priceData) {
+            try {
+                await db.collection('orders').doc(orderId).update({
+                    ...priceData,
+                    updatedAt: new Date().toISOString()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка обновления цены:', error);
+                return false;
+            }
+        }
+
         async function getOrder(orderId) {
             try {
                 const doc = await db.collection('orders').doc(orderId).get();
@@ -505,18 +857,222 @@
             }
         }
 
+        // --- Toast уведомления ---
+        function showToast(message, type = 'success', duration = 4000) {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="toast-message">${message}</div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 400);
+            }, duration);
+        }
+
+        // --- Пасхалка ---
+        let easterEggTriggered = false;
+
+        function checkEasterEgg() {
+            if (window.innerWidth <= 768 && !easterEggTriggered) {
+                const scrollPosition = window.scrollY || window.pageYOffset;
+                const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+                
+                if (scrollPosition >= pageHeight - 10) {
+                    showEasterEgg();
+                    easterEggTriggered = true;
+                }
+            }
+        }
+
+        function showEasterEgg() {
+            const easterEgg = document.getElementById('easter-egg');
+            easterEgg.classList.remove('hidden');
+            setTimeout(() => easterEgg.classList.add('show'), 100);
+        }
+
+        function hideEasterEgg() {
+            const easterEgg = document.getElementById('easter-egg');
+            easterEgg.classList.remove('show');
+            setTimeout(() => easterEgg.classList.add('hidden'), 500);
+        }
+
+        // --- Управление реквизитами ---
+        async function loadPaymentDetails() {
+            try {
+                const doc = await db.collection('settings').doc('paymentDetails').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('sbp-details').value = data.sbp || '';
+                    document.getElementById('sberbank-details').value = data.sberbank || '';
+                    document.getElementById('alfa-details').value = data.alfa || '';
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки реквизитов:', error);
+            }
+        }
+
+        async function savePaymentDetails(details) {
+            try {
+                await db.collection('settings').doc('paymentDetails').set(details);
+                return true;
+            } catch (error) {
+                console.error('Ошибка сохранения реквизитов:', error);
+                return false;
+            }
+        }
+
+        async function getPaymentDetails() {
+            try {
+                const doc = await db.collection('settings').doc('paymentDetails').get();
+                return doc.exists ? doc.data() : {};
+            } catch (error) {
+                console.error('Ошибка загрузки реквизитов:', error);
+                return {};
+            }
+        }
+
+        // --- Управление шаблонами ---
+        async function loadTemplates() {
+            try {
+                const snapshot = await db.collection('templates').orderBy('name').get();
+                return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (error) {
+                console.error('Ошибка загрузки шаблонов:', error);
+                return [];
+            }
+        }
+
+        async function saveTemplate(template) {
+            try {
+                const templateId = template.id || 'template_' + Math.random().toString(36).substr(2, 9);
+                await db.collection('templates').doc(templateId).set({
+                    name: template.name,
+                    price: template.price,
+                    createdAt: new Date().toISOString()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка сохранения шаблона:', error);
+                return false;
+            }
+        }
+
+        async function deleteTemplate(templateId) {
+            try {
+                await db.collection('templates').doc(templateId).delete();
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления шаблона:', error);
+                return false;
+            }
+        }
+
+        // --- Управление промокодами ---
+        async function loadPromocodes() {
+            try {
+                const snapshot = await db.collection('promocodes').get();
+                return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (error) {
+                console.error('Ошибка загрузки промокодов:', error);
+                return [];
+            }
+        }
+
+        async function savePromocode(promocode) {
+            try {
+                // Используем ID документа вместо кода как идентификатора
+                const promocodeId = 'promo_' + Math.random().toString(36).substr(2, 9);
+                await db.collection('promocodes').doc(promocodeId).set({
+                    code: promocode.code.toUpperCase(),
+                    discount: parseInt(promocode.discount),
+                    maxUses: parseInt(promocode.maxUses) || 0,
+                    usedCount: 0,
+                    createdAt: new Date().toISOString()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка сохранения промокода:', error);
+                showToast('Ошибка при создании промокода: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        async function deletePromocode(promocodeId) {
+            try {
+                await db.collection('promocodes').doc(promocodeId).delete();
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления промокода:', error);
+                return false;
+            }
+        }
+
+        async function validatePromocode(code) {
+            try {
+                const snapshot = await db.collection('promocodes').where('code', '==', code.toUpperCase()).get();
+                if (snapshot.empty) return null;
+                
+                const doc = snapshot.docs[0];
+                const promocode = { id: doc.id, ...doc.data() };
+                
+                if (promocode.maxUses > 0 && promocode.usedCount >= promocode.maxUses) {
+                    return null;
+                }
+                
+                return promocode;
+            } catch (error) {
+                console.error('Ошибка проверки промокода:', error);
+                return null;
+            }
+        }
+
+        async function usePromocode(promocodeId) {
+            try {
+                const doc = await db.collection('promocodes').doc(promocodeId).get();
+                if (!doc.exists) return false;
+                
+                const promocode = doc.data();
+                await db.collection('promocodes').doc(promocodeId).update({
+                    usedCount: (promocode.usedCount || 0) + 1
+                });
+                
+                return true;
+            } catch (error) {
+                console.error('Ошибка использования промокода:', error);
+                return false;
+            }
+        }
+
         // --- App logic ---
         document.addEventListener('DOMContentLoaded', async function() {
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('order');
 
-            // Сохраняем текущий view при перезагрузке
             if (orderId) {
                 currentView = 'order';
                 currentOrderId = orderId;
             }
 
-            // Восстанавливаем предыдущее состояние
             if (currentView === 'admin' && isAdminAuthenticated) {
                 await showAdminPanel();
             } else if (currentView === 'order' && currentOrderId) {
@@ -527,15 +1083,14 @@
             }
 
             setupEventHandlers();
+            window.addEventListener('scroll', checkEasterEgg);
         });
 
-        // Сохранение текущего состояния
         function saveCurrentView(view) {
             currentView = view;
             localStorage.setItem('dxs_current_view', view);
         }
 
-        // Start polling for order status updates
         function startOrderStatusPolling(orderId) {
             if (orderStatusInterval) {
                 clearInterval(orderStatusInterval);
@@ -547,7 +1102,6 @@
                     updateOrderStatusView(order.status);
                     updateOrderActions(order.status);
                     
-                    // Если заказ завершен или отклонен, останавливаем опрос
                     if (order.status === 'completed' || order.status === 'rejected') {
                         stopOrderStatusPolling();
                     }
@@ -555,7 +1109,6 @@
             }, 1000);
         }
 
-        // Stop polling when leaving order view
         function stopOrderStatusPolling() {
             if (orderStatusInterval) {
                 clearInterval(orderStatusInterval);
@@ -574,6 +1127,9 @@
             document.getElementById('logout-btn').classList.remove('hidden');
 
             await loadOrdersList();
+            await loadPaymentDetails();
+            await loadTemplatesList();
+            await loadPromocodesList();
             setupAdminTabs();
         }
 
@@ -605,6 +1161,7 @@
                 localStorage.setItem('dxs_admin_authenticated', 'true');
                 hideAuthModal();
                 showAdminPanel();
+                showToast('Успешный вход в админ-панель', 'success');
             } else {
                 document.getElementById('auth-error').style.display = 'block';
                 document.getElementById('admin-password').value = '';
@@ -617,6 +1174,7 @@
             localStorage.removeItem('dxs_admin_authenticated');
             localStorage.removeItem('dxs_current_view');
             showWelcomeView();
+            showToast('Вы вышли из админ-панели', 'success');
         }
 
         // --- Client order view ---
@@ -645,13 +1203,33 @@
 
             currentOrderId = orderId;
             document.getElementById('order-product').textContent = order.product;
-            document.getElementById('order-price').textContent = order.price;
             document.getElementById('order-client').textContent = `Для: ${order.client}`;
 
+            // Обновляем отображение цены с учетом промокода
+            updateOrderPriceDisplay(order);
+            
             updateOrderActions(order.status);
             updateOrderStatusView(order.status);
             
             startOrderStatusPolling(orderId);
+        }
+
+        function updateOrderPriceDisplay(order) {
+            const priceContainer = document.getElementById('order-price-container');
+            
+            if (order.promocodeUsed && order.finalPrice) {
+                // Показываем старую и новую цену
+                priceContainer.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="price-original">${order.originalPrice || order.price}</span>
+                        <span class="price-final">${order.finalPrice} ₽</span>
+                        <span class="discount-badge">Промокод: ${order.promocodeUsed}</span>
+                    </div>
+                `;
+            } else {
+                // Обычная цена
+                priceContainer.innerHTML = `<div class="order-price">${order.price}</div>`;
+            }
         }
 
         function updateOrderActions(status) {
@@ -706,13 +1284,31 @@
                     <div class="status-description">Администратор проверяет вашу оплату</div>
                 `;
             } else if (status === 'completed') {
+                // Сбрасываем таймер если он был
+                if (completedOrderTimer) {
+                    clearTimeout(completedOrderTimer);
+                    completedOrderTimer = null;
+                }
+                
+                // Сначала показываем сообщение об успешной оплате
                 statusContainer.innerHTML = `
                     <div class="status-icon success">
                         <i class="fas fa-check-circle"></i>
                     </div>
-                    <div class="status-title">Заказ уже завершен</div>
-                    <div class="status-description">Спасибо, что выбрали наш магазин</div>
+                    <div class="status-title">Успешная оплата!</div>
+                    <div class="status-description">ВЕРНИТЕСЬ В ЧАТ С АДМИНОМ</div>
                 `;
+                
+                // Через 60 секунд меняем на стандартное сообщение
+                completedOrderTimer = setTimeout(() => {
+                    statusContainer.innerHTML = `
+                        <div class="status-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="status-title">Заказ уже завершен</div>
+                        <div class="status-description">Спасибо, что выбрали наш магазин</div>
+                    `;
+                }, 60000); // 60 секунд
             } else if (status === 'rejected') {
                 statusContainer.innerHTML = `
                     <div class="status-icon error">
@@ -736,9 +1332,38 @@
                 if (order) {
                     document.getElementById('payment-product').textContent = order.product;
                     document.getElementById('payment-product-name').textContent = order.product;
-                    document.getElementById('payment-price').textContent = order.price;
+                    
+                    // Извлекаем числовое значение цены из строки (убираем " ₽")
+                    const priceText = order.price.replace(' ₽', '');
+                    originalPrice = parseFloat(priceText);
+                    
+                    // Обновляем отображение цены
+                    updatePaymentPriceDisplay(order);
+                    
+                    // Сбрасываем состояние промокода
+                    currentPromocode = null;
+                    document.getElementById('client-promocode-result').classList.add('hidden');
+                    document.getElementById('client-promocode-input').value = '';
                 }
             });
+        }
+
+        function updatePaymentPriceDisplay(order) {
+            const priceContainer = document.getElementById('payment-price-container');
+            
+            if (order.promocodeUsed && order.finalPrice) {
+                // Уже применен промокод
+                priceContainer.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="price-original">${originalPrice.toFixed(2)} ₽</span>
+                        <span class="price-final">${order.finalPrice} ₽</span>
+                        <span class="discount-badge">Промокод: ${order.promocodeUsed}</span>
+                    </div>
+                `;
+            } else {
+                // Обычная цена
+                priceContainer.innerHTML = `<div class="order-price">${order.price}</div>`;
+            }
         }
 
         // --- Admin: list, details, actions ---
@@ -769,6 +1394,15 @@
                     
                     const orderLink = `${window.location.origin}${window.location.pathname}?order=${order.id}`;
 
+                    // Определяем цену для отображения
+                    const displayPrice = order.finalPrice ? 
+                        `<div style="display:flex; align-items:center; gap:4px;">
+                            <span style="text-decoration:line-through; color:var(--text-secondary); font-size:14px;">${order.price}</span>
+                            <span>${order.finalPrice} ₽</span>
+                            ${order.promocodeUsed ? `<span class="discount-badge">${order.promocodeUsed}</span>` : ''}
+                        </div>` : 
+                        `<div>${order.price}</div>`;
+
                     html += `
                         <div class="order-item" data-order-id="${order.id}">
                             <div class="order-info">
@@ -776,7 +1410,7 @@
                                 <div class="order-meta">${order.client} • ${new Date(order.createdAt).toLocaleDateString('ru-RU')}</div>
                             </div>
                             <div>
-                                <div style="text-align:right;margin-bottom:8px;">${order.price}</div>
+                                <div style="text-align:right;margin-bottom:8px;">${displayPrice}</div>
                                 <div class="order-status status-${order.status}">${statusText}</div>
                                 <div class="quick-actions" style="margin-top:8px;">
                                     <button class="quick-action-btn" onclick="copyOrderLink('${orderLink}')">
@@ -853,13 +1487,21 @@
                         order.status === 'completed' ? 'Завершен' : 
                         'Оплата не прошла';
 
+                    // Определяем цену для отображения
+                    const displayPrice = order.finalPrice ? 
+                        `<div style="display:flex; align-items:center; gap:4px;">
+                            <span style="text-decoration:line-through; color:var(--text-secondary); font-size:12px;">${order.price}</span>
+                            <span>${order.finalPrice} ₽</span>
+                        </div>` : 
+                        order.price;
+
                     html += `
                         <tr>
                             <td>${dateStr}</td>
                             <td>${timeStr}</td>
                             <td>${order.client}</td>
                             <td>${order.product}</td>
-                            <td>${order.price}</td>
+                            <td>${displayPrice}</td>
                             <td><span class="order-status status-${order.status}">${statusText}</span></td>
                             <td>
                                 <div class="table-actions">
@@ -882,15 +1524,156 @@
             }
         }
 
+        // Загрузка шаблонов
+        async function loadTemplatesList() {
+            const templatesGrid = document.getElementById('templates-grid');
+            const templatesList = document.getElementById('templates-list');
+            
+            templatesGrid.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
+            templatesList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
+
+            try {
+                const templates = await loadTemplates();
+
+                if (templates.length === 0) {
+                    templatesGrid.innerHTML = `
+                        <div class="empty-state" style="grid-column:1/-1;">
+                            <i class="far fa-folder-open"></i>
+                            <div>Шаблонов пока нет</div>
+                        </div>
+                    `;
+                    templatesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="far fa-folder-open"></i>
+                            <div>Шаблонов пока нет</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Шаблоны для создания заказа
+                let gridHtml = '';
+                templates.forEach(template => {
+                    gridHtml += `
+                        <div class="template-card" data-template-id="${template.id}">
+                            <div class="template-name">${template.name}</div>
+                            <div class="template-price">${template.price} ₽</div>
+                        </div>
+                    `;
+                });
+                templatesGrid.innerHTML = gridHtml;
+
+                // Шаблоны для управления
+                let listHtml = '';
+                templates.forEach(template => {
+                    listHtml += `
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h3>${template.name}</h3>
+                                <div class="order-meta">ID: ${template.id}</div>
+                            </div>
+                            <div>
+                                <div style="text-align:right;margin-bottom:8px;">${template.price} ₽</div>
+                                <div class="quick-actions">
+                                    <button class="quick-action-btn" onclick="deleteTemplateFromList('${template.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                        <i class="fas fa-trash"></i> Удалить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                templatesList.innerHTML = listHtml;
+
+                // Обработчики для шаблонов
+                document.querySelectorAll('.template-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        const templateId = this.getAttribute('data-template-id');
+                        const template = templates.find(t => t.id === templateId);
+                        if (template) {
+                            document.getElementById('product-name').value = template.name;
+                            document.getElementById('product-price').value = template.price;
+                            
+                            // Снять выделение со всех карточек
+                            document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+                            // Выделить текущую карточку
+                            this.classList.add('active');
+                        }
+                    });
+                });
+
+            } catch (error) {
+                const errorHtml = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>Ошибка загрузки шаблонов</div>
+                    </div>
+                `;
+                templatesGrid.innerHTML = errorHtml;
+                templatesList.innerHTML = errorHtml;
+            }
+        }
+
+        // Загрузка промокодов
+        async function loadPromocodesList() {
+            const promocodesList = document.getElementById('promocodes-list');
+            promocodesList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
+
+            try {
+                const promocodes = await loadPromocodes();
+
+                if (promocodes.length === 0) {
+                    promocodesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="far fa-folder-open"></i>
+                            <div>Промокодов пока нет</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                promocodes.forEach(promo => {
+                    const usesText = promo.maxUses > 0 ? 
+                        `${promo.usedCount || 0}/${promo.maxUses} использований` : 
+                        `${promo.usedCount || 0} использований (безлимит)`;
+
+                    html += `
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h3>${promo.code} <span class="discount-badge">-${promo.discount}%</span></h3>
+                                <div class="order-meta">${usesText}</div>
+                            </div>
+                            <div class="quick-actions">
+                                <button class="quick-action-btn" onclick="deletePromocodeFromList('${promo.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                    <i class="fas fa-trash"></i> Удалить
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                promocodesList.innerHTML = html;
+
+            } catch (error) {
+                promocodesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>Ошибка загрузки промокодов</div>
+                    </div>
+                `;
+            }
+        }
+
         // Экспорт в CSV
         function exportToCSV() {
             loadOrders().then(orders => {
                 if (orders.length === 0) {
-                    alert('Нет данных для экспорта');
+                    showToast('Нет данных для экспорта', 'warning');
                     return;
                 }
 
-                let csv = 'Дата;Время;Клиент;Товар;Сумма;Статус\n';
+                let csv = 'Дата;Время;Клиент;Товар;Исходная цена;Финальная цена;Промокод;Статус\n';
                 
                 orders.forEach(order => {
                     const date = new Date(order.createdAt);
@@ -903,7 +1686,11 @@
                         order.status === 'completed' ? 'Завершен' : 
                         'Оплата не прошла';
 
-                    csv += `"${dateStr}";"${timeStr}";"${order.client}";"${order.product}";"${order.price}";"${statusText}"\n`;
+                    const finalPrice = order.finalPrice || order.price.replace(' ₽', '');
+                    const originalPrice = order.originalPrice || order.price.replace(' ₽', '');
+                    const promocode = order.promocodeUsed || '';
+
+                    csv += `"${dateStr}";"${timeStr}";"${order.client}";"${order.product}";"${originalPrice}";"${finalPrice}";"${promocode}";"${statusText}"\n`;
                 });
 
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -915,6 +1702,7 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+                showToast('Файл экспортирован в CSV', 'success');
             });
         }
 
@@ -929,6 +1717,17 @@
                 order.status === 'completed' ? 'Завершен' : 
                 'Оплата не прошла';
 
+            // Информация о промокоде
+            const promocodeInfo = order.promocodeUsed ? `
+                <div class="detail-item">
+                    <div class="detail-label">Промокод</div>
+                    <div class="detail-value">
+                        <span class="discount-badge">${order.promocodeUsed}</span>
+                        ${order.finalPrice ? `<div style="margin-top:8px; color:var(--success-glow);">Применена скидка: ${order.finalPrice} ₽ (вместо ${order.originalPrice || order.price})</div>` : ''}
+                    </div>
+                </div>
+            ` : '';
+
             document.getElementById('order-details-content').innerHTML = `
                 <div class="detail-item">
                     <div class="detail-label">ID заказа</div>
@@ -940,8 +1739,17 @@
                 </div>
                 <div class="detail-item">
                     <div class="detail-label">Цена</div>
-                    <div class="detail-value">${order.price}</div>
+                    <div class="detail-value">
+                        ${order.finalPrice ? 
+                            `<div style="display:flex; align-items:center; gap:8px;">
+                                <span style="text-decoration:line-through; color:var(--text-secondary);">${order.originalPrice || order.price}</span>
+                                <span class="order-price">${order.finalPrice} ₽</span>
+                            </div>` : 
+                            `<span class="order-price">${order.price}</span>`
+                        }
+                    </div>
                 </div>
+                ${promocodeInfo}
                 <div class="detail-item">
                     <div class="detail-label">Клиент</div>
                     <div class="detail-value">${order.client}</div>
@@ -993,7 +1801,7 @@
 
         function copyOrderLink(link) {
             navigator.clipboard.writeText(link).then(() => {
-                alert('Ссылка скопирована в буфер обмена!');
+                showToast('Ссылка скопирована в буфер обмена!', 'success');
             });
         }
 
@@ -1007,9 +1815,9 @@
                 await loadOrdersList();
                 await loadOrdersTable();
                 closeOrderDetails();
-                alert('✅ Оплата подтверждена! Клиент получил уведомление.');
+                showToast('Оплата подтверждена! Клиент получил уведомление.', 'success');
             } else {
-                alert('❌ Ошибка при подтверждении оплаты');
+                showToast('Ошибка при подтверждении оплаты', 'error');
             }
         }
 
@@ -1019,9 +1827,9 @@
                 await loadOrdersList();
                 await loadOrdersTable();
                 closeOrderDetails();
-                alert('❌ Статус заказа изменен на "Оплата не прошла". Клиент уведомлен.');
+                showToast('Статус заказа изменен на "Оплата не прошла". Клиент уведомлен.', 'success');
             } else {
-                alert('❌ Ошибка при изменении статуса');
+                showToast('Ошибка при изменении статуса', 'error');
             }
         }
 
@@ -1031,9 +1839,9 @@
                 await loadOrdersList();
                 await loadOrdersTable();
                 closeOrderDetails();
-                alert('✅ Статус заказа возвращен на "Ожидает оплаты".');
+                showToast('Статус заказа возвращен на "Ожидает оплаты".', 'success');
             } else {
-                alert('❌ Ошибка при изменении статуса');
+                showToast('Ошибка при изменении статуса', 'error');
             }
         }
 
@@ -1044,9 +1852,33 @@
                     await loadOrdersList();
                     await loadOrdersTable();
                     closeOrderDetails();
-                    alert('✅ Заказ удален');
+                    showToast('Заказ удален', 'success');
                 } else {
-                    alert('❌ Ошибка при удалении заказа');
+                    showToast('Ошибка при удалении заказа', 'error');
+                }
+            }
+        }
+
+        async function deleteTemplateFromList(templateId) {
+            if (confirm('Вы уверены, что хотите удалить этот шаблон?')) {
+                const success = await deleteTemplate(templateId);
+                if (success) {
+                    await loadTemplatesList();
+                    showToast('Шаблон удален', 'success');
+                } else {
+                    showToast('Ошибка при удалении шаблона', 'error');
+                }
+            }
+        }
+
+        async function deletePromocodeFromList(promocodeId) {
+            if (confirm('Вы уверены, что хотите удалить этот промокод?')) {
+                const success = await deletePromocode(promocodeId);
+                if (success) {
+                    await loadPromocodesList();
+                    showToast('Промокод удален', 'success');
+                } else {
+                    showToast('Ошибка при удалении промокода', 'error');
                 }
             }
         }
@@ -1060,12 +1892,19 @@
                     this.classList.add('active');
                     document.getElementById('orders-tab').classList.add('hidden');
                     document.getElementById('create-tab').classList.add('hidden');
+                    document.getElementById('settings-tab').classList.add('hidden');
+                    document.getElementById('templates-tab').classList.add('hidden');
+                    document.getElementById('promocodes-tab').classList.add('hidden');
                     document.getElementById('export-tab').classList.add('hidden');
                     const tabName = this.getAttribute('data-tab');
                     document.getElementById(`${tabName}-tab`).classList.remove('hidden');
                     
                     if (tabName === 'export') {
                         loadOrdersTable();
+                    } else if (tabName === 'templates') {
+                        loadTemplatesList();
+                    } else if (tabName === 'promocodes') {
+                        loadPromocodesList();
                     }
                 });
             });
@@ -1108,32 +1947,152 @@
                     const success = await saveOrder(newOrder);
                     if (success) {
                         const orderLink = `${window.location.origin}${window.location.pathname}?order=${orderId}`;
-                        alert(`Заказ создан! Ссылка для клиента:\n${orderLink}`);
+                        showToast(`Заказ создан! Ссылка для клиента:\n${orderLink}`, 'success');
                         this.reset();
                         document.querySelector('.nav-tab[data-tab="orders"]').click();
                         await loadOrdersList();
                     } else {
-                        alert('❌ Ошибка при создании заказа');
+                        showToast('Ошибка при создании заказа', 'error');
+                    }
+                });
+            }
+
+            // create template form
+            const createTemplateForm = document.getElementById('create-template-form');
+            if (createTemplateForm) {
+                createTemplateForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('template-name').value;
+                    const price = document.getElementById('template-price').value;
+
+                    const template = {
+                        name: name,
+                        price: price
+                    };
+
+                    const success = await saveTemplate(template);
+                    if (success) {
+                        showToast('Шаблон добавлен!', 'success');
+                        this.reset();
+                        await loadTemplatesList();
+                    } else {
+                        showToast('Ошибка при добавлении шаблона', 'error');
+                    }
+                });
+            }
+
+            // create promocode form
+            const createPromocodeForm = document.getElementById('create-promocode-form');
+            if (createPromocodeForm) {
+                createPromocodeForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const code = document.getElementById('promocode-name').value;
+                    const discount = document.getElementById('promocode-discount').value;
+                    const maxUses = document.getElementById('promocode-uses').value || 0;
+
+                    if (!code || !discount) {
+                        showToast('Заполните все обязательные поля', 'error');
+                        return;
+                    }
+
+                    const promocode = {
+                        code: code,
+                        discount: discount,
+                        maxUses: maxUses
+                    };
+
+                    const success = await savePromocode(promocode);
+                    if (success) {
+                        showToast('Промокод создан!', 'success');
+                        this.reset();
+                        await loadPromocodesList();
+                    } else {
+                        showToast('Ошибка при создании промокода', 'error');
+                    }
+                });
+            }
+
+            // apply client promocode
+            const applyClientPromocodeBtn = document.getElementById('apply-client-promocode');
+            if (applyClientPromocodeBtn) {
+                applyClientPromocodeBtn.addEventListener('click', async function() {
+                    const code = document.getElementById('client-promocode-input').value.trim();
+                    if (!code) {
+                        showToast('Введите промокод', 'warning');
+                        return;
+                    }
+
+                    const promocode = await validatePromocode(code);
+                    if (promocode) {
+                        currentPromocode = promocode;
+                        const discountedPrice = originalPrice * (1 - promocode.discount / 100);
+                        
+                        // Обновляем отображение цены
+                        const priceContainer = document.getElementById('payment-price-container');
+                        priceContainer.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="price-original">${originalPrice.toFixed(2)} ₽</span>
+                                <span class="price-final">${discountedPrice.toFixed(2)} ₽</span>
+                                <span class="discount-badge">-${promocode.discount}%</span>
+                            </div>
+                        `;
+                        
+                        document.getElementById('client-promocode-result').innerHTML = `
+                            <div style="color: var(--success-glow);">
+                                <i class="fas fa-check-circle"></i> Промокод применен! Скидка ${promocode.discount}%
+                            </div>
+                        `;
+                        document.getElementById('client-promocode-result').classList.remove('hidden');
+                        showToast(`Промокод применен! Скидка ${promocode.discount}%`, 'success');
+                    } else {
+                        document.getElementById('client-promocode-result').innerHTML = `
+                            <div style="color: var(--danger-glow);">
+                                <i class="fas fa-times-circle"></i> Неверный или неактивный промокод
+                            </div>
+                        `;
+                        document.getElementById('client-promocode-result').classList.remove('hidden');
+                        showToast('Неверный или неактивный промокод', 'error');
+                    }
+                });
+            }
+
+            // payment settings form
+            const paymentSettingsForm = document.getElementById('payment-settings-form');
+            if (paymentSettingsForm) {
+                paymentSettingsForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const details = {
+                        sbp: document.getElementById('sbp-details').value,
+                        sberbank: document.getElementById('sberbank-details').value,
+                        alfa: document.getElementById('alfa-details').value
+                    };
+                    const success = await savePaymentDetails(details);
+                    if (success) {
+                        showToast('Реквизиты сохранены!', 'success');
+                    } else {
+                        showToast('Ошибка при сохранении реквизитов', 'error');
                     }
                 });
             }
 
             // payment method selection in payment view
             document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
-                radio.addEventListener('change', function() {
+                radio.addEventListener('change', async function() {
                     const method = this.value;
                     const detailsContainer = document.getElementById('bank-details');
                     const detailsText = document.getElementById('bank-details-text');
                     const confirmButton = document.getElementById('confirm-payment');
 
                     if (method) {
+                        const paymentDetails = await getPaymentDetails();
                         let details = '';
+                        
                         if (method === 'сбп') {
-                            details = `СБП: +7 900 123-45-67\nИванов Иван Иванович\nБанк: Тинькофф`;
+                            details = paymentDetails.sbp || 'Реквизиты для СБП не заданы\nПерейдите в админ-панель → Реквизиты';
                         } else if (method === 'сбербанк') {
-                            details = `Сбербанк: 2202 2022 2202 2022\nИванов И.И.\nСчет: 40817810099910004321`;
+                            details = paymentDetails.sberbank || 'Реквизиты для Сбербанка не заданы\nПерейдите в админ-панель → Реквизиты';
                         } else if (method === 'альфа-банк') {
-                            details = `Альфа-Банк: 1234567890123456\nИванов И.И.\nСчет: 40817810099910004321`;
+                            details = paymentDetails.alfa || 'Реквизиты для Альфа-Банка не заданы\nПерейдите в админ-панель → Реквизиты';
                         }
 
                         detailsText.textContent = details;
@@ -1149,8 +2108,7 @@
                 copyBtn.addEventListener('click', function() {
                     const detailsText = document.getElementById('bank-details-text').textContent;
                     navigator.clipboard.writeText(detailsText).then(() => {
-                        this.innerHTML = '<i class="far fa-copy"></i> Скопировано!';
-                        setTimeout(() => this.innerHTML = '<i class="far fa-copy"></i> Скопировать реквизиты', 2000);
+                        showToast('Реквизиты скопированы!', 'success');
                     });
                 });
             }
@@ -1160,15 +2118,30 @@
             if (confirmBtn) {
                 confirmBtn.addEventListener('click', async function() {
                     if (!currentOrderId) {
-                        alert('❌ Ошибка: заказ не найден');
+                        showToast('Ошибка: заказ не найден', 'error');
                         return;
                     }
+
+                    // Если применен промокод, обновляем заказ с новой ценой
+                    if (currentPromocode) {
+                        const discountedPrice = originalPrice * (1 - currentPromocode.discount / 100);
+                        const success = await updateOrderPrice(currentOrderId, {
+                            finalPrice: discountedPrice.toFixed(2) + ' ₽',
+                            originalPrice: originalPrice.toFixed(2) + ' ₽',
+                            promocodeUsed: currentPromocode.code
+                        });
+                        
+                        if (success) {
+                            await usePromocode(currentPromocode.id);
+                        }
+                    }
+
                     const success = await updateOrderStatus(currentOrderId, 'waiting');
                     if (success) {
-                        alert('✅ Уведомление отправлено администратору. Ожидайте подтверждения оплаты.');
+                        showToast('Уведомление отправлено администратору. Ожидайте подтверждения оплаты.', 'success');
                         showOrderView(currentOrderId);
                     } else {
-                        alert('❌ Ошибка при отправке уведомления');
+                        showToast('Ошибка при отправке уведомления', 'error');
                     }
                 });
             }
