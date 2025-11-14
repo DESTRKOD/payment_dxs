@@ -46,7 +46,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-            background-color: var(--bg-primary);
+            background-color: #000000;
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
@@ -68,7 +68,7 @@
             100% { transform: translate(0,0) rotate(360deg); }
         }
 
-        .container { max-width:800px; margin:0 auto; padding:20px; min-height:100vh; display:flex; flex-direction:column; }
+        .container { max-width:800px; margin:0 auto; padding:20px; min-height:100vh; display:flex; flex-direction:column; background-color: var(--bg-primary); }
 
         header { text-align:center; padding:40px 20px 30px; position:relative; margin-bottom:20px; }
         .logo-container { 
@@ -83,8 +83,8 @@
             height: 60px; 
             border-radius: 12px; 
             object-fit: cover;
-            border: none; /* Убираем рамку полностью */
-            box-shadow: none; /* Убираем тень */
+            border: none;
+            box-shadow: none;
         }
         .logo-text { 
             font-size:42px; 
@@ -266,44 +266,6 @@
             line-height: 1.4;
         }
 
-        /* Пасхалка */
-        .easter-egg {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 255, 65, 0.1);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--primary-glow);
-            padding: 20px;
-            z-index: 1000;
-            transform: translateY(100%);
-            transition: transform 0.5s ease;
-        }
-
-        .easter-egg.show {
-            transform: translateY(0);
-        }
-
-        .easter-egg-content {
-            text-align: center;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        .easter-egg-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--primary-glow);
-        }
-
-        .easter-egg-text {
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-
         /* Шаблоны товаров */
         .templates-grid {
             display: grid;
@@ -400,6 +362,59 @@
             font-size: 14px;
         }
 
+        /* Новые стили для реквизитов */
+        .bank-detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,255,65,0.1);
+        }
+
+        .bank-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .bank-detail-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+            min-width: 120px;
+        }
+
+        .bank-detail-value {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: right;
+            margin-right: 12px;
+        }
+
+        .bank-detail-copy {
+            background: rgba(0,255,65,0.1);
+            border: 1px solid rgba(0,255,65,0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--primary-glow);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 12px;
+        }
+
+        .bank-detail-copy:hover {
+            background: rgba(0,255,65,0.2);
+        }
+
+        .payment-section {
+            margin-bottom: 20px;
+        }
+
+        .payment-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-glow);
+        }
+
         .hidden { display:none; }
         .fade-in { animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
@@ -420,6 +435,15 @@
             }
             .templates-grid {
                 grid-template-columns: 1fr;
+            }
+            .bank-detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .bank-detail-value {
+                text-align: left;
+                margin-right: 0;
             }
         }
 
@@ -443,16 +467,7 @@
     <!-- Toast уведомления -->
     <div class="toast-container" id="toast-container"></div>
 
-    <!-- Пасхалка -->
-    <div id="easter-egg" class="easter-egg hidden">
-        <div class="easter-egg-content">
-            <div class="easter-egg-title">🎉 Пасхалка найдена!</div>
-            <div class="easter-egg-text">Ты проявил любопытство! Вот тебе промокод: <strong>DXS2024SECRET</strong></div>
-            <button class="btn btn-sm btn-outline" onclick="hideEasterEgg()">Закрыть</button>
-        </div>
-    </div>
-
-    <div id="auth-modal" class="auth-modal hidden">
+    <div id="auth-modal" class="auth-modal hidden" class="auth-modal hidden">
         <div class="auth-card fade-in">
             <div class="auth-title">Доступ к админ-панели</div>
             <div class="auth-subtitle">Введите пароль администратора</div>
@@ -481,7 +496,6 @@
     <div class="container">
         <header>
             <div class="logo-container">
-                <!-- ЗАМЕНИТЕ src НА ПУТЬ К ВАШЕМУ ЛОГОТИПУ -->
                 <img src="https://i.imgur.com/0J9xhkb.png" alt="DxS Shop" class="logo-img">
                 <div class="logo-text">DxS Payments</div>
             </div>
@@ -551,18 +565,49 @@
                         <div class="card-title">Настройки реквизитов</div>
                     </div>
                     <form id="payment-settings-form">
-                        <div class="form-group">
-                            <label class="form-label" for="sbp-details">СБП реквизиты</label>
-                            <textarea id="sbp-details" class="form-control" rows="3" placeholder="Номер телефона, имя получателя, банк"></textarea>
+                        <!-- СБП реквизиты -->
+                        <div class="payment-section">
+                            <div class="payment-section-title">СБП реквизиты</div>
+                            <div class="form-group">
+                                <label class="form-label" for="sbp-phone">Номер телефона</label>
+                                <input type="text" id="sbp-phone" class="form-control" placeholder="+7 (999) 123-45-67">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="sbp-name">Имя получателя</label>
+                                <input type="text" id="sbp-name" class="form-control" placeholder="Иван Иванов">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="sbp-bank">Банк</label>
+                                <input type="text" id="sbp-bank" class="form-control" placeholder="Тинькофф">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="sberbank-details">Сбербанк реквизиты</label>
-                            <textarea id="sberbank-details" class="form-control" rows="3" placeholder="Номер карты, имя получателя"></textarea>
+
+                        <!-- Сбербанк реквизиты -->
+                        <div class="payment-section">
+                            <div class="payment-section-title">Сбербанк реквизиты</div>
+                            <div class="form-group">
+                                <label class="form-label" for="sberbank-card">Номер карты</label>
+                                <input type="text" id="sberbank-card" class="form-control" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="sberbank-name">Имя получателя</label>
+                                <input type="text" id="sberbank-name" class="form-control" placeholder="Иван Иванов">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="alfa-details">Альфа-Банк реквизиты</label>
-                            <textarea id="alfa-details" class="form-control" rows="3" placeholder="Номер карты, имя получателя"></textarea>
+
+                        <!-- Альфа-Банк реквизиты -->
+                        <div class="payment-section">
+                            <div class="payment-section-title">Альфа-Банк реквизиты</div>
+                            <div class="form-group">
+                                <label class="form-label" for="alfa-card">Номер карты</label>
+                                <input type="text" id="alfa-card" class="form-control" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="alfa-name">Имя получателя</label>
+                                <input type="text" id="alfa-name" class="form-control" placeholder="Иван Иванов">
+                            </div>
                         </div>
+
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save" style="margin-right:12px;"></i> Сохранить реквизиты
                         </button>
@@ -670,9 +715,7 @@
                         <h3 id="order-product"></h3>
                         <div class="order-meta">Один товар</div>
                     </div>
-                    <div id="order-price-container">
-                        <div class="order-price" id="order-price"></div>
-                    </div>
+                    <div id="order-price-container"></div>
                 </div>
                 <div id="order-actions"></div>
             </div>
@@ -697,9 +740,7 @@
                         <h3 id="payment-product-name"></h3>
                         <div class="order-meta">Сумма к оплате</div>
                     </div>
-                    <div id="payment-price-container">
-                        <div class="order-price" id="payment-price"></div>
-                    </div>
+                    <div id="payment-price-container"></div>
                 </div>
 
                 <!-- Промокод для клиента -->
@@ -734,11 +775,7 @@
                 </div>
 
                 <div id="bank-details" class="bank-details hidden">
-                    <h4 style="margin-bottom:16px;">Реквизиты для оплаты:</h4>
-                    <pre id="bank-details-text"></pre>
-                    <button type="button" class="copy-btn" id="copy-details">
-                        <i class="far fa-copy"></i> Скопировать реквизиты
-                    </button>
+                    <!-- Реквизиты будут отображаться здесь динамически -->
                 </div>
 
                 <button class="btn btn-primary" id="confirm-payment" disabled>
@@ -889,42 +926,20 @@
             }, duration);
         }
 
-        // --- Пасхалка ---
-        let easterEggTriggered = false;
-
-        function checkEasterEgg() {
-            if (window.innerWidth <= 768 && !easterEggTriggered) {
-                const scrollPosition = window.scrollY || window.pageYOffset;
-                const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-                
-                if (scrollPosition >= pageHeight - 10) {
-                    showEasterEgg();
-                    easterEggTriggered = true;
-                }
-            }
-        }
-
-        function showEasterEgg() {
-            const easterEgg = document.getElementById('easter-egg');
-            easterEgg.classList.remove('hidden');
-            setTimeout(() => easterEgg.classList.add('show'), 100);
-        }
-
-        function hideEasterEgg() {
-            const easterEgg = document.getElementById('easter-egg');
-            easterEgg.classList.remove('show');
-            setTimeout(() => easterEgg.classList.add('hidden'), 500);
-        }
-
         // --- Управление реквизитами ---
         async function loadPaymentDetails() {
             try {
                 const doc = await db.collection('settings').doc('paymentDetails').get();
                 if (doc.exists) {
                     const data = doc.data();
-                    document.getElementById('sbp-details').value = data.sbp || '';
-                    document.getElementById('sberbank-details').value = data.sberbank || '';
-                    document.getElementById('alfa-details').value = data.alfa || '';
+                    // Загружаем данные в новые поля
+                    document.getElementById('sbp-phone').value = data.sbpPhone || '';
+                    document.getElementById('sbp-name').value = data.sbpName || '';
+                    document.getElementById('sbp-bank').value = data.sbpBank || '';
+                    document.getElementById('sberbank-card').value = data.sberbankCard || '';
+                    document.getElementById('sberbank-name').value = data.sberbankName || '';
+                    document.getElementById('alfa-card').value = data.alfaCard || '';
+                    document.getElementById('alfa-name').value = data.alfaName || '';
                 }
             } catch (error) {
                 console.error('Ошибка загрузки реквизитов:', error);
@@ -1000,7 +1015,6 @@
 
         async function savePromocode(promocode) {
             try {
-                // Используем ID документа вместо кода как идентификатора
                 const promocodeId = 'promo_' + Math.random().toString(36).substr(2, 9);
                 await db.collection('promocodes').doc(promocodeId).set({
                     code: promocode.code.toUpperCase(),
@@ -1083,7 +1097,6 @@
             }
 
             setupEventHandlers();
-            window.addEventListener('scroll', checkEasterEgg);
         });
 
         function saveCurrentView(view) {
@@ -1205,9 +1218,7 @@
             document.getElementById('order-product').textContent = order.product;
             document.getElementById('order-client').textContent = `Для: ${order.client}`;
 
-            // Обновляем отображение цены с учетом промокода
             updateOrderPriceDisplay(order);
-            
             updateOrderActions(order.status);
             updateOrderStatusView(order.status);
             
@@ -1218,7 +1229,6 @@
             const priceContainer = document.getElementById('order-price-container');
             
             if (order.promocodeUsed && order.finalPrice) {
-                // Показываем старую и новую цену
                 priceContainer.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span class="price-original">${order.originalPrice || order.price}</span>
@@ -1227,7 +1237,6 @@
                     </div>
                 `;
             } else {
-                // Обычная цена
                 priceContainer.innerHTML = `<div class="order-price">${order.price}</div>`;
             }
         }
@@ -1284,22 +1293,19 @@
                     <div class="status-description">Администратор проверяет вашу оплату</div>
                 `;
             } else if (status === 'completed') {
-                // Сбрасываем таймер если он был
                 if (completedOrderTimer) {
                     clearTimeout(completedOrderTimer);
                     completedOrderTimer = null;
                 }
                 
-                // Сначала показываем сообщение об успешной оплате
                 statusContainer.innerHTML = `
                     <div class="status-icon success">
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="status-title">Успешная оплата!</div>
-                    <div class="status-description">ВЕРНИТЕСЬ В ЧАТ С АДМИНОМ</div>
+                    <div class="status-description">Вернитесь в чат с админом</div>
                 `;
                 
-                // Через 60 секунд меняем на стандартное сообщение
                 completedOrderTimer = setTimeout(() => {
                     statusContainer.innerHTML = `
                         <div class="status-icon success">
@@ -1308,7 +1314,7 @@
                         <div class="status-title">Заказ уже завершен</div>
                         <div class="status-description">Спасибо, что выбрали наш магазин</div>
                     `;
-                }, 60000); // 60 секунд
+                }, 60000);
             } else if (status === 'rejected') {
                 statusContainer.innerHTML = `
                     <div class="status-icon error">
@@ -1333,14 +1339,11 @@
                     document.getElementById('payment-product').textContent = order.product;
                     document.getElementById('payment-product-name').textContent = order.product;
                     
-                    // Извлекаем числовое значение цены из строки (убираем " ₽")
                     const priceText = order.price.replace(' ₽', '');
                     originalPrice = parseFloat(priceText);
                     
-                    // Обновляем отображение цены
                     updatePaymentPriceDisplay(order);
                     
-                    // Сбрасываем состояние промокода
                     currentPromocode = null;
                     document.getElementById('client-promocode-result').classList.add('hidden');
                     document.getElementById('client-promocode-input').value = '';
@@ -1352,7 +1355,6 @@
             const priceContainer = document.getElementById('payment-price-container');
             
             if (order.promocodeUsed && order.finalPrice) {
-                // Уже применен промокод
                 priceContainer.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span class="price-original">${originalPrice.toFixed(2)} ₽</span>
@@ -1361,9 +1363,92 @@
                     </div>
                 `;
             } else {
-                // Обычная цена
                 priceContainer.innerHTML = `<div class="order-price">${order.price}</div>`;
             }
+        }
+
+        // --- Отображение реквизитов в новом формате ---
+        function displayBankDetails(method, details) {
+            const bankDetailsContainer = document.getElementById('bank-details');
+            
+            if (method === 'сбп') {
+                bankDetailsContainer.innerHTML = `
+                    <h4 style="margin-bottom:16px;">Реквизиты для оплаты через СБП:</h4>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Телефон:</div>
+                        <div class="bank-detail-value">${details.sbpPhone || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sbpPhone || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Получатель:</div>
+                        <div class="bank-detail-value">${details.sbpName || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sbpName || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Банк:</div>
+                        <div class="bank-detail-value">${details.sbpBank || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sbpBank || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                `;
+            } else if (method === 'сбербанк') {
+                bankDetailsContainer.innerHTML = `
+                    <h4 style="margin-bottom:16px;">Реквизиты для оплаты через Сбербанк:</h4>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Номер карты:</div>
+                        <div class="bank-detail-value">${details.sberbankCard || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sberbankCard || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Получатель:</div>
+                        <div class="bank-detail-value">${details.sberbankName || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sberbankName || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                `;
+            } else if (method === 'альфа-банк') {
+                bankDetailsContainer.innerHTML = `
+                    <h4 style="margin-bottom:16px;">Реквизиты для оплаты через Альфа-Банк:</h4>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Номер карты:</div>
+                        <div class="bank-detail-value">${details.alfaCard || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.alfaCard || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Получатель:</div>
+                        <div class="bank-detail-value">${details.alfaName || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.alfaName || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                `;
+            }
+            
+            bankDetailsContainer.classList.remove('hidden');
+        }
+
+        function copyToClipboard(text) {
+            if (!text || text === 'Не указан') {
+                showToast('Нечего копировать', 'warning');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Скопировано в буфер обмена!', 'success');
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                showToast('Ошибка при копировании', 'error');
+            });
         }
 
         // --- Admin: list, details, actions ---
@@ -1394,7 +1479,6 @@
                     
                     const orderLink = `${window.location.origin}${window.location.pathname}?order=${order.id}`;
 
-                    // Определяем цену для отображения
                     const displayPrice = order.finalPrice ? 
                         `<div style="display:flex; align-items:center; gap:4px;">
                             <span style="text-decoration:line-through; color:var(--text-secondary); font-size:14px;">${order.price}</span>
@@ -1462,7 +1546,6 @@
             }
         }
 
-        // Загрузка таблицы заказов
         async function loadOrdersTable() {
             const tableBody = document.getElementById('orders-table-body');
             tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</td></tr>';
@@ -1487,7 +1570,6 @@
                         order.status === 'completed' ? 'Завершен' : 
                         'Оплата не прошла';
 
-                    // Определяем цену для отображения
                     const displayPrice = order.finalPrice ? 
                         `<div style="display:flex; align-items:center; gap:4px;">
                             <span style="text-decoration:line-through; color:var(--text-secondary); font-size:12px;">${order.price}</span>
@@ -1524,7 +1606,6 @@
             }
         }
 
-        // Загрузка шаблонов
         async function loadTemplatesList() {
             const templatesGrid = document.getElementById('templates-grid');
             const templatesList = document.getElementById('templates-list');
@@ -1551,7 +1632,6 @@
                     return;
                 }
 
-                // Шаблоны для создания заказа
                 let gridHtml = '';
                 templates.forEach(template => {
                     gridHtml += `
@@ -1563,7 +1643,6 @@
                 });
                 templatesGrid.innerHTML = gridHtml;
 
-                // Шаблоны для управления
                 let listHtml = '';
                 templates.forEach(template => {
                     listHtml += `
@@ -1585,7 +1664,6 @@
                 });
                 templatesList.innerHTML = listHtml;
 
-                // Обработчики для шаблонов
                 document.querySelectorAll('.template-card').forEach(card => {
                     card.addEventListener('click', function() {
                         const templateId = this.getAttribute('data-template-id');
@@ -1594,9 +1672,7 @@
                             document.getElementById('product-name').value = template.name;
                             document.getElementById('product-price').value = template.price;
                             
-                            // Снять выделение со всех карточек
                             document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
-                            // Выделить текущую карточку
                             this.classList.add('active');
                         }
                     });
@@ -1614,7 +1690,6 @@
             }
         }
 
-        // Загрузка промокодов
         async function loadPromocodesList() {
             const promocodesList = document.getElementById('promocodes-list');
             promocodesList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
@@ -1665,7 +1740,6 @@
             }
         }
 
-        // Экспорт в CSV
         function exportToCSV() {
             loadOrders().then(orders => {
                 if (orders.length === 0) {
@@ -1717,7 +1791,6 @@
                 order.status === 'completed' ? 'Завершен' : 
                 'Оплата не прошла';
 
-            // Информация о промокоде
             const promocodeInfo = order.promocodeUsed ? `
                 <div class="detail-item">
                     <div class="detail-label">Промокод</div>
@@ -2027,7 +2100,6 @@
                         currentPromocode = promocode;
                         const discountedPrice = originalPrice * (1 - promocode.discount / 100);
                         
-                        // Обновляем отображение цены
                         const priceContainer = document.getElementById('payment-price-container');
                         priceContainer.innerHTML = `
                             <div style="display: flex; align-items: center; gap: 8px;">
@@ -2062,9 +2134,13 @@
                 paymentSettingsForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     const details = {
-                        sbp: document.getElementById('sbp-details').value,
-                        sberbank: document.getElementById('sberbank-details').value,
-                        alfa: document.getElementById('alfa-details').value
+                        sbpPhone: document.getElementById('sbp-phone').value,
+                        sbpName: document.getElementById('sbp-name').value,
+                        sbpBank: document.getElementById('sbp-bank').value,
+                        sberbankCard: document.getElementById('sberbank-card').value,
+                        sberbankName: document.getElementById('sberbank-name').value,
+                        alfaCard: document.getElementById('alfa-card').value,
+                        alfaName: document.getElementById('alfa-name').value
                     };
                     const success = await savePaymentDetails(details);
                     if (success) {
@@ -2079,39 +2155,39 @@
             document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
                 radio.addEventListener('change', async function() {
                     const method = this.value;
-                    const detailsContainer = document.getElementById('bank-details');
-                    const detailsText = document.getElementById('bank-details-text');
+                    const bankDetailsContainer = document.getElementById('bank-details');
                     const confirmButton = document.getElementById('confirm-payment');
 
                     if (method) {
                         const paymentDetails = await getPaymentDetails();
-                        let details = '';
                         
+                        // Проверяем, заполнены ли реквизиты для выбранного метода
+                        let hasDetails = false;
                         if (method === 'сбп') {
-                            details = paymentDetails.sbp || 'Реквизиты для СБП не заданы\nПерейдите в админ-панель → Реквизиты';
+                            hasDetails = paymentDetails.sbpPhone && paymentDetails.sbpName && paymentDetails.sbpBank;
                         } else if (method === 'сбербанк') {
-                            details = paymentDetails.sberbank || 'Реквизиты для Сбербанка не заданы\nПерейдите в админ-панель → Реквизиты';
+                            hasDetails = paymentDetails.sberbankCard && paymentDetails.sberbankName;
                         } else if (method === 'альфа-банк') {
-                            details = paymentDetails.alfa || 'Реквизиты для Альфа-Банка не заданы\nПерейдите в админ-панель → Реквизиты';
+                            hasDetails = paymentDetails.alfaCard && paymentDetails.alfaName;
                         }
 
-                        detailsText.textContent = details;
-                        detailsContainer.classList.remove('hidden');
-                        confirmButton.disabled = false;
+                        if (hasDetails) {
+                            displayBankDetails(method, paymentDetails);
+                            confirmButton.disabled = false;
+                        } else {
+                            bankDetailsContainer.innerHTML = `
+                                <div style="text-align:center; padding:20px; color:var(--warning-glow);">
+                                    <i class="fas fa-exclamation-triangle" style="font-size:24px; margin-bottom:12px;"></i>
+                                    <div>Реквизиты для ${method} не настроены</div>
+                                    <div style="font-size:14px; margin-top:8px;">Обратитесь к администратору</div>
+                                </div>
+                            `;
+                            bankDetailsContainer.classList.remove('hidden');
+                            confirmButton.disabled = true;
+                        }
                     }
                 });
             });
-
-            // copy bank details
-            const copyBtn = document.getElementById('copy-details');
-            if (copyBtn) {
-                copyBtn.addEventListener('click', function() {
-                    const detailsText = document.getElementById('bank-details-text').textContent;
-                    navigator.clipboard.writeText(detailsText).then(() => {
-                        showToast('Реквизиты скопированы!', 'success');
-                    });
-                });
-            }
 
             // Confirm payment button
             const confirmBtn = document.getElementById('confirm-payment');
@@ -2122,7 +2198,6 @@
                         return;
                     }
 
-                    // Если применен промокод, обновляем заказ с новой ценой
                     if (currentPromocode) {
                         const discountedPrice = originalPrice * (1 - currentPromocode.discount / 100);
                         const success = await updateOrderPrice(currentOrderId, {
