@@ -132,6 +132,7 @@
         .status-waiting { background: rgba(0,255,65,0.15); color:var(--primary-glow); border:1px solid rgba(0,255,65,0.3); }
         .status-completed { background: rgba(0,255,102,0.15); color:var(--success-glow); border:1px solid rgba(0,255,102,0.3); }
         .status-rejected { background: rgba(255,46,122,0.15); color:var(--danger-glow); border:1px solid rgba(255,46,122,0.3); }
+        .status-deleted { background: rgba(255,46,122,0.15); color:var(--danger-glow); border:1px solid rgba(255,46,122,0.3); }
 
         .payment-methods { display:grid; grid-template-columns:1fr; gap:12px; margin:20px 0; }
         .payment-method { display:flex; align-items:center; padding:18px; border:1px solid rgba(0,255,65,0.1); border-radius:16px; cursor:pointer; transition:var(--transition-smooth); backdrop-filter: blur(10px); background: rgba(0,10,0,0.3); }
@@ -415,6 +416,100 @@
             color: var(--primary-glow);
         }
 
+        /* Стили для модального окна с уведомлением о комментарии */
+        .payment-alert-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        }
+
+        .payment-alert-content {
+            background: var(--glass-bg);
+            border: 2px solid var(--primary-glow);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); }
+            50% { box-shadow: 0 0 60px rgba(0, 255, 65, 0.6); }
+            100% { box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); }
+        }
+
+        .payment-alert-icon {
+            font-size: 48px;
+            color: var(--primary-glow);
+            margin-bottom: 20px;
+        }
+
+        .payment-alert-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary-glow);
+        }
+
+        .payment-alert-message {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .payment-alert-note {
+            font-size: 14px;
+            color: var(--warning-glow);
+            font-style: italic;
+            margin-top: 16px;
+        }
+
+        .countdown-timer {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--warning-glow);
+            margin: 20px 0;
+            padding: 12px;
+            background: rgba(255, 214, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 214, 0, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover::before {
+            left: -100%;
+        }
+
+        /* Стиль для отображения способа оплаты */
+        .payment-method-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(0,255,65,0.1);
+            border: 1px solid rgba(0,255,65,0.2);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-glow);
+        }
+
         .hidden { display:none; }
         .fade-in { animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
@@ -445,6 +540,23 @@
                 text-align: left;
                 margin-right: 0;
             }
+            .payment-alert-content {
+                padding: 24px 20px;
+                margin: 20px;
+            }
+            .payment-alert-icon {
+                font-size: 36px;
+            }
+            .payment-alert-title {
+                font-size: 20px;
+            }
+            .payment-alert-message {
+                font-size: 16px;
+            }
+            .countdown-timer {
+                font-size: 16px;
+                padding: 10px;
+            }
         }
 
         @media (max-width:480px) {
@@ -466,6 +578,31 @@
 
     <!-- Toast уведомления -->
     <div class="toast-container" id="toast-container"></div>
+
+    <!-- Модальное окно с уведомлением о комментарии -->
+    <div id="payment-alert-modal" class="payment-alert-modal hidden">
+        <div class="payment-alert-content fade-in">
+            <div class="payment-alert-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="payment-alert-title">Внимание!</div>
+            <div class="payment-alert-message">
+                Чтобы ваш платеж был обнаружен системой, в комментарий к переводу пишите слово <strong style="color: var(--warning-glow);">ПОДАРОК</strong>.<br><br>
+                Если строки комментария нет - отправляйте перевод без комментария.
+            </div>
+            <div class="payment-alert-note">
+                Без этого слова система может не распознать ваш платеж автоматически
+            </div>
+            
+            <div class="countdown-timer" id="countdown-timer">
+                Кнопка станет активной через: <span id="countdown-seconds">5</span> сек.
+            </div>
+            
+            <button class="btn btn-primary" id="close-payment-alert" disabled style="margin-top: 10px;">
+                <i class="fas fa-check" style="margin-right: 8px;"></i> Понятно, продолжить
+            </button>
+        </div>
+    </div>
 
     <div id="auth-modal" class="auth-modal hidden" class="auth-modal hidden">
         <div class="auth-card fade-in">
@@ -687,6 +824,7 @@
                                     <th>Товар</th>
                                     <th>Сумма</th>
                                     <th>Статус</th>
+                                    <th>Способ оплаты</th>
                                     <th>Действия</th>
                                 </tr>
                             </thead>
@@ -826,6 +964,10 @@
         let currentPromocode = null;
         let originalPrice = 0;
         let completedOrderTimer = null;
+        
+        // Переменные для таймера уведомления
+        let countdownTimer = null;
+        let countdownSeconds = 5;
 
         // --- Firebase helper functions ---
         async function saveOrder(order) {
@@ -841,7 +983,11 @@
         async function loadOrders() {
             try {
                 const snapshot = await db.collection('orders').orderBy('createdAt', 'desc').get();
-                return snapshot.docs.map(doc => doc.data());
+                
+                // Фильтруем на клиенте - это безопасно и не требует индексов
+                return snapshot.docs
+                    .map(doc => doc.data())
+                    .filter(order => order.status !== 'deleted');
             } catch (error) {
                 console.error('Ошибка загрузки:', error);
                 return [];
@@ -874,10 +1020,38 @@
             }
         }
 
+        async function updateOrderPaymentMethod(orderId, paymentMethod) {
+            try {
+                await db.collection('orders').doc(orderId).update({
+                    paymentMethod: paymentMethod,
+                    updatedAt: new Date().toISOString()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка обновления способа оплаты:', error);
+                return false;
+            }
+        }
+
         async function getOrder(orderId) {
             try {
                 const doc = await db.collection('orders').doc(orderId).get();
-                return doc.exists ? doc.data() : null;
+                if (!doc.exists) return null;
+                
+                const order = doc.data();
+                
+                // Проверяем, не был ли заказ удален более 5 минут назад
+                if (order.status === 'deleted' && order.deletedAt) {
+                    const deletedTime = new Date(order.deletedAt).getTime();
+                    const currentTime = new Date().getTime();
+                    const fiveMinutes = 5 * 60 * 1000;
+                    
+                    if (currentTime - deletedTime > fiveMinutes) {
+                        return null; // Просто возвращаем null, не удаляем из базы
+                    }
+                }
+                
+                return order;
             } catch (error) {
                 console.error('Ошибка получения заказа:', error);
                 return null;
@@ -886,7 +1060,11 @@
 
         async function deleteOrder(orderId) {
             try {
-                await db.collection('orders').doc(orderId).delete();
+                // Вместо полного удаления помечаем заказ как удаленный
+                await db.collection('orders').doc(orderId).update({
+                    status: 'deleted',
+                    deletedAt: new Date().toISOString()
+                });
                 return true;
             } catch (error) {
                 console.error('Ошибка удаления:', error);
@@ -894,36 +1072,16 @@
             }
         }
 
-        // --- Toast уведомления ---
-        function showToast(message, type = 'success', duration = 4000) {
-            const toastContainer = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            
-            const icon = type === 'success' ? 'fa-check-circle' : 
-                        type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
-            
-            toast.innerHTML = `
-                <div class="toast-icon">
-                    <i class="fas ${icon}"></i>
-                </div>
-                <div class="toast-message">${message}</div>
-            `;
-            
-            toastContainer.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 100);
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    if (toast.parentNode) {
-                        toast.parentNode.removeChild(toast);
-                    }
-                }, 400);
-            }, duration);
+        // ✅ ДОБАВЬТЕ эту функцию очистки
+        async function cleanupDeletedOrders() {
+            try {
+                // Эта функция теперь просто логирует, реальное удаление не требуется
+                console.log('Cleanup: Проверка старых удаленных заказов...');
+                return true;
+            } catch (error) {
+                console.error('Ошибка очистки:', error);
+                return false;
+            }
         }
 
         // --- Управление реквизитами ---
@@ -1077,6 +1235,38 @@
             }
         }
 
+        // --- Toast уведомления ---
+        function showToast(message, type = 'success', duration = 4000) {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="toast-message">${message}</div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 400);
+            }, duration);
+        }
+
         // --- App logic ---
         document.addEventListener('DOMContentLoaded', async function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -1096,6 +1286,9 @@
                 showWelcomeView();
             }
 
+            // ✅ ДОБАВЬТЕ эту строку
+            await cleanupDeletedOrders();
+
             setupEventHandlers();
         });
 
@@ -1112,14 +1305,26 @@
             orderStatusInterval = setInterval(async () => {
                 const order = await getOrder(orderId);
                 if (order) {
-                    updateOrderStatusView(order.status);
+                    updateOrderStatusView(order.status, order);
                     updateOrderActions(order.status);
                     
-                    if (order.status === 'completed' || order.status === 'rejected') {
+                    if (order.status === 'completed' || order.status === 'rejected' || order.status === 'deleted') {
                         stopOrderStatusPolling();
                     }
+                } else {
+                    // Если заказ не найден (удален и прошло более 5 минут)
+                    document.getElementById('order-view').innerHTML = `
+                        <div class="status-indicator">
+                            <div class="status-icon error">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="status-title">Заказ не найден</div>
+                            <div class="status-description">Проверьте правильность ссылки</div>
+                        </div>
+                    `;
+                    stopOrderStatusPolling();
                 }
-            }, 1000);
+            }, 2000); // Увеличиваем интервал до 2 секунд
         }
 
         function stopOrderStatusPolling() {
@@ -1220,7 +1425,7 @@
 
             updateOrderPriceDisplay(order);
             updateOrderActions(order.status);
-            updateOrderStatusView(order.status);
+            updateOrderStatusView(order.status, order);
             
             startOrderStatusPolling(orderId);
         }
@@ -1232,7 +1437,7 @@
                 priceContainer.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span class="price-original">${order.originalPrice || order.price}</span>
-                        <span class="price-final">${order.finalPrice} ₽</span>
+                        <span class="price-final">${order.finalPrice}</span>
                         <span class="discount-badge">Промокод: ${order.promocodeUsed}</span>
                     </div>
                 `;
@@ -1243,6 +1448,11 @@
 
         function updateOrderActions(status) {
             const actionsContainer = document.getElementById('order-actions');
+
+            if (status === 'deleted') {
+                actionsContainer.innerHTML = '';
+                return;
+            }
 
             if (status === 'pending') {
                 actionsContainer.innerHTML = `
@@ -1273,7 +1483,7 @@
             }
         }
 
-        function updateOrderStatusView(status) {
+        function updateOrderStatusView(status, order = null) {
             const statusContainer = document.getElementById('order-status');
 
             if (status === 'pending') {
@@ -1323,6 +1533,16 @@
                     <div class="status-title">Оплата не прошла</div>
                     <div class="status-description">Попробуйте еще раз или обратитесь к администратору</div>
                 `;
+            } else if (status === 'deleted') {
+                statusContainer.innerHTML = `
+                    <div class="status-icon error">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <div class="status-title">Заказ удален администратором</div>
+                    <div class="status-description">Наверное, это просто сбой в системе. Напишите админу, чтобы узнать, что произошло.</div>
+                `;
+                
+                document.getElementById('order-actions').innerHTML = '';
             }
         }
 
@@ -1358,7 +1578,7 @@
                 priceContainer.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span class="price-original">${originalPrice.toFixed(2)} ₽</span>
-                        <span class="price-final">${order.finalPrice} ₽</span>
+                        <span class="price-final">${order.finalPrice}</span>
                         <span class="discount-badge">Промокод: ${order.promocodeUsed}</span>
                     </div>
                 `;
@@ -1384,16 +1604,10 @@
                     <div class="bank-detail-item">
                         <div class="bank-detail-label">Получатель:</div>
                         <div class="bank-detail-value">${details.sbpName || 'Не указан'}</div>
-                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sbpName || ''}')">
-                            <i class="far fa-copy"></i> Копировать
-                        </button>
                     </div>
                     <div class="bank-detail-item">
                         <div class="bank-detail-label">Банк:</div>
                         <div class="bank-detail-value">${details.sbpBank || 'Не указан'}</div>
-                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sbpBank || ''}')">
-                            <i class="far fa-copy"></i> Копировать
-                        </button>
                     </div>
                 `;
             } else if (method === 'сбербанк') {
@@ -1409,9 +1623,6 @@
                     <div class="bank-detail-item">
                         <div class="bank-detail-label">Получатель:</div>
                         <div class="bank-detail-value">${details.sberbankName || 'Не указан'}</div>
-                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sberbankName || ''}')">
-                            <i class="far fa-copy"></i> Копировать
-                        </button>
                     </div>
                 `;
             } else if (method === 'альфа-банк') {
@@ -1427,9 +1638,6 @@
                     <div class="bank-detail-item">
                         <div class="bank-detail-label">Получатель:</div>
                         <div class="bank-detail-value">${details.alfaName || 'Не указан'}</div>
-                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.alfaName || ''}')">
-                            <i class="far fa-copy"></i> Копировать
-                        </button>
                     </div>
                 `;
             }
@@ -1449,6 +1657,42 @@
                 console.error('Ошибка копирования: ', err);
                 showToast('Ошибка при копировании', 'error');
             });
+        }
+
+        // --- Функция показа уведомления с таймером ---
+        function showPaymentAlert() {
+            const alertModal = document.getElementById('payment-alert-modal');
+            const closeButton = document.getElementById('close-payment-alert');
+            const countdownElement = document.getElementById('countdown-seconds');
+            
+            // Сбрасываем таймер
+            countdownSeconds = 5;
+            countdownElement.textContent = countdownSeconds;
+            
+            // Блокируем кнопку
+            closeButton.disabled = true;
+            closeButton.innerHTML = '<i class="fas fa-check" style="margin-right: 8px;"></i> Понятно, продолжить';
+            
+            // Показываем модальное окно
+            alertModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Запускаем таймер
+            if (countdownTimer) {
+                clearInterval(countdownTimer);
+            }
+            
+            countdownTimer = setInterval(() => {
+                countdownSeconds--;
+                countdownElement.textContent = countdownSeconds;
+                
+                if (countdownSeconds <= 0) {
+                    clearInterval(countdownTimer);
+                    closeButton.disabled = false;
+                    closeButton.innerHTML = '<i class="fas fa-check" style="margin-right: 8px;"></i> Понятно, продолжить';
+                    document.getElementById('countdown-timer').innerHTML = 'Теперь вы можете продолжить';
+                }
+            }, 1000);
         }
 
         // --- Admin: list, details, actions ---
@@ -1482,16 +1726,38 @@
                     const displayPrice = order.finalPrice ? 
                         `<div style="display:flex; align-items:center; gap:4px;">
                             <span style="text-decoration:line-through; color:var(--text-secondary); font-size:14px;">${order.price}</span>
-                            <span>${order.finalPrice} ₽</span>
+                            <span>${order.finalPrice}</span>
                             ${order.promocodeUsed ? `<span class="discount-badge">${order.promocodeUsed}</span>` : ''}
                         </div>` : 
                         `<div>${order.price}</div>`;
+
+                    // Определяем иконку способа оплаты
+                    let paymentIcon = 'fa-credit-card';
+                    let paymentMethodText = 'Не выбран';
+                    
+                    if (order.paymentMethod === 'сбп') {
+                        paymentIcon = 'fa-mobile-alt';
+                        paymentMethodText = 'СБП';
+                    } else if (order.paymentMethod === 'сбербанк') {
+                        paymentIcon = 'fa-university';
+                        paymentMethodText = 'Сбербанк';
+                    } else if (order.paymentMethod === 'альфа-банк') {
+                        paymentIcon = 'fa-credit-card';
+                        paymentMethodText = 'Альфа-Банк';
+                    }
 
                     html += `
                         <div class="order-item" data-order-id="${order.id}">
                             <div class="order-info">
                                 <h3>${order.product}</h3>
                                 <div class="order-meta">${order.client} • ${new Date(order.createdAt).toLocaleDateString('ru-RU')}</div>
+                                ${order.paymentMethod ? `
+                                    <div style="margin-top: 8px;">
+                                        <span class="payment-method-badge">
+                                            <i class="fas ${paymentIcon}"></i> ${paymentMethodText}
+                                        </span>
+                                    </div>
+                                ` : ''}
                             </div>
                             <div>
                                 <div style="text-align:right;margin-bottom:8px;">${displayPrice}</div>
@@ -1548,13 +1814,13 @@
 
         async function loadOrdersTable() {
             const tableBody = document.getElementById('orders-table-body');
-            tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</td></tr>';
 
             try {
                 const orders = await loadOrders();
 
                 if (orders.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text-secondary);">Заказов пока нет</td></tr>';
+                    tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--text-secondary);">Заказов пока нет</td></tr>';
                     return;
                 }
 
@@ -1573,9 +1839,19 @@
                     const displayPrice = order.finalPrice ? 
                         `<div style="display:flex; align-items:center; gap:4px;">
                             <span style="text-decoration:line-through; color:var(--text-secondary); font-size:12px;">${order.price}</span>
-                            <span>${order.finalPrice} ₽</span>
+                            <span>${order.finalPrice}</span>
                         </div>` : 
                         order.price;
+
+                    // Определяем текст способа оплаты
+                    let paymentMethodText = 'Не выбран';
+                    if (order.paymentMethod === 'сбп') {
+                        paymentMethodText = 'СБП';
+                    } else if (order.paymentMethod === 'сбербанк') {
+                        paymentMethodText = 'Сбербанк';
+                    } else if (order.paymentMethod === 'альфа-банк') {
+                        paymentMethodText = 'Альфа-Банк';
+                    }
 
                     html += `
                         <tr>
@@ -1585,6 +1861,7 @@
                             <td>${order.product}</td>
                             <td>${displayPrice}</td>
                             <td><span class="order-status status-${order.status}">${statusText}</span></td>
+                            <td>${paymentMethodText}</td>
                             <td>
                                 <div class="table-actions">
                                     <button class="quick-action-btn" onclick="showOrderDetails('${order.id}')">
@@ -1602,7 +1879,7 @@
                 tableBody.innerHTML = html;
 
             } catch (error) {
-                tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--danger-glow);">Ошибка загрузки заказов</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--danger-glow);">Ошибка загрузки заказов</td></tr>';
             }
         }
 
@@ -1747,7 +2024,7 @@
                     return;
                 }
 
-                let csv = 'Дата;Время;Клиент;Товар;Исходная цена;Финальная цена;Промокод;Статус\n';
+                let csv = 'Дата;Время;Клиент;Товар;Исходная цена;Финальная цена;Промокод;Способ оплаты;Статус\n';
                 
                 orders.forEach(order => {
                     const date = new Date(order.createdAt);
@@ -1763,8 +2040,9 @@
                     const finalPrice = order.finalPrice || order.price.replace(' ₽', '');
                     const originalPrice = order.originalPrice || order.price.replace(' ₽', '');
                     const promocode = order.promocodeUsed || '';
+                    const paymentMethod = order.paymentMethod || 'Не выбран';
 
-                    csv += `"${dateStr}";"${timeStr}";"${order.client}";"${order.product}";"${originalPrice}";"${finalPrice}";"${promocode}";"${statusText}"\n`;
+                    csv += `"${dateStr}";"${timeStr}";"${order.client}";"${order.product}";"${originalPrice}";"${finalPrice}";"${promocode}";"${paymentMethod}";"${statusText}"\n`;
                 });
 
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -1796,7 +2074,33 @@
                     <div class="detail-label">Промокод</div>
                     <div class="detail-value">
                         <span class="discount-badge">${order.promocodeUsed}</span>
-                        ${order.finalPrice ? `<div style="margin-top:8px; color:var(--success-glow);">Применена скидка: ${order.finalPrice} ₽ (вместо ${order.originalPrice || order.price})</div>` : ''}
+                        ${order.finalPrice ? `<div style="margin-top:8px; color:var(--success-glow);">Применена скидка: ${order.finalPrice} (вместо ${order.originalPrice || order.price})</div>` : ''}
+                    </div>
+                </div>
+            ` : '';
+
+            // Определяем иконку и текст способа оплаты
+            let paymentIcon = 'fa-credit-card';
+            let paymentMethodText = 'Не выбран';
+            
+            if (order.paymentMethod === 'сбп') {
+                paymentIcon = 'fa-mobile-alt';
+                paymentMethodText = 'СБП';
+            } else if (order.paymentMethod === 'сбербанк') {
+                paymentIcon = 'fa-university';
+                paymentMethodText = 'Сбербанк';
+            } else if (order.paymentMethod === 'альфа-банк') {
+                paymentIcon = 'fa-credit-card';
+                paymentMethodText = 'Альфа-Банк';
+            }
+
+            const paymentMethodInfo = order.paymentMethod ? `
+                <div class="detail-item">
+                    <div class="detail-label">Способ оплаты</div>
+                    <div class="detail-value">
+                        <span class="payment-method-badge">
+                            <i class="fas ${paymentIcon}"></i> ${paymentMethodText}
+                        </span>
                     </div>
                 </div>
             ` : '';
@@ -1816,13 +2120,14 @@
                         ${order.finalPrice ? 
                             `<div style="display:flex; align-items:center; gap:8px;">
                                 <span style="text-decoration:line-through; color:var(--text-secondary);">${order.originalPrice || order.price}</span>
-                                <span class="order-price">${order.finalPrice} ₽</span>
+                                <span class="order-price">${order.finalPrice}</span>
                             </div>` : 
                             `<span class="order-price">${order.price}</span>`
                         }
                     </div>
                 </div>
                 ${promocodeInfo}
+                ${paymentMethodInfo}
                 <div class="detail-item">
                     <div class="detail-label">Клиент</div>
                     <div class="detail-value">${order.client}</div>
@@ -1997,6 +2302,38 @@
             document.getElementById('close-details').addEventListener('click', closeOrderDetails);
             document.getElementById('export-csv').addEventListener('click', exportToCSV);
 
+            // Закрытие уведомления о комментарии
+            document.getElementById('close-payment-alert').addEventListener('click', function() {
+                const alertModal = document.getElementById('payment-alert-modal');
+                
+                // Останавливаем таймер если он еще работает
+                if (countdownTimer) {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+                }
+                
+                alertModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+
+            // Закрытие по клику на фон - отключаем, пока таймер не закончится
+            document.getElementById('payment-alert-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    // Проверяем, истекло ли время таймера
+                    if (countdownSeconds <= 0) {
+                        if (countdownTimer) {
+                            clearInterval(countdownTimer);
+                            countdownTimer = null;
+                        }
+                        this.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    } else {
+                        // Показываем сообщение, что нужно подождать
+                        showToast('Пожалуйста, прочитайте внимательно и подождите ' + countdownSeconds + ' секунд', 'warning', 2000);
+                    }
+                }
+            });
+
             // create order form
             const createForm = document.getElementById('create-order-form');
             if (createForm) {
@@ -2104,7 +2441,7 @@
                         priceContainer.innerHTML = `
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span class="price-original">${originalPrice.toFixed(2)} ₽</span>
-                                <span class="price-final">${discountedPrice.toFixed(2)} ₽</span>
+                                <span class="price-final">${discountedPrice.toFixed(2)}</span>
                                 <span class="discount-badge">-${promocode.discount}%</span>
                             </div>
                         `;
@@ -2174,6 +2511,9 @@
                         if (hasDetails) {
                             displayBankDetails(method, paymentDetails);
                             confirmButton.disabled = false;
+                            
+                            // Показываем уведомление о комментарии с таймером
+                            showPaymentAlert();
                         } else {
                             bankDetailsContainer.innerHTML = `
                                 <div style="text-align:center; padding:20px; color:var(--warning-glow);">
@@ -2198,10 +2538,16 @@
                         return;
                     }
 
+                    // Сохраняем выбранный способ оплаты
+                    const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked');
+                    if (selectedPaymentMethod) {
+                        await updateOrderPaymentMethod(currentOrderId, selectedPaymentMethod.value);
+                    }
+
                     if (currentPromocode) {
                         const discountedPrice = originalPrice * (1 - currentPromocode.discount / 100);
                         const success = await updateOrderPrice(currentOrderId, {
-                            finalPrice: discountedPrice.toFixed(2) + ' ₽',
+                            finalPrice: discountedPrice.toFixed(2),
                             originalPrice: originalPrice.toFixed(2) + ' ₽',
                             promocodeUsed: currentPromocode.code
                         });
