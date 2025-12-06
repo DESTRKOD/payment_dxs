@@ -1,29 +1,3837 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сайт не работает</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>DxS Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/w8TagaC.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/w8TagaC.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/w8TagaC.png">
+    <link rel="manifest" href="data:application/manifest+json,{}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DxS Shop">
+    <meta name="theme-color" content="#FF2E7A">
+    
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-glow: #FF2E7A;
+            --secondary-glow: #FF6B9D;
+            --accent-glow: #FFD600;
+            --success-glow: #00FF66;
+            --warning-glow: #FFD600;
+            --danger-glow: #FF2E7A;
+            --christmas-red: #FF2E7A;
+            --christmas-green: #00CC33;
+            --christmas-gold: #FFD600;
+            --snow-white: #FFFFFF;
+            
+            --glass-bg: rgba(20, 0, 10, 0.3);
+            --glass-border: rgba(255, 46, 122, 0.15);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            
+            --bg-primary: #0A0508;
+            --bg-secondary: #150A10;
+            --bg-gradient: radial-gradient(circle at 20% 30%, rgba(255, 46, 122, 0.05) 0%, transparent 50%),
+                          radial-gradient(circle at 80% 70%, rgba(0, 204, 51, 0.05) 0%, transparent 50%);
+            
+            --blur-intensity: 20px;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        
-        .message {
-            font-size: 48px;
-            color: #ff0000;
+
+        * { 
+            margin:0; 
+            padding:0; 
+            box-sizing:border-box; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background-color: #0A0508;
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: var(--bg-gradient);
+            touch-action: manipulation;
+            position: relative;
+        }
+
+        .snowfall {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            filter: blur(0.5px);
+            animation-name: snowfall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .garland-container {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .garland {
+            position: absolute;
+            width: 120%;
+            left: -10%;
+            height: 20px;
+            display: flex;
+            justify-content: space-around;
+            animation: garlandTwinkle 2s infinite;
+        }
+
+        .light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: lightTwinkle 1.5s infinite;
+        }
+
+        .light:nth-child(3n) {
+            background: var(--christmas-red);
+            box-shadow: 0 0 10px var(--christmas-red);
+        }
+
+        .light:nth-child(3n+1) {
+            background: var(--christmas-green);
+            box-shadow: 0 0 10px var(--christmas-green);
+        }
+
+        .light:nth-child(3n+2) {
+            background: var(--christmas-gold);
+            box-shadow: 0 0 10px var(--christmas-gold);
+        }
+
+        @keyframes garlandTwinkle {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes lightTwinkle {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .liquid-background { 
+            position: fixed; 
+            top:0; 
+            left:0; 
+            width:100%; 
+            height:100%; 
+            z-index:-1; 
+            overflow:hidden; 
+        }
+        .liquid-shape { 
+            position:absolute; 
+            border-radius:50%; 
+            filter:blur(60px); 
+            opacity:0.15; 
+            animation: float 20s infinite linear; 
+        }
+        .shape-1{ width:400px; height:400px; background: linear-gradient(135deg, var(--christmas-red), var(--christmas-green)); top:10%; left:5%; }
+        .shape-2{ width:300px; height:300px; background: linear-gradient(135deg, var(--christmas-green), var(--christmas-gold)); top:60%; left:80%; animation-delay:-5s; }
+        .shape-3{ width:350px; height:350px; background: linear-gradient(135deg, var(--christmas-gold), var(--christmas-red)); top:30%; left:70%; animation-delay:-10s; }
+        .shape-4{ width:250px; height:250px; background: linear-gradient(135deg, var(--christmas-red), var(--christmas-gold)); top:70%; left:10%; animation-delay:-15s; }
+
+        @keyframes float {
+            0% { transform: translate(0,0) rotate(0deg); }
+            33% { transform: translate(30px,-50px) rotate(120deg); }
+            66% { transform: translate(-20px,20px) rotate(240deg); }
+            100% { transform: translate(0,0) rotate(360deg); }
+        }
+
+        .container { 
+            max-width:800px; 
+            margin:0 auto; 
+            padding:16px; 
+            min-height:100vh; 
+            display:flex; 
+            flex-direction:column; 
+            background-color: var(--bg-primary); 
+            position: relative;
+            z-index: 1;
+        }
+
+        header { 
+            text-align:center; 
+            padding:30px 16px 20px; 
+            position:relative; 
+            margin-bottom:16px; 
+        }
+        .logo-container { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            margin-bottom: 12px; 
+            gap: 12px;
+        }
+        .logo-img { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 12px; 
+            object-fit: cover;
+            border: none;
+            box-shadow: none;
+        }
+        .logo-text { 
+            font-size:32px; 
+            font-weight:800; 
+            background: linear-gradient(135deg, var(--christmas-red), var(--christmas-gold)); 
+            -webkit-background-clip:text; 
+            -webkit-text-fill-color:transparent; 
+            background-clip:text; 
+            text-shadow:0 0 30px rgba(255, 46, 122, 0.3); 
+            letter-spacing:-0.5px; 
+        }
+        .subtitle { 
+            color:var(--text-secondary); 
+            font-size:16px; 
+            font-weight:400; 
+            margin-bottom:8px; 
+            letter-spacing:0.5px; 
+        }
+
+        .glass-card { 
+            background:var(--glass-bg); 
+            border:1px solid var(--glass-border); 
+            border-radius:20px; 
+            padding:20px; 
+            margin-bottom:16px; 
+            backdrop-filter: blur(var(--blur-intensity)); 
+            box-shadow:var(--glass-shadow); 
+            transition:var(--transition-smooth); 
+            position:relative; 
+            overflow:hidden; 
+            z-index: 2;
+        }
+        .glass-card::before { 
+            content:''; 
+            position:absolute; 
+            top:0; 
+            left:0; 
+            right:0; 
+            height:1px; 
+            background: linear-gradient(90deg, transparent, rgba(255, 46, 122, 0.3), transparent); 
+        }
+        .glass-card:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 0 20px rgba(255, 46, 122, 0.2); 
+            border-color: rgba(255, 46, 122, 0.3); 
+        }
+
+        .card-header { 
+            display:flex; 
+            align-items:center; 
+            margin-bottom:16px; 
+        }
+        .card-icon { 
+            width:44px; 
+            height:44px; 
+            border-radius:12px; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            margin-right:14px; 
+            background: rgba(20, 0, 10, 0.5); 
+            backdrop-filter: blur(10px); 
+            border:1px solid rgba(255, 46, 122, 0.2); 
+            box-shadow:0 4px 20px rgba(0,0,0,0.2); 
+        }
+        .card-icon i { 
+            font-size:20px; 
+            background: linear-gradient(135deg, var(--christmas-red), var(--christmas-gold)); 
+            -webkit-background-clip:text; 
+            -webkit-text-fill-color:transparent; 
+            background-clip:text; 
+        }
+        .card-title { 
+            font-size:20px; 
+            font-weight:700; 
+            letter-spacing:-0.5px; 
+        }
+
+        .form-group { 
+            margin-bottom:16px; 
+        }
+        .form-label { 
+            display:block; 
+            margin-bottom:8px; 
+            font-weight:600; 
+            color:var(--text-secondary); 
+            font-size:15px; 
+        }
+        .form-control { 
+            width:100%; 
+            padding:14px 16px; 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid rgba(255, 46, 122, 0.1); 
+            border-radius:14px; 
+            font-size:16px; 
+            color:var(--text-primary); 
+            transition:var(--transition-smooth); 
+            backdrop-filter: blur(10px); 
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .form-control:focus { 
+            outline:none; 
+            border-color:var(--christmas-red); 
+            box-shadow:0 0 0 2px rgba(255, 46, 122, 0.2); 
+        }
+        textarea.form-control { 
+            min-height: 100px; 
+            resize: vertical; 
+        }
+
+        .btn { 
+            display:inline-flex; 
+            align-items:center; 
+            justify-content:center; 
+            padding:14px 24px; 
+            border:none; 
+            border-radius:14px; 
+            font-size:16px; 
+            font-weight:600; 
+            cursor:pointer; 
+            transition:var(--transition-smooth); 
+            text-decoration:none; 
+            position:relative; 
+            overflow:hidden; 
+            backdrop-filter: blur(10px); 
+            min-height: 48px;
+            z-index: 2;
+        }
+        .btn::before { 
+            content:''; 
+            position:absolute; 
+            top:0; 
+            left:-100%; 
+            width:100%; 
+            height:100%; 
+            background: linear-gradient(90deg, transparent, rgba(255, 46, 122, 0.2), transparent); 
+            transition:left 0.7s ease; 
+        }
+        .btn:hover::before { 
+            left:100%; 
+        }
+        .btn-primary { 
+            background: linear-gradient(135deg, rgba(255, 46, 122, 0.2), rgba(255, 107, 157, 0.2)); 
+            color:var(--text-primary); 
+            border:1px solid rgba(255, 46, 122, 0.3); 
+            box-shadow:0 4px 20px rgba(255, 46, 122, 0.15); 
+            width:100%; 
+        }
+        .btn-success { 
+            background: linear-gradient(135deg, rgba(0,255,102,0.2), rgba(0,255,65,0.2)); 
+            color:var(--text-primary); 
+            border:1px solid rgba(0,255,102,0.3); 
+            box-shadow:0 4px 20px rgba(0,255,102,0.15); 
+        }
+        .btn-outline { 
+            background: rgba(20, 0, 10, 0.3); 
+            border:1px solid rgba(255, 46, 122, 0.2); 
+            color:var(--text-primary); 
+        }
+        .btn-danger { 
+            background: linear-gradient(135deg, rgba(255,46,122,0.2), rgba(255,0,0,0.2)); 
+            color:var(--text-primary); 
+            border:1px solid rgba(255,46,122,0.3); 
+            box-shadow:0 4px 20px rgba(255,46,122,0.15); 
+        }
+        .btn-sm { 
+            padding:10px 16px; 
+            font-size:14px; 
+            min-height: 40px;
+        }
+
+        .order-item { 
+            display:flex; 
+            justify-content:space-between; 
+            align-items:center; 
+            padding:16px 0; 
+            border-bottom:1px solid rgba(255, 46, 122, 0.1); 
+            cursor:pointer; 
+            transition:var(--transition-smooth); 
+        }
+        .order-item:hover { 
+            background: rgba(255, 46, 122, 0.05); 
+            border-radius:12px; 
+            padding:16px; 
+            margin:0 -8px; 
+        }
+        .order-info h3 { 
+            font-size:16px; 
+            margin-bottom:6px; 
+            font-weight:600; 
+        }
+        .order-meta { 
+            color:var(--text-secondary); 
+            font-size:13px; 
+        }
+        .order-price { 
+            font-size:18px; 
+            font-weight:700; 
+            background: linear-gradient(135deg, var(--christmas-red), var(--christmas-gold)); 
+            -webkit-background-clip:text; 
+            -webkit-text-fill-color:transparent; 
+            background-clip:text; 
+        }
+        .order-status { 
+            padding:6px 12px; 
+            border-radius:16px; 
+            font-size:11px; 
+            font-weight:600; 
+            backdrop-filter: blur(10px); 
+        }
+        .status-pending { 
+            background: rgba(255,214,0,0.15); 
+            color:var(--warning-glow); 
+            border: 1px solid rgba(255,214,0,0.3); 
+        }
+        .status-waiting { 
+            background: rgba(255, 46, 122, 0.15); 
+            color:var(--christmas-red); 
+            border:1px solid rgba(255, 46, 122, 0.3); 
+        }
+        .status-completed { 
+            background: rgba(0,255,102,0.15); 
+            color:var(--success-glow); 
+            border:1px solid rgba(0,255,102,0.3); 
+        }
+        .status-rejected { 
+            background: rgba(255,46,122,0.15); 
+            color:var(--danger-glow); 
+            border:1px solid rgba(255,46,122,0.3); 
+        }
+        .status-deleted { 
+            background: rgba(255,46,122,0.15); 
+            color:var(--danger-glow); 
+            border:1px solid rgba(255,46,122,0.3); 
+        }
+
+        .payment-methods { 
+            display:grid; 
+            grid-template-columns:1fr; 
+            gap:10px; 
+            margin:16px 0; 
+        }
+        .payment-method { 
+            display:flex; 
+            align-items:center; 
+            padding:16px; 
+            border:1px solid rgba(255, 46, 122, 0.1); 
+            border-radius:14px; 
+            cursor:pointer; 
+            transition:var(--transition-smooth); 
+            backdrop-filter: blur(10px); 
+            background: rgba(20, 0, 10, 0.3); 
+        }
+        .payment-method:hover { 
+            border-color: rgba(255, 46, 122, 0.3); 
+            background: rgba(255, 46, 122, 0.05); 
+        }
+        .payment-method input { 
+            margin-right:14px; 
+        }
+        .payment-icon { 
+            width:40px; 
+            height:40px; 
+            border-radius:10px; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            margin-right:14px; 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid rgba(255, 46, 122, 0.1); 
+        }
+        .bank-details { 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid var(--christmas-red); 
+            border-radius:14px; 
+            padding:16px; 
+            margin:16px 0; 
+            backdrop-filter: blur(10px); 
+        }
+
+        .copy-btn { 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid rgba(255, 46, 122, 0.2); 
+            border-radius:10px; 
+            padding:8px 12px; 
+            font-size:13px; 
+            color:var(--text-secondary); 
+            cursor:pointer; 
+            margin-top:10px; 
+            display:inline-flex; 
+            align-items:center; 
+            transition:var(--transition-smooth); 
+            backdrop-filter: blur(10px); 
+        }
+        .copy-btn:hover { 
+            background: rgba(255, 46, 122, 0.1); 
+            border-color:var(--christmas-red); 
+            color:var(--christmas-red); 
+        }
+
+        .status-indicator { 
+            display:flex; 
+            flex-direction:column; 
+            align-items:center; 
+            text-align:center; 
+            padding:30px 16px; 
+        }
+        .status-icon { 
+            width:80px; 
+            height:80px; 
+            border-radius:50%; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            margin-bottom:20px; 
+            font-size:32px; 
+            backdrop-filter: blur(10px); 
+            border:1px solid rgba(255, 46, 122, 0.2); 
+            box-shadow:0 8px 32px rgba(0,0,0,0.3); 
+        }
+        .status-icon.success { 
+            background: rgba(0,255,102,0.1); 
+            color:var(--success-glow); 
+            border-color: rgba(0,255,102,0.2); 
+        }
+        .status-icon.waiting { 
+            background: rgba(255, 46, 122, 0.1); 
+            color:var(--christmas-red); 
+            border-color: rgba(255, 46, 122, 0.2); 
+        }
+        .status-icon.error { 
+            background: rgba(255,46,122,0.1); 
+            color:var(--danger-glow); 
+            border-color: rgba(255,46,122,0.2); 
+        }
+        .status-title { 
+            font-size:24px; 
+            font-weight:700; 
+            margin-bottom:10px; 
+            letter-spacing:-0.5px; 
+        }
+        .status-description { 
+            color:var(--text-secondary); 
+            margin-bottom:20px; 
+            font-size:16px; 
+            line-height:1.5; 
+        }
+
+        .nav-tabs { 
+            display:flex; 
+            background: rgba(20, 0, 10, 0.4); 
+            border-radius:16px; 
+            padding:4px; 
+            margin-bottom:20px; 
+            backdrop-filter: blur(10px); 
+            border:1px solid rgba(255, 46, 122, 0.1); 
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-tab { 
+            flex: 1 0 auto;
+            text-align:center; 
+            padding:10px 8px; 
+            border-radius:12px; 
+            font-weight:600; 
+            cursor:pointer; 
+            transition:var(--transition-smooth); 
+            font-size: 13px;
+            white-space: nowrap;
+            min-width: 80px;
+        }
+        .nav-tab.active { 
+            background: linear-gradient(135deg, rgba(255, 46, 122, 0.2), rgba(255, 107, 157, 0.2)); 
+            color:var(--text-primary); 
+            box-shadow:0 4px 12px rgba(0,0,0,0.2); 
+        }
+
+        .auth-modal { 
+            position: fixed; 
+            top:0; 
+            left:0; 
+            width:100%; 
+            height:100%; 
+            background-color: rgba(0,0,0,0.9); 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            z-index:1000; 
+            backdrop-filter: blur(10px); 
+            padding: 16px;
+        }
+        .auth-card { 
+            background: var(--glass-bg); 
+            border:1px solid var(--glass-border); 
+            border-radius:20px; 
+            padding:24px; 
+            width:100%; 
+            max-width:400px; 
+            box-shadow:0 20px 60px rgba(0,0,0,0.4); 
+            backdrop-filter: blur(var(--blur-intensity)); 
+        }
+        .auth-title { 
+            font-size:20px; 
+            font-weight:700; 
+            margin-bottom:8px; 
+            text-align:center; 
+        }
+        .auth-subtitle { 
+            color:var(--text-secondary); 
+            text-align:center; 
+            margin-bottom:20px; 
+            font-size: 14px;
+        }
+
+        .order-details-panel { 
+            position: fixed; 
+            top:0; 
+            right:-100%; 
+            width:100%; 
+            max-width:500px; 
+            height:100%; 
+            background:var(--glass-bg); 
+            backdrop-filter: blur(var(--blur-intensity)); 
+            border-left:1px solid var(--glass-border); 
+            z-index:100; 
+            transition:var(--transition-smooth); 
+            overflow-y:auto; 
+            padding:20px; 
+        }
+        .order-details-panel.active { 
+            right:0; 
+        }
+        .order-details-header { 
+            display:flex; 
+            justify-content:space-between; 
+            align-items:center; 
+            margin-bottom:20px; 
+        }
+        .order-details-title { 
+            font-size:20px; 
+            font-weight:700; 
+        }
+        .close-details { 
+            width:36px; 
+            height:36px; 
+            border-radius:10px; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid rgba(255, 46, 122, 0.1); 
+            color:var(--text-secondary); 
+            cursor:pointer; 
+            transition:var(--transition-smooth); 
+        }
+        .close-details:hover { 
+            background: rgba(255, 46, 122, 0.1); 
+            color:var(--christmas-red); 
+        }
+
+        .detail-item { 
+            margin-bottom:16px; 
+        }
+        .detail-label { 
+            font-size:13px; 
+            color:var(--text-secondary); 
+            margin-bottom:4px; 
+        }
+        .detail-value { 
+            font-size:15px; 
+            color:var(--text-primary); 
+        }
+        .order-link-container { 
+            display:flex; 
+            margin-top:8px; 
+        }
+        .order-link-input { 
+            flex:1; 
+            padding:10px 12px; 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid rgba(255, 46, 122, 0.1); 
+            border-radius:10px 0 0 10px; 
+            color:var(--text-primary); 
+            font-size:13px; 
+        }
+        .order-link-copy { 
+            padding:10px 12px; 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid rgba(255, 46, 122, 0.1); 
+            border-left:none; 
+            border-radius:0 10px 10px 0; 
+            color:var(--text-secondary); 
+            cursor:pointer; 
+            transition:var(--transition-smooth); 
+        }
+        .order-link-copy:hover { 
+            background: rgba(255, 46, 122, 0.1); 
+            color:var(--christmas-red); 
+        }
+        .quick-actions { 
+            display:flex; 
+            gap:6px; 
+            flex-wrap:wrap; 
+            margin-top:10px; 
+        }
+        .quick-action-btn { 
+            padding:6px 12px; 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid rgba(255, 46, 122, 0.2); 
+            border-radius:10px; 
+            color:var(--text-primary); 
+            font-size:13px; 
+            cursor:pointer; 
+            transition:var(--transition-smooth); 
+        }
+        .quick-action-btn:hover { 
+            background: rgba(255, 46, 122, 0.1); 
+            border-color:var(--christmas-red); 
+        }
+
+        .empty-state { 
+            text-align:center; 
+            padding:30px 16px; 
+            color:var(--text-secondary); 
+        }
+        .empty-state i { 
+            font-size:40px; 
+            margin-bottom:12px; 
+            opacity:0.5; 
+        }
+
+        .logout-btn { 
+            position:absolute; 
+            top:16px; 
+            right:16px; 
+            padding:8px 12px; 
+            background: rgba(20, 0, 10, 0.4); 
+            border:1px solid rgba(255,255,255,0.1); 
+            border-radius:10px; 
+            color:var(--text-secondary); 
+            font-size:13px; 
+            cursor:pointer; 
+            transition:var(--transition-smooth); 
+            backdrop-filter: blur(10px); 
+        }
+        .logout-btn:hover { 
+            background: rgba(255,255,255,0.1); 
+            color:var(--text-primary); 
+        }
+
+        .orders-table-container { 
+            overflow-x: auto; 
+            margin-top: 16px; 
+            -webkit-overflow-scrolling: touch;
+        }
+        .orders-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 14px;
+        }
+        .orders-table th, .orders-table td { 
+            padding: 10px 12px; 
+            text-align: left; 
+            border-bottom: 1px solid rgba(255, 46, 122, 0.1); 
+            white-space: nowrap;
+        }
+        .orders-table th { 
+            font-weight: 600; 
+            color: var(--text-secondary); 
+            font-size: 13px; 
+        }
+        .orders-table tr:hover { 
+            background: rgba(255, 46, 122, 0.05); 
+        }
+        .table-actions { 
+            display: flex; 
+            gap: 6px; 
+        }
+        .export-btn { 
+            margin-bottom: 16px; 
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            left: 16px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: none;
+        }
+
+        .toast {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            backdrop-filter: blur(var(--blur-intensity));
+            box-shadow: var(--glass-shadow);
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-color: rgba(0,255,102,0.3);
+        }
+
+        .toast.error {
+            border-color: rgba(255,46,122,0.3);
+        }
+
+        .toast.warning {
+            border-color: rgba(255,214,0,0.3);
+        }
+
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .toast.success .toast-icon {
+            background: rgba(0,255,102,0.2);
+            color: var(--success-glow);
+        }
+
+        .toast.error .toast-icon {
+            background: rgba(255,46,122,0.2);
+            color: var(--danger-glow);
+        }
+
+        .toast.warning .toast-icon {
+            background: rgba(255,214,0,0.2);
+            color: var(--warning-glow);
+        }
+
+        .toast-message {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .template-card {
+            background: rgba(20, 0, 10, 0.3);
+            border: 1px solid rgba(255, 46, 122, 0.1);
+            border-radius: 14px;
+            padding: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
             text-align: center;
+        }
+
+        .template-card:hover {
+            border-color: rgba(255, 46, 122, 0.3);
+            background: rgba(255, 46, 122, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .template-card.active {
+            border-color: var(--christmas-red);
+            background: rgba(255, 46, 122, 0.1);
+        }
+
+        .template-name {
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .template-price {
+            color: var(--christmas-red);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .promocode-section {
+            background: rgba(20, 0, 10, 0.3);
+            border: 1px solid rgba(255, 46, 122, 0.1);
+            border-radius: 14px;
+            padding: 14px;
+            margin: 14px 0;
+        }
+
+        .promocode-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .promocode-input {
+            flex: 1;
+            padding: 10px 12px;
+            background: rgba(20, 0, 10, 0.4);
+            border: 1px solid rgba(255, 46, 122, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .discount-badge {
+            background: rgba(0,255,102,0.15);
+            color: var(--success-glow);
+            border: 1px solid rgba(0,255,102,0.3);
+            padding: 4px 6px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-right: 6px;
+        }
+
+        .price-final {
+            color: var(--christmas-red);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .promocode-info {
+            background: rgba(255, 46, 122, 0.1);
+            border: 1px solid rgba(255, 46, 122, 0.2);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .bank-detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 46, 122, 0.1);
+        }
+
+        .bank-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .bank-detail-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+            min-width: 100px;
+        }
+
+        .bank-detail-value {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .bank-detail-copy {
+            background: rgba(255, 46, 122, 0.1);
+            border: 1px solid rgba(255, 46, 122, 0.2);
+            border-radius: 6px;
+            padding: 6px 10px;
+            color: var(--christmas-red);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 11px;
+        }
+
+        .bank-detail-copy:hover {
+            background: rgba(255, 46, 122, 0.2);
+        }
+
+        .payment-section {
+            margin-bottom: 16px;
+        }
+
+        .payment-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--christmas-red);
+        }
+
+        .payment-alert-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+            padding: 16px;
+        }
+
+        .payment-alert-content {
+            background: var(--glass-bg);
+            border: 2px solid var(--christmas-red);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 46, 122, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 20px rgba(255, 46, 122, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 46, 122, 0.6); }
+            100% { box-shadow: 0 0 20px rgba(255, 46, 122, 0.3); }
+        }
+
+        .payment-alert-icon {
+            font-size: 36px;
+            color: var(--christmas-red);
+            margin-bottom: 16px;
+        }
+
+        .payment-alert-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--christmas-red);
+        }
+
+        .payment-alert-message {
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .payment-alert-note {
+            font-size: 13px;
+            color: var(--warning-glow);
+            font-style: italic;
+            margin-top: 12px;
+        }
+
+        .countdown-timer {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--warning-glow);
+            margin: 16px 0;
+            padding: 10px;
+            background: rgba(255, 214, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 214, 0, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover::before {
+            left: -100%;
+        }
+
+        .payment-method-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: rgba(255, 46, 122, 0.1);
+            border: 1px solid rgba(255, 46, 122, 0.2);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--christmas-red);
+        }
+
+        .hidden { display:none; }
+        .fade-in { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+
+        @media (max-width:768px) {
+            .container { padding:12px; }
+            .logo-text { font-size:28px; }
+            .logo-img { width: 44px; height: 44px; }
+            .glass-card { padding:16px; border-radius: 16px; }
+            .card-title { font-size:18px; }
+            .order-details-panel { max-width:100%; padding: 16px; }
+            .orders-table { font-size: 12px; }
+            .orders-table th, .orders-table td { padding: 8px 10px; }
+            .templates-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .bank-detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            .bank-detail-value {
+                text-align: left;
+                margin-right: 0;
+                font-size: 15px;
+            }
+            .payment-alert-content {
+                padding: 20px 16px;
+            }
+            .payment-alert-icon {
+                font-size: 32px;
+            }
+            .payment-alert-title {
+                font-size: 18px;
+            }
+            .payment-alert-message {
+                font-size: 15px;
+            }
+            .countdown-timer {
+                font-size: 15px;
+                padding: 8px;
+            }
+            .nav-tab {
+                font-size: 12px;
+                padding: 8px 6px;
+                min-width: 70px;
+            }
+            .btn {
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width:480px) {
+            .logo-container { flex-direction: column; gap: 6px; }
+            .logo-text { font-size: 24px; }
+            .promocode-input-group {
+                flex-direction: column;
+            }
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-tabs {
+                padding: 3px;
+            }
+            .nav-tab {
+                padding: 8px 4px;
+                font-size: 11px;
+                min-width: 60px;
+            }
+            .status-title {
+                font-size: 20px;
+            }
+            .status-description {
+                font-size: 14px;
+            }
+            .card-icon {
+                width: 40px;
+                height: 40px;
+            }
+            .card-icon i {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width:360px) {
+            .container { padding:10px; }
+            .logo-text { font-size: 22px; }
+            .glass-card { padding:14px; }
+            .nav-tab {
+                font-size: 10px;
+                padding: 6px 3px;
+            }
+        }
+
+        @media (min-height: 800px) and (max-width: 768px) {
+            .container {
+                justify-content: center;
+            }
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            body {
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            input, textarea {
+                -webkit-user-select: text;
+                user-select: text;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="message">Сайт не работает</div>
+    <div class="snowfall" id="snowfall"></div>
+
+    <div class="liquid-background">
+        <div class="liquid-shape shape-1"></div>
+        <div class="liquid-shape shape-2"></div>
+        <div class="liquid-shape shape-3"></div>
+        <div class="liquid-shape shape-4"></div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <div id="payment-alert-modal" class="payment-alert-modal hidden">
+        <div class="payment-alert-content fade-in">
+            <div class="payment-alert-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="payment-alert-title">Внимание!</div>
+            <div class="payment-alert-message">
+                Чтобы ваш платеж был обнаружен системой, в комментарий к переводу пишите слово <strong style="color: var(--warning-glow);">ПОДАРОК</strong>.<br><br>
+                Если строки комментария нет - отправляйте перевод без комментария.
+            </div>
+            <div class="payment-alert-note">
+                Без этого слова система может не распознать ваш платеж автоматически
+            </div>
+            
+            <div class="countdown-timer" id="countdown-timer">
+                Кнопка станет активной через: <span id="countdown-seconds">5</span> сек.
+            </div>
+            
+            <button class="btn btn-primary" id="close-payment-alert" disabled style="margin-top: 10px;">
+                <i class="fas fa-check" style="margin-right: 8px;"></i> Понятно, продолжить
+            </button>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="auth-modal hidden">
+        <div class="auth-card fade-in">
+            <div class="auth-title">🔐 Доступ к админ-панели</div>
+            <div class="auth-subtitle">Введите код из Telegram</div>
+            
+            <div id="auth-step-code">
+                <div class="form-group">
+                    <label class="form-label">Код подтверждения</label>
+                    <input type="text" id="auth-code" class="form-control" placeholder="Введите код" required>
+                </div>
+                <button class="btn btn-primary" id="login-with-code">
+                    <i class="fas fa-sign-in-alt" style="margin-right:12px;"></i> Войти
+                </button>
+                <div style="text-align:center; margin-top:15px;">
+                    <button class="btn btn-outline" id="send-new-code">
+                        <i class="fas fa-paper-plane" style="margin-right:8px;"></i> Отправить новый код
+                    </button>
+                </div>
+            </div>
+
+            <div id="auth-step-2fa" class="hidden">
+                <div class="form-group">
+                    <label class="form-label">Пароль двухфакторной аутентификации</label>
+                    <input type="password" id="twofa-password" class="form-control" placeholder="Введите пароль" required>
+                </div>
+                <button class="btn btn-primary" id="login-with-2fa">
+                    <i class="fas fa-shield-alt" style="margin-right:12px;"></i> Подтвердить
+                </button>
+            </div>
+
+            <div id="auth-error" style="color: var(--danger-glow); text-align:center; margin-top:20px; display:none;">
+                <i class="fas fa-exclamation-circle"></i> <span id="error-message"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="order-details-panel" class="order-details-panel">
+        <div class="order-details-header">
+            <div class="order-details-title">Детали заказа</div>
+            <button class="close-details" id="close-details">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="order-details-content"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="garland-container">
+                <div class="garland">
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
+                </div>
+            </div>
+            
+            <div class="logo-container">
+                <img src="https://i.imgur.com/SeHR2kQ.png" alt="DxS Shop" class="logo-img">
+                <div class="logo-text">DxS Payments</div>
+            </div>
+            <div class="subtitle">Оплата товаров в DxS Shop</div>
+            <button id="logout-btn" class="logout-btn hidden">
+                <i class="fas fa-sign-out-alt" style="margin-right:8px;"></i> Выйти
+            </button>
+        </header>
+
+        <div id="admin-panel" class="hidden">
+            <div class="nav-tabs">
+                <div class="nav-tab active" data-tab="orders">Заказы</div>
+                <div class="nav-tab" data-tab="create">Создать</div>
+                <div class="nav-tab" data-tab="settings">Реквизиты</div>
+                <div class="nav-tab" data-tab="templates">Шаблоны</div>
+                <div class="nav-tab" data-tab="promocodes">Промокоды</div>
+                <div class="nav-tab" data-tab="2fa">2FA</div>
+                <div class="nav-tab" data-tab="export">Экспорт</div>
+            </div>
+
+            <div id="orders-tab">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Активные заказы</div>
+                    </div>
+                    <div id="orders-list"></div>
+                </div>
+            </div>
+
+            <div id="create-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Создать новый заказ</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Выберите шаблон:</label>
+                        <div class="templates-grid" id="templates-grid">
+                        </div>
+                    </div>
+
+                    <form id="create-order-form">
+                        <div class="form-group">
+                            <label class="form-label" for="product-name">Название товара</label>
+                            <input type="text" id="product-name" class="form-control" placeholder="Например: Премиум аккаунт" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="product-price">Цена (руб.)</label>
+                            <input type="number" id="product-price" class="form-control" placeholder="Например: 1000" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="client-name">Имя клиента</label>
+                            <input type="text" id="client-name" class="form-control" placeholder="Например: Иван" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle" style="margin-right:12px;"></i> Создать заказ
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="settings-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Настройки реквизитов</div>
+                    </div>
+                    <form id="payment-settings-form">
+                        <div class="payment-section">
+                            <div class="payment-section-title">СБП реквизиты</div>
+                            <div class="form-group">
+                                <label class="form-label" for="sbp-phone">Номер телефона</label>
+                                <input type="text" id="sbp-phone" class="form-control" placeholder="+7 (999) 123-45-67">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="sbp-name">Имя получателя</label>
+                                <input type="text" id="sbp-name" class="form-control" placeholder="Иван Иванов">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="sbp-bank">Банк</label>
+                                <input type="text" id="sbp-bank" class="form-control" placeholder="Тинькофф">
+                            </div>
+                        </div>
+
+                        <div class="payment-section">
+                            <div class="payment-section-title">Сбербанк реквизиты</div>
+                            <div class="form-group">
+                                <label class="form-label" for="sberbank-card">Номер карты</label>
+                                    <input type="text" id="sberbank-card" class="form-control" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="sberbank-name">Имя получателя</label>
+                                <input type="text" id="sberbank-name" class="form-control" placeholder="Иван Иванов">
+                            </div>
+                        </div>
+
+                        <div class="payment-section">
+                            <div class="payment-section-title">Альфа-Банк реквизиты</div>
+                            <div class="form-group">
+                                <label class="form-label" for="alfa-card">Номер карты</label>
+                                <input type="text" id="alfa-card" class="form-control" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="alfa-name">Имя получателя</label>
+                                <input type="text" id="alfa-name" class="form-control" placeholder="Иван Иванов">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="save-payment-btn">
+                            <i class="fas fa-save" style="margin-right:12px;"></i> Сохранить реквизиты
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="templates-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Управление шаблонами</div>
+                    </div>
+                    <form id="create-template-form">
+                        <div class="form-group">
+                            <label class="form-label" for="template-name">Название шаблона</label>
+                            <input type="text" id="template-name" class="form-control" placeholder="Например: Премиум аккаунт" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="template-price">Цена (руб.)</label>
+                            <input type="number" id="template-price" class="form-control" placeholder="Например: 1000" step="0.01" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle" style="margin-right:12px;"></i> Добавить шаблон
+                        </button>
+                    </form>
+
+                    <div id="templates-list" style="margin-top: 20px;">
+                    </div>
+                </div>
+            </div>
+
+            <div id="promocodes-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Управление промокодами</div>
+                    </div>
+                    <form id="create-promocode-form">
+                        <div class="form-group">
+                            <label class="form-label" for="promocode-name">Код промокода</label>
+                            <input type="text" id="promocode-name" class="form-control" placeholder="Например: SUMMER2024" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="promocode-discount">Скидка (%)</label>
+                            <input type="number" id="promocode-discount" class="form-control" placeholder="Например: 10" min="1" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="promocode-uses">Количество использований</label>
+                            <input type="number" id="promocode-uses" class="form-control" placeholder="0 = безлимит" min="0">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle" style="margin-right:12px;"></i> Создать промокод
+                        </button>
+                    </form>
+
+                    <div id="promocodes-list" style="margin-top: 20px;">
+                    </div>
+                </div>
+            </div>
+
+            <div id="2fa-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Двухфакторная аутентификация</div>
+                    </div>
+                    
+                    <div id="2fa-status">
+                        <div style="text-align:center; padding:20px;">
+                            <div class="status-icon" style="margin:0 auto 20px;">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div style="margin-bottom:20px;">
+                                <div style="font-size:18px; font-weight:600; margin-bottom:8px;">2FA отключена</div>
+                                <div style="color:var(--text-secondary);">Включите для дополнительной безопасности</div>
+                            </div>
+                            <button class="btn btn-primary" id="enable-2fa-btn">
+                                <i class="fas fa-toggle-on" style="margin-right:10px;"></i> Включить 2FA
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="2fa-setup" class="hidden">
+                        <div class="form-group">
+                            <label class="form-label">Новый пароль 2FA</label>
+                            <input type="password" id="new-2fa-password" class="form-control" placeholder="Введите пароль">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Повторите пароль</label>
+                            <input type="password" id="confirm-2fa-password" class="form-control" placeholder="Повторите пароль">
+                        </div>
+                        <button class="btn btn-primary" id="setup-2fa-btn">
+                            <i class="fas fa-check" style="margin-right:10px;"></i> Настроить 2FA
+                        </button>
+                    </div>
+
+                    <div id="2fa-verify" class="hidden">
+                        <div style="text-align:center; margin-bottom:20px;">
+                            <div class="status-icon waiting" style="margin:0 auto 20px;">
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
+                            <div style="font-weight:600; margin-bottom:8px;">Код отправлен в Telegram</div>
+                            <div style="color:var(--text-secondary);">Введите код для подтверждения</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Код подтверждения</label>
+                            <input type="text" id="2fa-verify-code" class="form-control" placeholder="Введите код">
+                        </div>
+                        <button class="btn btn-primary" id="verify-2fa-btn">
+                            <i class="fas fa-check" style="margin-right:10px;"></i> Подтвердить
+                        </button>
+                    </div>
+
+                    <div id="2fa-enabled" class="hidden">
+                        <div style="text-align:center; padding:20px;">
+                            <div class="status-icon success" style="margin:0 auto 20px;">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div style="font-size:18px; font-weight:600; margin-bottom:8px; color:var(--success-glow);">2FA включена</div>
+                            <div style="color:var(--text-secondary); margin-bottom:20px;">Двухфакторная аутентификация активна</div>
+                            <button class="btn btn-danger" id="disable-2fa-btn">
+                                <i class="fas fa-toggle-off" style="margin-right:10px;"></i> Отключить 2FA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="export-tab" class="hidden">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <div class="card-title">Экспорт заказов</div>
+                    </div>
+                    <button class="btn btn-outline export-btn" id="export-csv">
+                        <i class="fas fa-file-csv" style="margin-right:12px;"></i> Экспорт в CSV
+                    </button>
+                    <div class="orders-table-container">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Время</th>
+                                    <th>Клиент</th>
+                                    <th>Товар</th>
+                                    <th>Сумма</th>
+                                    <th>Статус</th>
+                                    <th>Способ оплаты</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="order-view" class="hidden">
+            <div class="glass-card">
+                <div class="card-header">
+                    <div style="display:flex; align-items:center;">
+                        <div class="card-icon"><i class="fas fa-shopping-bag"></i></div>
+                        <div>
+                            <div class="card-title">Ваш заказ</div>
+                            <div class="order-meta" id="order-client"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-item">
+                    <div class="order-info">
+                        <h3 id="order-product"></h3>
+                        <div class="order-meta">Один товар</div>
+                    </div>
+                    <div id="order-price-container"></div>
+                </div>
+                <div id="order-actions"></div>
+            </div>
+            <div id="order-status" class="status-indicator"></div>
+        </div>
+
+        <div id="payment-view" class="hidden">
+            <div class="glass-card">
+                <div class="card-header">
+                    <div style="display:flex; align-items:center;">
+                        <div class="card-icon"><i class="fas fa-credit-card"></i></div>
+                        <div>
+                            <div class="card-title">Оплата заказа</div>
+                            <div class="order-meta" id="payment-product"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-item">
+                    <div class="order-info">
+                        <h3 id="payment-product-name"></h3>
+                        <div class="order-meta">Сумма к оплате</div>
+                    </div>
+                    <div id="payment-price-container"></div>
+                </div>
+
+                <div class="promocode-section">
+                    <label class="form-label">Есть промокод?</label>
+                    <div class="promocode-input-group">
+                        <input type="text" id="client-promocode-input" class="promocode-input" placeholder="Введите промокод">
+                        <button type="button" class="btn btn-outline" id="apply-client-promocode">Применить</button>
+                    </div>
+                    <div id="client-promocode-result" class="hidden" style="margin-top: 8px;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Выберите способ оплаты:</label>
+                    <div class="payment-methods">
+                        <label class="payment-method">
+                            <input type="radio" name="payment-method" value="сбп">
+                            <div class="payment-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <div><div>СБП</div><div class="order-meta">Моментальный перевод</div></div>
+                        </label>
+                        <label class="payment-method">
+                            <input type="radio" name="payment-method" value="сбербанк">
+                            <div class="payment-icon"><i class="fas fa-university"></i></div>
+                            <div><div>Сбербанк</div><div class="order-meta">Карта или перевод</div></div>
+                        </label>
+                        <label class="payment-method">
+                            <input type="radio" name="payment-method" value="альфа-банк">
+                            <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
+                            <div><div>Альфа-Банк</div><div class="order-meta">Карта или перевод</div></div>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="bank-details" class="bank-details hidden">
+                </div>
+
+                <button class="btn btn-primary" id="confirm-payment" disabled>
+                    <i class="fas fa-check-circle" style="margin-right:12px;"></i> Я оплатил
+                </button>
+            </div>
+        </div>
+
+        <div id="welcome-view">
+            <div class="status-indicator">
+                <div class="status-icon" style="background: rgba(255, 46, 122, 0.1); color:var(--christmas-red); border-color: rgba(255, 46, 122, 0.2);">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="status-title">DxS Shop</div>
+                <div class="status-description">Для доступа к заказу используйте ссылку, предоставленную администратором</div>
+                <button class="btn btn-outline" id="admin-access-btn" style="margin-top:20px;">
+                    <i class="fas fa-cog" style="margin-right:12px;"></i> Панель администратора
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXbq06XQd2E2XDseEMnkXAgk-nwGl2XM4",
+            authDomain: "shopdxs.firebaseapp.com",
+            projectId: "shopdxs",
+            storageBucket: "shopdxs.firebasestorage.app",
+            messagingSenderId: "404838670939",
+            appId: "1:404838670939:web:1b8ef595f599cfef29957e"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function createSnowfall() {
+            const snowfall = document.getElementById('snowfall');
+            const snowflakeCount = 150;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                
+                const size = Math.random() * 4 + 2;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                
+                snowflake.style.left = `${Math.random() * 100}%`;
+                
+                const duration = Math.random() * 20 + 10;
+                snowflake.style.animationDuration = `${duration}s`;
+                
+                const delay = Math.random() * 5;
+                snowflake.style.animationDelay = `${delay}s`;
+                
+                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                snowfall.appendChild(snowflake);
+            }
+        }
+
+        class CodeGenerator {
+            static generateCode(type) {
+                const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                let code = '';
+                for (let i = 0; i < 6; i++) {
+                    code += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                
+                const prefix = type === 'login' ? 'L' : type === 'settings' ? 'S' : 'A';
+                return prefix + code;
+            }
+        }
+
+        class TelegramService {
+            static async sendTelegramMessage(text) {
+                try {
+                    const telegramConfig = await db.collection('settings').doc('telegramConfig').get();
+                    if (!telegramConfig.exists) {
+                        console.error('Telegram конфигурация не найдена');
+                        return false;
+                    }
+                    
+                    const config = telegramConfig.data();
+                    const botToken = config.botToken;
+                    const chatId = config.chatId;
+                    
+                    if (!botToken || !chatId) {
+                        console.error('Отсутствует токен бота или chat ID');
+                        return false;
+                    }
+                    
+                    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: text,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    return data.ok === true;
+                } catch (error) {
+                    console.error('Ошибка отправки в Telegram:', error);
+                    return false;
+                }
+            }
+
+            static async sendCode(code, type) {
+                try {
+                    const codeTypeText = type === 'login' ? 'для входа в админ-панель' : 
+                                      type === 'settings' ? 'для изменения реквизитов' : 
+                                      'для подтверждения 2FA';
+                    
+                    const message = `🔐 <b>Код подтверждения</b>\n\n` +
+                                   `Код: <code>${code}</code>\n` +
+                                   `Тип: ${codeTypeText}\n` +
+                                   `Действителен: 5 минут\n\n` +
+                                   `Никому не передавайте этот код!`;
+                    
+                    const success = await this.sendTelegramMessage(message);
+                    
+                    if (success) {
+                        await this.saveCodeToFirebase(code, type);
+                    }
+                    
+                    return success;
+                } catch (error) {
+                    console.error('Ошибка отправки кода:', error);
+                    return false;
+                }
+            }
+
+            static async saveCodeToFirebase(code, type) {
+                try {
+                    await db.collection('authCodes').doc(code).set({
+                        code: code,
+                        type: type,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+                        used: false
+                    });
+                } catch (error) {
+                    console.error('Ошибка сохранения кода:', error);
+                }
+            }
+
+            static async verifyCode(code, type) {
+                try {
+                    const codeDoc = await db.collection('authCodes').doc(code).get();
+                    if (!codeDoc.exists) {
+                        return false;
+                    }
+                    
+                    const codeData = codeDoc.data();
+                    
+                    if (codeData.type !== type) {
+                        return false;
+                    }
+                    
+                    const expiresAt = new Date(codeData.expiresAt).getTime();
+                    if (Date.now() > expiresAt) {
+                        await db.collection('authCodes').doc(code).delete();
+                        return false;
+                    }
+                    
+                    if (codeData.used) {
+                        return false;
+                    }
+                    
+                    await db.collection('authCodes').doc(code).update({ used: true });
+                    
+                    setTimeout(() => {
+                        db.collection('authCodes').doc(code).delete();
+                    }, 60000);
+                    
+                    return true;
+                } catch (error) {
+                    console.error('Ошибка проверки кода:', error);
+                    return false;
+                }
+            }
+        }
+
+        class AuthManager {
+            constructor() {
+                this.loginAttempts = parseInt(localStorage.getItem('login_attempts')) || 0;
+                this.maxAttempts = 5;
+                this.lockUntil = parseInt(localStorage.getItem('lock_until')) || 0;
+                this.is2FAEnabled = false;
+            }
+
+            async sendLoginCode() {
+                const code = CodeGenerator.generateCode('login');
+                return await TelegramService.sendCode(code, 'login');
+            }
+
+            async sendSettingsCode() {
+                const code = CodeGenerator.generateCode('settings');
+                return await TelegramService.sendCode(code, 'settings');
+            }
+
+            async send2FACode() {
+                const code = CodeGenerator.generateCode('2fa');
+                return await TelegramService.sendCode(code, '2fa');
+            }
+
+            async verifyCode(code, type) {
+                if (this.isLocked()) {
+                    const timeLeft = this.getLockTimeLeft();
+                    throw new Error(`Слишком много попыток. Попробуйте через ${timeLeft} минут.`);
+                }
+
+                const isValid = await TelegramService.verifyCode(code, type);
+                
+                if (isValid) {
+                    this.resetAttempts();
+                    return true;
+                } else {
+                    await this.recordFailedAttempt();
+                    throw new Error('Неверный код');
+                }
+            }
+
+            async check2FAStatus() {
+                try {
+                    const doc = await db.collection('security').doc('2fa').get();
+                    if (doc.exists) {
+                        this.is2FAEnabled = doc.data().enabled || false;
+                        return this.is2FAEnabled;
+                    }
+                    return false;
+                } catch (error) {
+                    console.error('Ошибка проверки 2FA:', error);
+                    return false;
+                }
+            }
+
+            async verify2FAPassword(password) {
+                try {
+                    const doc = await db.collection('security').doc('2fa').get();
+                    if (!doc.exists) return false;
+                    
+                    const data = doc.data();
+                    return data.password === password;
+                } catch (error) {
+                    console.error('Ошибка проверки пароля 2FA:', error);
+                    return false;
+                }
+            }
+
+            async setup2FA(password) {
+                try {
+                    await db.collection('security').doc('2fa').set({
+                        enabled: false,
+                        password: password,
+                        setupPending: true,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    return true;
+                } catch (error) {
+                    console.error('Ошибка настройки 2FA:', error);
+                    return false;
+                }
+            }
+
+            async enable2FA() {
+                try {
+                    await db.collection('security').doc('2fa').update({
+                        enabled: true,
+                        setupPending: false
+                    });
+                    this.is2FAEnabled = true;
+                    return true;
+                } catch (error) {
+                    console.error('Ошибка включения 2FA:', error);
+                    return false;
+                }
+            }
+
+            async disable2FA() {
+                try {
+                    await db.collection('security').doc('2fa').update({
+                        enabled: false,
+                        setupPending: false
+                    });
+                    this.is2FAEnabled = false;
+                    return true;
+                } catch (error) {
+                    console.error('Ошибка отключения 2FA:', error);
+                    return false;
+                }
+            }
+
+            isLocked() {
+                if (Date.now() < this.lockUntil) return true;
+                
+                if (this.lockUntil > 0 && Date.now() >= this.lockUntil) {
+                    this.resetAttempts();
+                }
+                return false;
+            }
+
+            getLockTimeLeft() {
+                return Math.ceil((this.lockUntil - Date.now()) / 60000);
+            }
+
+            async recordFailedAttempt() {
+                this.loginAttempts++;
+                localStorage.setItem('login_attempts', this.loginAttempts.toString());
+                
+                if (this.loginAttempts >= this.maxAttempts) {
+                    this.lockUntil = Date.now() + 30 * 60 * 1000;
+                    localStorage.setItem('lock_until', this.lockUntil.toString());
+                    
+                    const message = `⚠️ <b>Предупреждение безопасности</b>\n\n` +
+                                   `Обнаружено ${this.loginAttempts} неудачных попыток входа.\n` +
+                                   `Доступ заблокирован на 30 минут.\n` +
+                                   `IP: ${await this.getClientIP()}`;
+                    
+                    await TelegramService.sendTelegramMessage(message);
+                }
+            }
+
+            resetAttempts() {
+                this.loginAttempts = 0;
+                this.lockUntil = 0;
+                localStorage.removeItem('login_attempts');
+                localStorage.removeItem('lock_until');
+            }
+
+            async getClientIP() {
+                try {
+                    const response = await fetch('https://api.ipify.org?format=json');
+                    const data = await response.json();
+                    return data.ip;
+                } catch (error) {
+                    return 'Неизвестно';
+                }
+            }
+        }
+
+        function showToast(message, type = 'success', duration = 4000) {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            toast.innerHTML = `
+                <div class="toast-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="toast-message">${message}</div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 400);
+            }, duration);
+        }
+
+        async function initializeSystemData() {
+            try {
+                const settingsDoc = await db.collection('settings').doc('paymentDetails').get();
+                
+                if (!settingsDoc.exists) {
+                    const paymentData = {
+                        sbpPhone: "+7 (999) 123-45-67",
+                        sbpName: "Иван Иванов",
+                        sbpBank: "Тинькофф",
+                        sberbankCard: "1234 5678 9012 3456",
+                        sberbankName: "Иван Иванов",
+                        alfaCard: "1234 5678 9012 3456",
+                        alfaName: "Иван Иванов",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    
+                    await db.collection('settings').doc('paymentDetails').set(paymentData);
+                }
+                
+                const telegramConfigDoc = await db.collection('settings').doc('telegramConfig').get();
+                if (!telegramConfigDoc.exists) {
+                    const telegramConfig = {
+                        botToken: "",
+                        chatId: "",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    
+                    await db.collection('settings').doc('telegramConfig').set(telegramConfig);
+                }
+                
+                return true;
+                
+            } catch (error) {
+                console.error('Ошибка инициализации:', error);
+                showToast('Ошибка инициализации системы', 'error');
+                return false;
+            }
+        }
+
+        const authManager = new AuthManager();
+        let currentOrderId = null;
+        let orderStatusInterval = null;
+        let isAdminAuthenticated = false;
+        let currentView = localStorage.getItem('dxs_current_view') || 'welcome';
+        let currentPromocode = null;
+        let originalPrice = 0;
+        let completedOrderTimer = null;
+        let countdownTimer = null;
+        let countdownSeconds = 5;
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 Загрузка DxS Shop...');
+            
+            createSnowfall();
+            await initializeSystemData();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('order');
+
+            if (orderId) {
+                currentView = 'order';
+                currentOrderId = orderId;
+            }
+
+            const sessionValid = validateAdminSession();
+            if (sessionValid) {
+                isAdminAuthenticated = true;
+                await showAdminPanel();
+            } else if (currentView === 'order' && currentOrderId) {
+                await showOrderView(currentOrderId);
+                startOrderStatusPolling(currentOrderId);
+            } else {
+                showWelcomeView();
+            }
+
+            setupEventHandlers();
+        });
+
+        function validateAdminSession() {
+            const sessionTime = parseInt(localStorage.getItem('dxs_admin_session') || '0');
+            const currentTime = Date.now();
+            
+            if (currentTime - sessionTime > 8 * 60 * 60 * 1000) {
+                localStorage.removeItem('dxs_admin_authenticated');
+                localStorage.removeItem('dxs_admin_session');
+                return false;
+            }
+            
+            return localStorage.getItem('dxs_admin_authenticated') === 'true';
+        }
+
+        async function showAdminPanel() {
+            saveCurrentView('admin');
+            stopOrderStatusPolling();
+            document.getElementById('admin-panel').classList.remove('hidden');
+            document.getElementById('order-view').classList.add('hidden');
+            document.getElementById('payment-view').classList.add('hidden');
+            document.getElementById('welcome-view').classList.add('hidden');
+            document.getElementById('logout-btn').classList.remove('hidden');
+
+            await loadOrdersList();
+            await loadPaymentDetails();
+            await loadTemplatesList();
+            await loadPromocodesList();
+            await load2FAStatus();
+            setupAdminTabs();
+        }
+
+        function showWelcomeView() {
+            saveCurrentView('welcome');
+            stopOrderStatusPolling();
+            document.getElementById('admin-panel').classList.add('hidden');
+            document.getElementById('order-view').classList.add('hidden');
+            document.getElementById('payment-view').classList.add('hidden');
+            document.getElementById('welcome-view').classList.remove('hidden');
+            document.getElementById('logout-btn').classList.add('hidden');
+        }
+
+        function showAuthModal() {
+            document.getElementById('auth-modal').classList.remove('hidden');
+            document.getElementById('auth-step-code').classList.remove('hidden');
+            document.getElementById('auth-step-2fa').classList.add('hidden');
+            document.getElementById('auth-error').style.display = 'none';
+            document.getElementById('auth-code').value = '';
+            document.getElementById('auth-code').focus();
+            
+            authManager.sendLoginCode().then(success => {
+                if (success) {
+                    showToast('Код отправлен в Telegram', 'success');
+                } else {
+                    showToast('Ошибка отправки кода. Проверьте настройки Telegram.', 'error');
+                }
+            });
+        }
+
+        function hideAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.getElementById('auth-code').value = '';
+            document.getElementById('twofa-password').value = '';
+            document.getElementById('auth-error').style.display = 'none';
+        }
+
+        async function handleLogin() {
+            const code = document.getElementById('auth-code').value.trim().toUpperCase();
+            
+            if (!code) {
+                showAuthError('Введите код');
+                return;
+            }
+
+            document.getElementById('login-with-code').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
+            document.getElementById('login-with-code').disabled = true;
+
+            try {
+                const isValid = await authManager.verifyCode(code, 'login');
+                
+                if (isValid) {
+                    const is2FAEnabled = await authManager.check2FAStatus();
+                    
+                    if (is2FAEnabled) {
+                        document.getElementById('auth-step-code').classList.add('hidden');
+                        document.getElementById('auth-step-2fa').classList.remove('hidden');
+                        document.getElementById('auth-error').style.display = 'none';
+                        document.getElementById('twofa-password').focus();
+                    } else {
+                        completeLogin();
+                    }
+                } else {
+                    throw new Error('Неверный код');
+                }
+                
+            } catch (error) {
+                showAuthError(error.message);
+                resetLoginButton();
+            }
+        }
+
+        async function handle2FALogin() {
+            const password = document.getElementById('twofa-password').value;
+            
+            if (!password) {
+                showAuthError('Введите пароль');
+                return;
+            }
+
+            document.getElementById('login-with-2fa').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
+            document.getElementById('login-with-2fa').disabled = true;
+
+            try {
+                const isValid = await authManager.verify2FAPassword(password);
+                
+                if (isValid) {
+                    completeLogin();
+                } else {
+                    throw new Error('Неверный пароль');
+                }
+                
+            } catch (error) {
+                showAuthError(error.message);
+                document.getElementById('login-with-2fa').innerHTML = '<i class="fas fa-shield-alt" style="margin-right:12px;"></i> Подтвердить';
+                document.getElementById('login-with-2fa').disabled = false;
+            }
+        }
+
+        function completeLogin() {
+            isAdminAuthenticated = true;
+            localStorage.setItem('dxs_admin_authenticated', 'true');
+            localStorage.setItem('dxs_admin_session', Date.now().toString());
+            
+            hideAuthModal();
+            showAdminPanel();
+            showToast('✅ Успешный вход!', 'success');
+        }
+
+        function showAuthError(message) {
+            document.getElementById('error-message').textContent = message;
+            document.getElementById('auth-error').style.display = 'block';
+        }
+
+        function resetLoginButton() {
+            document.getElementById('login-with-code').innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:12px;"></i> Войти';
+            document.getElementById('login-with-code').disabled = false;
+        }
+
+        function logoutAdmin() {
+            isAdminAuthenticated = false;
+            localStorage.removeItem('dxs_admin_authenticated');
+            localStorage.removeItem('dxs_admin_session');
+            
+            showWelcomeView();
+            showToast('🔒 Сессия завершена', 'success');
+        }
+
+        async function savePaymentDetailsWithCode(details) {
+            try {
+                const success = await authManager.sendSettingsCode();
+                
+                if (success) {
+                    showToast(`Код для подтверждения отправлен в Telegram`, 'success');
+                    
+                    const userCode = prompt('Введите код из Telegram для подтверждения изменения реквизитов:');
+                    
+                    if (userCode) {
+                        const isValid = await authManager.verifyCode(userCode.trim().toUpperCase(), 'settings');
+                        
+                        if (isValid) {
+                            await db.collection('settings').doc('paymentDetails').set(details);
+                            showToast('Реквизиты сохранены!', 'success');
+                            return true;
+                        } else {
+                            showToast('Неверный код подтверждения', 'error');
+                            return false;
+                        }
+                    } else {
+                        showToast('Операция отменена', 'warning');
+                        return false;
+                    }
+                } else {
+                    showToast('Ошибка отправки кода', 'error');
+                    return false;
+                }
+            } catch (error) {
+                console.error('Ошибка сохранения реквизитов:', error);
+                showToast('Ошибка при сохранении реквизитов', 'error');
+                return false;
+            }
+        }
+
+        async function load2FAStatus() {
+            const isEnabled = await authManager.check2FAStatus();
+            
+            if (isEnabled) {
+                document.getElementById('2fa-status').classList.add('hidden');
+                document.getElementById('2fa-setup').classList.add('hidden');
+                document.getElementById('2fa-verify').classList.add('hidden');
+                document.getElementById('2fa-enabled').classList.remove('hidden');
+            } else {
+                document.getElementById('2fa-status').classList.remove('hidden');
+                document.getElementById('2fa-setup').classList.add('hidden');
+                document.getElementById('2fa-verify').classList.add('hidden');
+                document.getElementById('2fa-enabled').classList.add('hidden');
+            }
+        }
+
+        async function setup2FA() {
+            const password = document.getElementById('new-2fa-password').value;
+            const confirmPassword = document.getElementById('confirm-2fa-password').value;
+            
+            if (!password || !confirmPassword) {
+                showToast('Заполните все поля', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showToast('Пароли не совпадают', 'error');
+                return;
+            }
+            
+            const success = await authManager.setup2FA(password);
+            if (success) {
+                document.getElementById('2fa-setup').classList.add('hidden');
+                document.getElementById('2fa-verify').classList.remove('hidden');
+                
+                await authManager.send2FACode();
+                showToast('Код подтверждения отправлен в Telegram', 'success');
+            }
+        }
+
+        async function verify2FA() {
+            const code = document.getElementById('2fa-verify-code').value.trim().toUpperCase();
+            
+            if (!code) {
+                showToast('Введите код', 'error');
+                return;
+            }
+            
+            try {
+                const isValid = await authManager.verifyCode(code, '2fa');
+                
+                if (isValid) {
+                    await authManager.enable2FA();
+                    showToast('2FA успешно включена!', 'success');
+                    await load2FAStatus();
+                } else {
+                    showToast('Неверный код', 'error');
+                }
+            } catch (error) {
+                showToast(error.message, 'error');
+            }
+        }
+
+        async function disable2FA() {
+            if (confirm('Вы уверены, что хотите отключить двухфакторную аутентификацию?')) {
+                await authManager.disable2FA();
+                showToast('2FA отключена', 'success');
+                await load2FAStatus();
+            }
+        }
+
+        function saveCurrentView(view) {
+            currentView = view;
+            localStorage.setItem('dxs_current_view', view);
+        }
+
+        function startOrderStatusPolling(orderId) {
+            if (orderStatusInterval) {
+                clearInterval(orderStatusInterval);
+            }
+            
+            orderStatusInterval = setInterval(async () => {
+                const order = await getOrder(orderId);
+                if (order) {
+                    updateOrderStatusView(order.status, order);
+                    updateOrderActions(order.status);
+                    
+                    if (order.status === 'completed' || order.status === 'rejected' || order.status === 'deleted') {
+                        stopOrderStatusPolling();
+                    }
+                } else {
+                    document.getElementById('order-view').innerHTML = `
+                        <div class="status-indicator">
+                            <div class="status-icon error">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="status-title">Заказ не найден</div>
+                            <div class="status-description">Проверьте правильность ссылки</div>
+                        </div>
+                    `;
+                    stopOrderStatusPolling();
+                }
+            }, 2000);
+        }
+
+        function stopOrderStatusPolling() {
+            if (orderStatusInterval) {
+                clearInterval(orderStatusInterval);
+                orderStatusInterval = null;
+            }
+        }
+
+        async function showOrderView(orderId) {
+            saveCurrentView('order');
+            stopOrderStatusPolling();
+            document.getElementById('admin-panel').classList.add('hidden');
+            document.getElementById('order-view').classList.remove('hidden');
+            document.getElementById('payment-view').classList.add('hidden');
+            document.getElementById('welcome-view').classList.add('hidden');
+            document.getElementById('logout-btn').classList.add('hidden');
+
+            const order = await getOrder(orderId);
+            if (!order) {
+                document.getElementById('order-view').innerHTML = `
+                    <div class="status-indicator">
+                        <div class="status-icon error">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="status-title">Заказ не найден</div>
+                        <div class="status-description">Проверьте правильность ссылки</div>
+                    </div>
+                `;
+                return;
+            }
+
+            currentOrderId = orderId;
+            document.getElementById('order-product').textContent = order.product;
+            document.getElementById('order-client').textContent = `Для: ${order.client}`;
+
+            updateOrderPriceDisplay(order);
+            updateOrderActions(order.status);
+            updateOrderStatusView(order.status, order);
+            
+            startOrderStatusPolling(orderId);
+        }
+
+        function updateOrderPriceDisplay(order) {
+            const priceContainer = document.getElementById('order-price-container');
+            
+            if (order.promocodeUsed && order.finalPrice) {
+                priceContainer.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="price-original">${order.originalPrice || order.price}</span>
+                        <span class="price-final">${order.finalPrice}</span>
+                        <span class="discount-badge">Промокод: ${order.promocodeUsed}</span>
+                    </div>
+                `;
+            } else {
+                priceContainer.innerHTML = `<div class="order-price">${order.price}</div>`;
+            }
+        }
+
+        function updateOrderActions(status) {
+            const actionsContainer = document.getElementById('order-actions');
+
+            if (status === 'deleted') {
+                actionsContainer.innerHTML = '';
+                return;
+            }
+
+            if (status === 'pending') {
+                actionsContainer.innerHTML = `
+                    <button class="btn btn-primary" id="pay-button">
+                        <i class="fas fa-credit-card" style="margin-right:12px;"></i> Оплатить заказ
+                    </button>
+                `;
+                setTimeout(() => {
+                    const payButton = document.getElementById('pay-button');
+                    if (payButton) payButton.addEventListener('click', showPaymentView);
+                }, 0);
+            } else if (status === 'rejected') {
+                actionsContainer.innerHTML = `
+                    <button class="btn btn-primary" id="try-again-button">
+                        <i class="fas fa-redo" style="margin-right:12px;"></i> Попробовать снова
+                    </button>
+                `;
+                setTimeout(() => {
+                    const tryAgainButton = document.getElementById('try-again-button');
+                    if (tryAgainButton) tryAgainButton.addEventListener('click', function() {
+                        updateOrderStatus(currentOrderId, 'pending').then(() => {
+                            showOrderView(currentOrderId);
+                        });
+                    });
+                }, 0);
+            } else {
+                actionsContainer.innerHTML = '';
+            }
+        }
+
+        function updateOrderStatusView(status, order = null) {
+            const statusContainer = document.getElementById('order-status');
+
+            if (status === 'pending') {
+                statusContainer.innerHTML = `
+                    <div class="status-icon waiting">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="status-title">Ожидает оплаты</div>
+                    <div class="status-description">Для завершения заказа нажмите кнопку "Оплатить"</div>
+                `;
+            } else if (status === 'waiting') {
+                statusContainer.innerHTML = `
+                    <div class="status-icon waiting">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="status-title">Ожидает подтверждения</div>
+                    <div class="status-description">Администратор проверяет вашу оплату</div>
+                `;
+            } else if (status === 'completed') {
+                if (completedOrderTimer) {
+                    clearTimeout(completedOrderTimer);
+                    completedOrderTimer = null;
+                }
+                
+                statusContainer.innerHTML = `
+                    <div class="status-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="status-title">Успешная оплата!</div>
+                    <div class="status-description">Вернитесь в чат с админом</div>
+                `;
+                
+                completedOrderTimer = setTimeout(() => {
+                    statusContainer.innerHTML = `
+                        <div class="status-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="status-title">Заказ уже завершен</div>
+                        <div class="status-description">Спасибо, что выбрали наш магазин</div>
+                    `;
+                }, 60000);
+            } else if (status === 'rejected') {
+                statusContainer.innerHTML = `
+                    <div class="status-icon error">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="status-title">Оплата не прошла</div>
+                    <div class="status-description">Попробуйте еще раз или обратитесь к администратору</div>
+                `;
+            } else if (status === 'deleted') {
+                statusContainer.innerHTML = `
+                    <div class="status-icon error">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <div class="status-title">Заказ удален администратором</div>
+                    <div class="status-description">Наверное, это просто сбой в системе. Напишите админу, чтобы узнать, что произошло.</div>
+                `;
+                
+                document.getElementById('order-actions').innerHTML = '';
+            }
+        }
+
+        function showPaymentView() {
+            stopOrderStatusPolling();
+            document.getElementById('admin-panel').classList.add('hidden');
+            document.getElementById('order-view').classList.add('hidden');
+            document.getElementById('payment-view').classList.remove('hidden');
+            document.getElementById('welcome-view').classList.add('hidden');
+            document.getElementById('logout-btn').classList.add('hidden');
+            
+            getOrder(currentOrderId).then(order => {
+                if (order) {
+                    document.getElementById('payment-product').textContent = order.product;
+                    document.getElementById('payment-product-name').textContent = order.product;
+                    
+                    const priceText = order.price.replace(' ₽', '');
+                    originalPrice = parseFloat(priceText);
+                    
+                    updatePaymentPriceDisplay(order);
+                    
+                    currentPromocode = null;
+                    document.getElementById('client-promocode-result').classList.add('hidden');
+                    document.getElementById('client-promocode-input').value = '';
+                }
+            });
+        }
+
+        function updatePaymentPriceDisplay(order) {
+            const priceContainer = document.getElementById('payment-price-container');
+            
+            if (order.promocodeUsed && order.finalPrice) {
+                priceContainer.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="price-original">${originalPrice.toFixed(2)} ₽</span>
+                        <span class="price-final">${order.finalPrice}</span>
+                        <span class="discount-badge">Промокод: ${order.promocodeUsed}</span>
+                    </div>
+                `;
+            } else {
+                priceContainer.innerHTML = `<div class="order-price">${order.price}</div>`;
+            }
+        }
+
+        function displayBankDetails(method, details) {
+            const bankDetailsContainer = document.getElementById('bank-details');
+            
+            if (method === 'сбп') {
+                bankDetailsContainer.innerHTML = `
+                    <h4 style="margin-bottom:16px;">Реквизиты для оплаты через СБП:</h4>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Телефон:</div>
+                        <div class="bank-detail-value">${details.sbpPhone || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sbpPhone || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Получатель:</div>
+                        <div class="bank-detail-value">${details.sbpName || 'Не указан'}</div>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Банк:</div>
+                        <div class="bank-detail-value">${details.sbpBank || 'Не указан'}</div>
+                    </div>
+                `;
+            } else if (method === 'сбербанк') {
+                bankDetailsContainer.innerHTML = `
+                    <h4 style="margin-bottom:16px;">Реквизиты для оплаты через Сбербанк:</h4>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Номер карты:</div>
+                        <div class="bank-detail-value">${details.sberbankCard || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.sberbankCard || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Получатель:</div>
+                        <div class="bank-detail-value">${details.sberbankName || 'Не указан'}</div>
+                    </div>
+                `;
+            } else if (method === 'альфа-банк') {
+                bankDetailsContainer.innerHTML = `
+                    <h4 style="margin-bottom:16px;">Реквизиты для оплаты через Альфа-Банк:</h4>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Номер карты:</div>
+                        <div class="bank-detail-value">${details.alfaCard || 'Не указан'}</div>
+                        <button class="bank-detail-copy" onclick="copyToClipboard('${details.alfaCard || ''}')">
+                            <i class="far fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="bank-detail-label">Получатель:</div>
+                        <div class="bank-detail-value">${details.alfaName || 'Не указан'}</div>
+                    </div>
+                `;
+            }
+            
+            bankDetailsContainer.classList.remove('hidden');
+        }
+
+        function copyToClipboard(text) {
+            if (!text || text === 'Не указан') {
+                showToast('Нечего копировать', 'warning');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Скопировано в буфер обмена!', 'success');
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                showToast('Ошибка при копировании', 'error');
+            });
+        }
+
+        function showPaymentAlert() {
+            const alertModal = document.getElementById('payment-alert-modal');
+            const closeButton = document.getElementById('close-payment-alert');
+            const countdownElement = document.getElementById('countdown-seconds');
+            
+            countdownSeconds = 5;
+            countdownElement.textContent = countdownSeconds;
+            
+            closeButton.disabled = true;
+            closeButton.innerHTML = '<i class="fas fa-check" style="margin-right: 8px;"></i> Понятно, продолжить';
+            
+            alertModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            if (countdownTimer) {
+                clearInterval(countdownTimer);
+            }
+            
+            countdownTimer = setInterval(() => {
+                countdownSeconds--;
+                countdownElement.textContent = countdownSeconds;
+                
+                if (countdownSeconds <= 0) {
+                    clearInterval(countdownTimer);
+                    closeButton.disabled = false;
+                    closeButton.innerHTML = '<i class="fas fa-check" style="margin-right: 8px;"></i> Понятно, продолжить';
+                    document.getElementById('countdown-timer').innerHTML = 'Теперь вы можете продолжить';
+                }
+            }, 1000);
+        }
+
+        async function saveOrder(order) {
+            try {
+                await db.collection('orders').doc(order.id).set(order);
+                return true;
+            } catch (error) {
+                console.error('Ошибка сохранения:', error);
+                return false;
+            }
+        }
+
+        async function loadOrders() {
+            try {
+                const snapshot = await db.collection('orders').orderBy('createdAt', 'desc').get();
+                return snapshot.docs
+                    .map(doc => doc.data())
+                    .filter(order => order.status !== 'deleted');
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                return [];
+            }
+        }
+
+        async function updateOrderStatus(orderId, status) {
+            try {
+                await db.collection('orders').doc(orderId).update({
+                    status: status,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка обновления:', error);
+                return false;
+            }
+        }
+
+        async function updateOrderPrice(orderId, priceData) {
+            try {
+                await db.collection('orders').doc(orderId).update({
+                    ...priceData,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка обновления цены:', error);
+                return false;
+            }
+        }
+
+        async function updateOrderPaymentMethod(orderId, paymentMethod) {
+            try {
+                await db.collection('orders').doc(orderId).update({
+                    paymentMethod: paymentMethod,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка обновления способа оплаты:', error);
+                return false;
+            }
+        }
+
+        async function getOrder(orderId) {
+            try {
+                const doc = await db.collection('orders').doc(orderId).get();
+                if (!doc.exists) return null;
+                
+                const order = doc.data();
+                
+                if (order.status === 'deleted' && order.deletedAt) {
+                    const deletedTime = new Date(order.deletedAt).getTime();
+                    const currentTime = new Date().getTime();
+                    const fiveMinutes = 5 * 60 * 1000;
+                    
+                    if (currentTime - deletedTime > fiveMinutes) {
+                        return null;
+                    }
+                }
+                
+                return order;
+            } catch (error) {
+                console.error('Ошибка получения заказа:', error);
+                return null;
+            }
+        }
+
+        async function deleteOrder(orderId) {
+            try {
+                await db.collection('orders').doc(orderId).update({
+                    status: 'deleted',
+                    deletedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления:', error);
+                return false;
+            }
+        }
+
+        async function loadPaymentDetails() {
+            try {
+                const doc = await db.collection('settings').doc('paymentDetails').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('sbp-phone').value = data.sbpPhone || '';
+                    document.getElementById('sbp-name').value = data.sbpName || '';
+                    document.getElementById('sbp-bank').value = data.sbpBank || '';
+                    document.getElementById('sberbank-card').value = data.sberbankCard || '';
+                    document.getElementById('sberbank-name').value = data.sberbankName || '';
+                    document.getElementById('alfa-card').value = data.alfaCard || '';
+                    document.getElementById('alfa-name').value = data.alfaName || '';
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки реквизитов:', error);
+            }
+        }
+
+        async function loadTemplates() {
+            try {
+                const snapshot = await db.collection('templates').orderBy('name').get();
+                return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (error) {
+                console.error('Ошибка загрузки шаблонов:', error);
+                return [];
+            }
+        }
+
+        async function saveTemplate(template) {
+            try {
+                const templateId = template.id || 'template_' + Math.random().toString(36).substr(2, 9);
+                await db.collection('templates').doc(templateId).set({
+                    name: template.name,
+                    price: template.price,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка сохранения шаблона:', error);
+                return false;
+            }
+        }
+
+        async function deleteTemplate(templateId) {
+            try {
+                await db.collection('templates').doc(templateId).delete();
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления шаблона:', error);
+                return false;
+            }
+        }
+
+        async function loadPromocodes() {
+            try {
+                const snapshot = await db.collection('promocodes').get();
+                return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (error) {
+                console.error('Ошибка загрузки промокодов:', error);
+                return [];
+            }
+        }
+
+        async function savePromocode(promocode) {
+            try {
+                const promocodeId = 'promo_' + Math.random().toString(36).substr(2, 9);
+                await db.collection('promocodes').doc(promocodeId).set({
+                    code: promocode.code.toUpperCase(),
+                    discount: parseInt(promocode.discount),
+                    maxUses: parseInt(promocode.maxUses) || 0,
+                    usedCount: 0,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                return true;
+            } catch (error) {
+                console.error('Ошибка сохранения промокода:', error);
+                showToast('Ошибка при создании промокода: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        async function deletePromocode(promocodeId) {
+            try {
+                await db.collection('promocodes').doc(promocodeId).delete();
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления промокода:', error);
+                return false;
+            }
+        }
+
+        async function validatePromocode(code) {
+            try {
+                const snapshot = await db.collection('promocodes').where('code', '==', code.toUpperCase()).get();
+                if (snapshot.empty) return null;
+                
+                const doc = snapshot.docs[0];
+                const promocode = { id: doc.id, ...doc.data() };
+                
+                if (promocode.maxUses > 0 && promocode.usedCount >= promocode.maxUses) {
+                    return null;
+                }
+                
+                return promocode;
+            } catch (error) {
+                console.error('Ошибка проверки промокода:', error);
+                return null;
+            }
+        }
+
+        async function usePromocode(promocodeId) {
+            try {
+                const doc = await db.collection('promocodes').doc(promocodeId).get();
+                if (!doc.exists) return false;
+                
+                const promocode = doc.data();
+                await db.collection('promocodes').doc(promocodeId).update({
+                    usedCount: (promocode.usedCount || 0) + 1
+                });
+                
+                return true;
+            } catch (error) {
+                console.error('Ошибка использования промокода:', error);
+                return false;
+            }
+        }
+
+        async function loadOrdersList() {
+            const ordersList = document.getElementById('orders-list');
+            ordersList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
+
+            try {
+                const orders = await loadOrders();
+
+                if (orders.length === 0) {
+                    ordersList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="far fa-folder-open"></i>
+                            <div>Заказов пока нет</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                orders.forEach(order => {
+                    const statusText = 
+                        order.status === 'pending' ? 'Ожидает оплаты' : 
+                        order.status === 'waiting' ? 'Ожидает проверки' : 
+                        order.status === 'completed' ? 'Завершен' : 
+                        'Оплата не прошла';
+                    
+                    const orderLink = `${window.location.origin}${window.location.pathname}?order=${order.id}`;
+
+                    const displayPrice = order.finalPrice ? 
+                        `<div style="display:flex; align-items:center; gap:4px;">
+                            <span style="text-decoration:line-through; color:var(--text-secondary); font-size:14px;">${order.price}</span>
+                            <span>${order.finalPrice}</span>
+                            ${order.promocodeUsed ? `<span class="discount-badge">${order.promocodeUsed}</span>` : ''}
+                        </div>` : 
+                        `<div>${order.price}</div>`;
+
+                    let paymentIcon = 'fa-credit-card';
+                    let paymentMethodText = 'Не выбран';
+                    
+                    if (order.paymentMethod === 'сбп') {
+                        paymentIcon = 'fa-mobile-alt';
+                        paymentMethodText = 'СБП';
+                    } else if (order.paymentMethod === 'сбербанк') {
+                        paymentIcon = 'fa-university';
+                        paymentMethodText = 'Сбербанк';
+                    } else if (order.paymentMethod === 'альфа-банк') {
+                        paymentIcon = 'fa-credit-card';
+                        paymentMethodText = 'Альфа-Банк';
+                    }
+
+                    html += `
+                        <div class="order-item" data-order-id="${order.id}">
+                            <div class="order-info">
+                                <h3>${order.product}</h3>
+                                <div class="order-meta">${order.client} • ${new Date(order.createdAt).toLocaleDateString('ru-RU')}</div>
+                                ${order.paymentMethod ? `
+                                    <div style="margin-top: 8px;">
+                                        <span class="payment-method-badge">
+                                            <i class="fas ${paymentIcon}"></i> ${paymentMethodText}
+                                        </span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div>
+                                <div style="text-align:right;margin-bottom:8px;">${displayPrice}</div>
+                                <div class="order-status status-${order.status}">${statusText}</div>
+                                <div class="quick-actions" style="margin-top:8px;">
+                                    <button class="quick-action-btn" onclick="copyOrderLink('${orderLink}')">
+                                        <i class="fas fa-copy"></i> Ссылка
+                                    </button>
+                                    <button class="quick-action-btn" onclick="showOrderDetails('${order.id}')">
+                                        <i class="fas fa-eye"></i> Детали
+                                    </button>
+                                    <button class="quick-action-btn" onclick="deleteOrderFromList('${order.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                        <i class="fas fa-trash"></i> Удалить
+                                    </button>
+                                </div>
+                                ${order.status === 'waiting' ? `
+                                    <button onclick="verifyPayment('${order.id}')" class="btn btn-success btn-sm" style="margin-top:8px;width:100%;">
+                                        Подтвердить оплату
+                                    </button>
+                                    <button onclick="rejectPayment('${order.id}')" class="btn btn-outline btn-sm" style="margin-top:6px;width:100%; color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                        Оплата не получена
+                                    </button>
+                                ` : ''}
+                                ${order.status === 'rejected' ? `
+                                    <button onclick="resetOrderStatus('${order.id}')" class="btn btn-outline btn-sm" style="margin-top:6px;width:100%;">
+                                        Вернуть в ожидание
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                ordersList.innerHTML = html;
+
+                document.querySelectorAll('.order-item').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        if (!e.target.closest('button')) {
+                            const orderId = this.getAttribute('data-order-id');
+                            showOrderDetails(orderId);
+                        }
+                    });
+                });
+
+            } catch (error) {
+                ordersList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>Ошибка загрузки заказов</div>
+                    </div>
+                `;
+            }
+        }
+
+        async function loadOrdersTable() {
+            const tableBody = document.getElementById('orders-table-body');
+            tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</td></tr>';
+
+            try {
+                const orders = await loadOrders();
+
+                if (orders.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--text-secondary);">Заказов пока нет</td></tr>';
+                    return;
+                }
+
+                let html = '';
+                orders.forEach(order => {
+                    const date = new Date(order.createdAt);
+                    const dateStr = date.toLocaleDateString('ru-RU');
+                    const timeStr = date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                    
+                    const statusText = 
+                        order.status === 'pending' ? 'Ожидает оплаты' : 
+                        order.status === 'waiting' ? 'Ожидает проверки' : 
+                        order.status === 'completed' ? 'Завершен' : 
+                        'Оплата не прошла';
+
+                    const displayPrice = order.finalPrice ? 
+                        `<div style="display:flex; align-items:center; gap:4px;">
+                            <span style="text-decoration:line-through; color:var(--text-secondary); font-size:12px;">${order.price}</span>
+                            <span>${order.finalPrice}</span>
+                        </div>` : 
+                        order.price;
+
+                    let paymentMethodText = 'Не выбран';
+                    if (order.paymentMethod === 'сбп') {
+                        paymentMethodText = 'СБП';
+                    } else if (order.paymentMethod === 'сбербанк') {
+                        paymentMethodText = 'Сбербанк';
+                    } else if (order.paymentMethod === 'альфа-банк') {
+                        paymentMethodText = 'Альфа-Банк';
+                    }
+
+                    html += `
+                        <tr>
+                            <td>${dateStr}</td>
+                            <td>${timeStr}</td>
+                            <td>${order.client}</td>
+                            <td>${order.product}</td>
+                            <td>${displayPrice}</td>
+                            <td><span class="order-status status-${order.status}">${statusText}</span></td>
+                            <td>${paymentMethodText}</td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="quick-action-btn" onclick="showOrderDetails('${order.id}')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="quick-action-btn" onclick="deleteOrderFromList('${order.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                tableBody.innerHTML = html;
+
+            } catch (error) {
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--danger-glow);">Ошибка загрузки заказов</td></tr>';
+            }
+        }
+
+        async function loadTemplatesList() {
+            const templatesGrid = document.getElementById('templates-grid');
+            const templatesList = document.getElementById('templates-list');
+            
+            templatesGrid.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
+            templatesList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
+
+            try {
+                const templates = await loadTemplates();
+
+                if (templates.length === 0) {
+                    templatesGrid.innerHTML = `
+                        <div class="empty-state" style="grid-column:1/-1;">
+                            <i class="far fa-folder-open"></i>
+                            <div>Шаблонов пока нет</div>
+                        </div>
+                    `;
+                    templatesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="far fa-folder-open"></i>
+                            <div>Шаблонов пока нет</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let gridHtml = '';
+                templates.forEach(template => {
+                    gridHtml += `
+                        <div class="template-card" data-template-id="${template.id}">
+                            <div class="template-name">${template.name}</div>
+                            <div class="template-price">${template.price} ₽</div>
+                        </div>
+                    `;
+                });
+                templatesGrid.innerHTML = gridHtml;
+
+                let listHtml = '';
+                templates.forEach(template => {
+                    listHtml += `
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h3>${template.name}</h3>
+                                <div class="order-meta">ID: ${template.id}</div>
+                            </div>
+                            <div>
+                                <div style="text-align:right;margin-bottom:8px;">${template.price} ₽</div>
+                                <div class="quick-actions">
+                                    <button class="quick-action-btn" onclick="deleteTemplateFromList('${template.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                        <i class="fas fa-trash"></i> Удалить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                templatesList.innerHTML = listHtml;
+
+                document.querySelectorAll('.template-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        const templateId = this.getAttribute('data-template-id');
+                        const template = templates.find(t => t.id === templateId);
+                        if (template) {
+                            document.getElementById('product-name').value = template.name;
+                            document.getElementById('product-price').value = template.price;
+                            
+                            document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+                            this.classList.add('active');
+                        }
+                    });
+                });
+
+            } catch (error) {
+                const errorHtml = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>Ошибка загрузки шаблонов</div>
+                    </div>
+                `;
+                templatesGrid.innerHTML = errorHtml;
+                templatesList.innerHTML = errorHtml;
+            }
+        }
+
+        async function loadPromocodesList() {
+            const promocodesList = document.getElementById('promocodes-list');
+            promocodesList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Загрузка...</div>';
+
+            try {
+                const promocodes = await loadPromocodes();
+
+                if (promocodes.length === 0) {
+                    promocodesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="far fa-folder-open"></i>
+                            <div>Промокодов пока нет</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                promocodes.forEach(promo => {
+                    const usesText = promo.maxUses > 0 ? 
+                        `${promo.usedCount || 0}/${promo.maxUses} использований` : 
+                        `${promo.usedCount || 0} использований (безлимит)`;
+
+                    html += `
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h3>${promo.code} <span class="discount-badge">-${promo.discount}%</span></h3>
+                                <div class="order-meta">${usesText}</div>
+                            </div>
+                            <div class="quick-actions">
+                                <button class="quick-action-btn" onclick="deletePromocodeFromList('${promo.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                                    <i class="fas fa-trash"></i> Удалить
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                promocodesList.innerHTML = html;
+
+            } catch (error) {
+                promocodesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>Ошибка загрузки промокодов</div>
+                    </div>
+                `;
+            }
+        }
+
+        function exportToCSV() {
+            loadOrders().then(orders => {
+                if (orders.length === 0) {
+                    showToast('Нет данных для экспорта', 'warning');
+                    return;
+                }
+
+                let csv = 'Дата;Время;Клиент;Товар;Исходная цена;Финальная цена;Промокод;Способ оплаты;Статус\n';
+                
+                orders.forEach(order => {
+                    const date = new Date(order.createdAt);
+                    const dateStr = date.toLocaleDateString('ru-RU');
+                    const timeStr = date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                    
+                    const statusText = 
+                        order.status === 'pending' ? 'Ожидает оплаты' : 
+                        order.status === 'waiting' ? 'Ожидает проверки' : 
+                        order.status === 'completed' ? 'Завершен' : 
+                        'Оплата не прошла';
+
+                    const finalPrice = order.finalPrice || order.price.replace(' ₽', '');
+                    const originalPrice = order.originalPrice || order.price.replace(' ₽', '');
+                    const promocode = order.promocodeUsed || '';
+                    const paymentMethod = order.paymentMethod || 'Не выбран';
+
+                    csv += `"${dateStr}";"${timeStr}";"${order.client}";"${order.product}";"${originalPrice}";"${finalPrice}";"${promocode}";"${paymentMethod}";"${statusText}"\n`;
+                });
+
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', `заказы_${new Date().toISOString().split('T')[0]}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast('Файл экспортирован в CSV', 'success');
+            });
+        }
+
+        async function showOrderDetails(orderId) {
+            const order = await getOrder(orderId);
+            if (!order) return;
+
+            const orderLink = `${window.location.origin}${window.location.pathname}?order=${order.id}`;
+            const statusText = 
+                order.status === 'pending' ? 'Ожидает оплаты' : 
+                order.status === 'waiting' ? 'Ожидает проверки' : 
+                order.status === 'completed' ? 'Завершен' : 
+                'Оплата не прошла';
+
+            const promocodeInfo = order.promocodeUsed ? `
+                <div class="detail-item">
+                    <div class="detail-label">Промокод</div>
+                    <div class="detail-value">
+                        <span class="discount-badge">${order.promocodeUsed}</span>
+                        ${order.finalPrice ? `<div style="margin-top:8px; color:var(--success-glow);">Применена скидка: ${order.finalPrice} (вместо ${order.originalPrice || order.price})</div>` : ''}
+                    </div>
+                </div>
+            ` : '';
+
+            let paymentIcon = 'fa-credit-card';
+            let paymentMethodText = 'Не выбран';
+            
+            if (order.paymentMethod === 'сбп') {
+                paymentIcon = 'fa-mobile-alt';
+                paymentMethodText = 'СБП';
+            } else if (order.paymentMethod === 'сбербанк') {
+                paymentIcon = 'fa-university';
+                paymentMethodText = 'Сбербанк';
+            } else if (order.paymentMethod === 'альфа-банк') {
+                paymentIcon = 'fa-credit-card';
+                paymentMethodText = 'Альфа-Банк';
+            }
+
+            const paymentMethodInfo = order.paymentMethod ? `
+                <div class="detail-item">
+                    <div class="detail-label">Способ оплаты</div>
+                    <div class="detail-value">
+                        <span class="payment-method-badge">
+                            <i class="fas ${paymentIcon}"></i> ${paymentMethodText}
+                        </span>
+                    </div>
+                </div>
+            ` : '';
+
+            document.getElementById('order-details-content').innerHTML = `
+                <div class="detail-item">
+                    <div class="detail-label">ID заказа</div>
+                    <div class="detail-value">${order.id}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Товар</div>
+                    <div class="detail-value">${order.product}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Цена</div>
+                    <div class="detail-value">
+                        ${order.finalPrice ? 
+                            `<div style="display:flex; align-items:center; gap:8px;">
+                                <span style="text-decoration:line-through; color:var(--text-secondary);">${order.originalPrice || order.price}</span>
+                                <span class="order-price">${order.finalPrice}</span>
+                            </div>` : 
+                            `<span class="order-price">${order.price}</span>`
+                        }
+                    </div>
+                </div>
+                ${promocodeInfo}
+                ${paymentMethodInfo}
+                <div class="detail-item">
+                    <div class="detail-label">Клиент</div>
+                    <div class="detail-value">${order.client}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Статус</div>
+                    <div class="detail-value">
+                        <span class="order-status status-${order.status}">${statusText}</span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Дата создания</div>
+                    <div class="detail-value">${new Date(order.createdAt).toLocaleDateString('ru-RU')}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Ссылка для клиента</div>
+                    <div class="order-link-container">
+                        <input type="text" class="order-link-input" value="${orderLink}" readonly>
+                        <button class="order-link-copy" onclick="copyOrderLink('${orderLink}')">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="quick-actions" style="margin-top:12px;">
+                    <button class="quick-action-btn" onclick="copyOrderLink('${orderLink}')">
+                        <i class="fas fa-copy"></i> Скопировать ссылку
+                    </button>
+                    ${order.status === 'waiting' ? `
+                        <button class="quick-action-btn" onclick="verifyPayment('${order.id}')">
+                            <i class="fas fa-check"></i> Подтвердить оплату
+                        </button>
+                        <button class="quick-action-btn" onclick="rejectPayment('${order.id}')">
+                            <i class="fas fa-times"></i> Оплата не получена
+                        </button>
+                    ` : ''}
+                    ${order.status === 'rejected' ? `
+                        <button class="quick-action-btn" onclick="resetOrderStatus('${order.id}')">
+                            <i class="fas fa-undo"></i> Вернуть в ожидание
+                        </button>
+                    ` : ''}
+                    <button class="quick-action-btn" onclick="deleteOrderFromList('${order.id}')" style="color:var(--danger-glow); border-color: rgba(255,46,122,0.4);">
+                        <i class="fas fa-trash"></i> Удалить заказ
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('order-details-panel').classList.add('active');
+        }
+
+        function copyOrderLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                showToast('Ссылка скопирована в буфер обмена!', 'success');
+            });
+        }
+
+        function closeOrderDetails() {
+            document.getElementById('order-details-panel').classList.remove('active');
+        }
+
+        async function verifyPayment(orderId) {
+            const success = await updateOrderStatus(orderId, 'completed');
+            if (success) {
+                await loadOrdersList();
+                await loadOrdersTable();
+                closeOrderDetails();
+                showToast('Оплата подтверждена! Клиент получил уведомление.', 'success');
+            } else {
+                showToast('Ошибка при подтверждении оплаты', 'error');
+            }
+        }
+
+        async function rejectPayment(orderId) {
+            const success = await updateOrderStatus(orderId, 'rejected');
+            if (success) {
+                await loadOrdersList();
+                await loadOrdersTable();
+                closeOrderDetails();
+                showToast('Статус заказа изменен на "Оплата не прошла". Клиент уведомлен.', 'success');
+            } else {
+                showToast('Ошибка при изменении статуса', 'error');
+            }
+        }
+
+        async function resetOrderStatus(orderId) {
+            const success = await updateOrderStatus(orderId, 'pending');
+            if (success) {
+                await loadOrdersList();
+                await loadOrdersTable();
+                closeOrderDetails();
+                showToast('Статус заказа возвращен на "Ожидает оплаты".', 'success');
+            } else {
+                showToast('Ошибка при изменении статуса', 'error');
+            }
+        }
+
+        async function deleteOrderFromList(orderId) {
+            if (confirm('Вы уверены, что хотите удалить этот заказ? Это действие нельзя отменить.')) {
+                const success = await deleteOrder(orderId);
+                if (success) {
+                    await loadOrdersList();
+                    await loadOrdersTable();
+                    closeOrderDetails();
+                    showToast('Заказ удален', 'success');
+                } else {
+                    showToast('Ошибка при удалении заказа', 'error');
+                }
+            }
+        }
+
+        async function deleteTemplateFromList(templateId) {
+            if (confirm('Вы уверены, что хотите удалить этот шаблон?')) {
+                const success = await deleteTemplate(templateId);
+                if (success) {
+                    await loadTemplatesList();
+                    showToast('Шаблон удален', 'success');
+                } else {
+                    showToast('Ошибка при удалении шаблона', 'error');
+                }
+            }
+        }
+
+        async function deletePromocodeFromList(promocodeId) {
+            if (confirm('Вы уверены, что хотите удалить этот промокод?')) {
+                const success = await deletePromocode(promocodeId);
+                if (success) {
+                    await loadPromocodesList();
+                    showToast('Промокод удален', 'success');
+                } else {
+                    showToast('Ошибка при удалении промокода', 'error');
+                }
+            }
+        }
+
+        function setupAdminTabs() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('orders-tab').classList.add('hidden');
+                    document.getElementById('create-tab').classList.add('hidden');
+                    document.getElementById('settings-tab').classList.add('hidden');
+                    document.getElementById('templates-tab').classList.add('hidden');
+                    document.getElementById('promocodes-tab').classList.add('hidden');
+                    document.getElementById('2fa-tab').classList.add('hidden');
+                    document.getElementById('export-tab').classList.add('hidden');
+                    const tabName = this.getAttribute('data-tab');
+                    document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+                    
+                    if (tabName === 'export') {
+                        loadOrdersTable();
+                    } else if (tabName === 'templates') {
+                        loadTemplatesList();
+                    } else if (tabName === 'promocodes') {
+                        loadPromocodesList();
+                    } else if (tabName === '2fa') {
+                        load2FAStatus();
+                    }
+                });
+            });
+        }
+
+        function setupEventHandlers() {
+            document.getElementById('admin-access-btn').addEventListener('click', showAuthModal);
+            
+            document.getElementById('login-with-code').addEventListener('click', handleLogin);
+            document.getElementById('auth-code').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleLogin();
+            });
+            
+            document.getElementById('login-with-2fa').addEventListener('click', handle2FALogin);
+            document.getElementById('twofa-password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handle2FALogin();
+            });
+            
+            document.getElementById('send-new-code').addEventListener('click', function() {
+                authManager.sendLoginCode().then(success => {
+                    if (success) {
+                        showToast('Новый код отправлен в Telegram', 'success');
+                    }
+                });
+            });
+            
+            document.getElementById('logout-btn').addEventListener('click', logoutAdmin);
+            
+            document.getElementById('auth-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideAuthModal();
+                }
+            });
+
+            document.getElementById('close-details').addEventListener('click', closeOrderDetails);
+            document.getElementById('export-csv').addEventListener('click', exportToCSV);
+
+            document.getElementById('close-payment-alert').addEventListener('click', function() {
+                const alertModal = document.getElementById('payment-alert-modal');
+                
+                if (countdownTimer) {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+                }
+                
+                alertModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+
+            document.getElementById('payment-alert-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    if (countdownSeconds <= 0) {
+                        if (countdownTimer) {
+                            clearInterval(countdownTimer);
+                            countdownTimer = null;
+                        }
+                        this.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    } else {
+                        showToast('Пожалуйста, прочитайте внимательно и подождите ' + countdownSeconds + ' секунд', 'warning', 2000);
+                    }
+                }
+            });
+
+            const createForm = document.getElementById('create-order-form');
+            if (createForm) {
+                createForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const product = document.getElementById('product-name').value;
+                    const price = document.getElementById('product-price').value;
+                    const client = document.getElementById('client-name').value;
+                    const orderId = 'dxs_' + Math.random().toString(36).substr(2, 9);
+
+                    const newOrder = {
+                        id: orderId,
+                        product: product,
+                        price: price + ' ₽',
+                        client: client,
+                        status: 'pending',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+
+                    const success = await saveOrder(newOrder);
+                    if (success) {
+                        const orderLink = `${window.location.origin}${window.location.pathname}?order=${orderId}`;
+                        showToast(`Заказ создан! Ссылка для клиента:\n${orderLink}`, 'success');
+                        this.reset();
+                        document.querySelector('.nav-tab[data-tab="orders"]').click();
+                        await loadOrdersList();
+                    } else {
+                        showToast('Ошибка при создании заказа', 'error');
+                    }
+                });
+            }
+
+            const createTemplateForm = document.getElementById('create-template-form');
+            if (createTemplateForm) {
+                createTemplateForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('template-name').value;
+                    const price = document.getElementById('template-price').value;
+
+                    const template = {
+                        name: name,
+                        price: price
+                    };
+
+                    const success = await saveTemplate(template);
+                    if (success) {
+                        showToast('Шаблон добавлен!', 'success');
+                        this.reset();
+                        await loadTemplatesList();
+                    } else {
+                        showToast('Ошибка при добавлении шаблона', 'error');
+                    }
+                });
+            }
+
+            const createPromocodeForm = document.getElementById('create-promocode-form');
+            if (createPromocodeForm) {
+                createPromocodeForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const code = document.getElementById('promocode-name').value;
+                    const discount = document.getElementById('promocode-discount').value;
+                    const maxUses = document.getElementById('promocode-uses').value || 0;
+
+                    if (!code || !discount) {
+                        showToast('Заполните все обязательные поля', 'error');
+                        return;
+                    }
+
+                    const promocode = {
+                        code: code,
+                        discount: discount,
+                        maxUses: maxUses
+                    };
+
+                    const success = await savePromocode(promocode);
+                    if (success) {
+                        showToast('Промокод создан!', 'success');
+                        this.reset();
+                        await loadPromocodesList();
+                    } else {
+                        showToast('Ошибка при создании промокода', 'error');
+                    }
+                });
+            }
+
+            const applyClientPromocodeBtn = document.getElementById('apply-client-promocode');
+            if (applyClientPromocodeBtn) {
+                applyClientPromocodeBtn.addEventListener('click', async function() {
+                    const code = document.getElementById('client-promocode-input').value.trim();
+                    if (!code) {
+                        showToast('Введите промокод', 'warning');
+                        return;
+                    }
+
+                    const promocode = await validatePromocode(code);
+                    if (promocode) {
+                        currentPromocode = promocode;
+                        const discountedPrice = originalPrice * (1 - promocode.discount / 100);
+                        
+                        const priceContainer = document.getElementById('payment-price-container');
+                        priceContainer.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="price-original">${originalPrice.toFixed(2)} ₽</span>
+                                <span class="price-final">${discountedPrice.toFixed(2)} ₽</span>
+                                <span class="discount-badge">-${promocode.discount}%</span>
+                            </div>
+                        `;
+                        
+                        document.getElementById('client-promocode-result').innerHTML = `
+                            <div style="color: var(--success-glow);">
+                                <i class="fas fa-check-circle"></i> Промокод применен! Скидка ${promocode.discount}%
+                            </div>
+                        `;
+                        document.getElementById('client-promocode-result').classList.remove('hidden');
+                        showToast(`Промокод применен! Скидка ${promocode.discount}%`, 'success');
+                    } else {
+                        document.getElementById('client-promocode-result').innerHTML = `
+                            <div style="color: var(--danger-glow);">
+                                <i class="fas fa-times-circle"></i> Неверный или неактивный промокод
+                            </div>
+                        `;
+                        document.getElementById('client-promocode-result').classList.remove('hidden');
+                        showToast('Неверный или неактивный промокод', 'error');
+                    }
+                });
+            }
+
+            document.getElementById('save-payment-btn').addEventListener('click', async function(e) {
+                e.preventDefault();
+                const details = {
+                    sbpPhone: document.getElementById('sbp-phone').value,
+                    sbpName: document.getElementById('sbp-name').value,
+                    sbpBank: document.getElementById('sbp-bank').value,
+                    sberbankCard: document.getElementById('sberbank-card').value,
+                    sberbankName: document.getElementById('sberbank-name').value,
+                    alfaCard: document.getElementById('alfa-card').value,
+                    alfaName: document.getElementById('alfa-name').value,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                const success = await savePaymentDetailsWithCode(details);
+                if (success) {
+                    await loadPaymentDetails();
+                }
+            });
+
+            document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+                radio.addEventListener('change', async function() {
+                    const method = this.value;
+                    const bankDetailsContainer = document.getElementById('bank-details');
+                    const confirmButton = document.getElementById('confirm-payment');
+
+                    if (method) {
+                        const paymentDetails = await db.collection('settings').doc('paymentDetails').get();
+                        const details = paymentDetails.exists ? paymentDetails.data() : {};
+                        
+                        let hasDetails = false;
+                        if (method === 'сбп') {
+                            hasDetails = details.sbpPhone && details.sbpName && details.sbpBank;
+                        } else if (method === 'сбербанк') {
+                            hasDetails = details.sberbankCard && details.sberbankName;
+                        } else if (method === 'альфа-банк') {
+                            hasDetails = details.alfaCard && details.alfaName;
+                        }
+
+                        if (hasDetails) {
+                            displayBankDetails(method, details);
+                            confirmButton.disabled = false;
+                            
+                            showPaymentAlert();
+                        } else {
+                            bankDetailsContainer.innerHTML = `
+                                <div style="text-align:center; padding:20px; color:var(--warning-glow);">
+                                    <i class="fas fa-exclamation-triangle" style="font-size:24px; margin-bottom:12px;"></i>
+                                    <div>Реквизиты для ${method} не настроены</div>
+                                    <div style="font-size:14px; margin-top:8px;">Обратитесь к администратору</div>
+                                </div>
+                            `;
+                            bankDetailsContainer.classList.remove('hidden');
+                            confirmButton.disabled = true;
+                        }
+                    }
+                });
+            });
+
+            const confirmBtn = document.getElementById('confirm-payment');
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', async function() {
+                    if (!currentOrderId) {
+                        showToast('Ошибка: заказ не найден', 'error');
+                        return;
+                    }
+
+                    const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked');
+                    if (selectedPaymentMethod) {
+                        await updateOrderPaymentMethod(currentOrderId, selectedPaymentMethod.value);
+                    }
+
+                    if (currentPromocode) {
+                        const discountedPrice = originalPrice * (1 - currentPromocode.discount / 100);
+                        const success = await updateOrderPrice(currentOrderId, {
+                            finalPrice: discountedPrice.toFixed(2) + ' ₽',
+                            originalPrice: originalPrice.toFixed(2) + ' ₽',
+                            promocodeUsed: currentPromocode.code
+                        });
+                        
+                        if (success) {
+                            await usePromocode(currentPromocode.id);
+                        }
+                    }
+
+                    const success = await updateOrderStatus(currentOrderId, 'waiting');
+                    if (success) {
+                        showToast('Уведомление отправлено администратору. Ожидайте подтверждения оплаты.', 'success');
+                        showOrderView(currentOrderId);
+                    } else {
+                        showToast('Ошибка при отправке уведомления', 'error');
+                    }
+                });
+            }
+
+            document.getElementById('enable-2fa-btn').addEventListener('click', function() {
+                document.getElementById('2fa-status').classList.add('hidden');
+                document.getElementById('2fa-setup').classList.remove('hidden');
+            });
+
+            document.getElementById('setup-2fa-btn').addEventListener('click', setup2FA);
+            document.getElementById('verify-2fa-btn').addEventListener('click', verify2FA);
+            document.getElementById('disable-2fa-btn').addEventListener('click', disable2FA);
+        }
+    </script>
 </body>
 </html>
